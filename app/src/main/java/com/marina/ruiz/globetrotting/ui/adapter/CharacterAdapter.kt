@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.marina.ruiz.globetrotting.data.repository.model.Character
+import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import com.marina.ruiz.globetrotting.databinding.CharacterItemBinding
 
 class CharacterAdapter(
-    private val onShowDetail: (p: Character, view: View) -> Unit
-) : ListAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterDiffCallBack()) {
+    private val onShowDetail: (p: Traveler, view: View) -> Unit
+) : ListAdapter<Traveler, CharacterAdapter.CharacterViewHolder>(CharacterDiffCallBack()) {
 
     inner class CharacterViewHolder(private val binding: CharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindCharacter(c: Character) {
+        fun bindCharacter(c: Traveler) {
             binding.charName.text = c.name
             binding.charImg.load(c.image)
             binding.charSpecies.text = c.species
@@ -27,11 +27,11 @@ class CharacterAdapter(
         }
     }
 
-    private class CharacterDiffCallBack : DiffUtil.ItemCallback<Character>() {
-        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
+    private class CharacterDiffCallBack : DiffUtil.ItemCallback<Traveler>() {
+        override fun areItemsTheSame(oldItem: Traveler, newItem: Traveler): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean =
+        override fun areContentsTheSame(oldItem: Traveler, newItem: Traveler): Boolean =
             oldItem == newItem
     }
 

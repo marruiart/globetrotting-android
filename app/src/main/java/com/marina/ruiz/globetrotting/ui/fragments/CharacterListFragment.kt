@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.marina.ruiz.globetrotting.data.repository.model.Character
+import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import com.marina.ruiz.globetrotting.databinding.FragmentCharacterListBinding
 import com.marina.ruiz.globetrotting.ui.adapter.CharacterAdapter
 import com.marina.ruiz.globetrotting.ui.viewmodels.CharacterListViewModel
@@ -34,7 +34,7 @@ class CharacterListFragment : Fragment() {
         binding.characterList.adapter = adapter
 
         // Subscribe to observable from viewModel
-        val observer = Observer<List<Character>> {
+        val observer = Observer<List<Traveler>> {
             // update adapter
             Log.d("LISTA", it.toString())
             adapter.submitList(it)
@@ -43,7 +43,7 @@ class CharacterListFragment : Fragment() {
         viewModel.characters.observe(viewLifecycleOwner, observer)
     }
 
-    private fun onShowDetail(character: Character, view: View) {
+    private fun onShowDetail(character: Traveler, view: View) {
         val action =
             CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailFragment(
                 character

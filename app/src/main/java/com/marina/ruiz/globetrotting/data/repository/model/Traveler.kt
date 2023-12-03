@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Character(
-    val id: Int,
+data class Traveler(
     val name: String,
     val status: String,
     val species: String,

@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/character_list">
+    app:startDestination="@id/traveler_list">
 
     <include app:graph="@navigation/booking_creation_form" />
-    <include app:graph="@navigation/character_list" />
+    <include app:graph="@navigation/traveler_list" />
 </navigation>

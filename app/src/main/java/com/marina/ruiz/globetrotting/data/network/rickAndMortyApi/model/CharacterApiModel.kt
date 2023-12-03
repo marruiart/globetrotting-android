@@ -1,6 +1,5 @@
-package com.marina.ruiz.globetrotting.data.network.model.rickAndMortyApi
+package com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model
 
-import androidx.room.PrimaryKey
 import com.marina.ruiz.globetrotting.data.local.TravelerEntity
 
 data class CharacterApiModel(

@@ -1,8 +1,12 @@
 package com.marina.ruiz.globetrotting.data.network
 
-import com.marina.ruiz.globetrotting.data.network.model.rickAndMortyApi.CharacterApiModel
+import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.RickAndMortyApiService
+import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.CharacterApiModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkRepository(
+@Singleton
+class NetworkRepository @Inject constructor(
     private val service: RickAndMortyApiService
 ) {
 

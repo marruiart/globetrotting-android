@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/traveler_list"
+    app:startDestination="@id/travelerListFragment">
+    <fragment
+        android:id="@+id/travelerListFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.fragments.TravelerListFragment"
+        android:label="TravelerListFragment">
+        <action
+            android:id="@+id/action_travelerListFragment_to_travelerDetailFragment"
+            app:destination="@id/travelerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/travelerDetailFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.fragments.TravelerDetailFragment"
+        android:label="TravelerDetailFragment">
+        <argument
+            android:name="traveler"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Traveler" />
+    </fragment>
+</navigation>

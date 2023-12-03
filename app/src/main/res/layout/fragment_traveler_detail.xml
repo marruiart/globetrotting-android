@@ -15,11 +15,11 @@
         android:padding="18dp">
 
         <ImageView
-            android:id="@+id/char_img"
+            android:id="@+id/traveler_img"
             android:layout_width="match_parent"
             android:layout_height="194dp"
             android:adjustViewBounds="true"
-            android:contentDescription="Character"
+            android:contentDescription="Traveler"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,42 +27,42 @@
 
 
         <TextView
-            android:id="@+id/char_name"
+            android:id="@+id/traveler_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:layout_constraintStart_toStartOf="@+id/char_img"
-            app:layout_constraintTop_toBottomOf="@+id/char_img"
-            tools:text="CHARACTER" />
+            app:layout_constraintStart_toStartOf="@+id/traveler_img"
+            app:layout_constraintTop_toBottomOf="@+id/traveler_img"
+            tools:text="TRAVELER" />
 
         <TextView
-            android:id="@+id/char_desription"
+            android:id="@+id/traveler_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:layout_constraintStart_toStartOf="@+id/char_img"
-            app:layout_constraintTop_toBottomOf="@+id/char_name"
-            tools:text="Descripción del character" />
+            app:layout_constraintStart_toStartOf="@+id/traveler_img"
+            app:layout_constraintTop_toBottomOf="@+id/traveler_name"
+            tools:text="Descripción del traveleracter" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/char_species"
+            android:id="@+id/traveler_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/char_gender"
-            app:layout_constraintStart_toStartOf="@+id/char_img"
-            app:layout_constraintTop_toBottomOf="@+id/char_desription"
+            app:layout_constraintEnd_toStartOf="@+id/traveler_gender"
+            app:layout_constraintStart_toStartOf="@+id/traveler_img"
+            app:layout_constraintTop_toBottomOf="@+id/traveler_description"
             tools:text="Agua" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/char_gender"
+            android:id="@+id/traveler_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/char_species"
-            app:layout_constraintTop_toTopOf="@+id/char_species"
+            app:layout_constraintStart_toEndOf="@+id/traveler_species"
+            app:layout_constraintTop_toTopOf="@+id/traveler_species"
             tools:text="Hierba" />
 
 

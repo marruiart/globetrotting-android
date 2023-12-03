@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.data.network.model.rickAndMortyApi
+package com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model
 
 data class CharacterListResponse(
     val info: Pagination,

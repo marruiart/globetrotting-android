@@ -2,8 +2,11 @@ package com.marina.ruiz.globetrotting.data.local
 
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalRepository(
+@Singleton
+class LocalRepository @Inject constructor(
     private val travelerDao: TravelerDao
 ) {
 

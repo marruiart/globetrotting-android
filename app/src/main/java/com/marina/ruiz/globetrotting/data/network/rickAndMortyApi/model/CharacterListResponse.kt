@@ -5,13 +5,6 @@ data class CharacterListResponse(
     val results: List<CharacterResponse>
 )
 
-data class Pagination(
-    val count: Int,
-    val pages: Int,
-    val next: String?,
-    val prev: String?,
-)
-
 data class CharacterResponse(
     val id: Int,
     val name: String,

@@ -7,13 +7,13 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TravelerDao {
+interface DestinationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createTravelers(listTravelerEntity: List<TravelerEntity>)
+    suspend fun createDestinations(listDestinationEntity: List<DestinationEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createTravelers(travelerEntity: TravelerEntity)
+    suspend fun createDestination(destinationEntity: DestinationEntity)
 
     @Query("SELECT * FROM traveler")
-    fun getAllTraveler(): Flow<List<TravelerEntity>>
+    fun getAllDestinations(): Flow<List<DestinationEntity>>
 }

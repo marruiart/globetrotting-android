@@ -14,8 +14,8 @@ class LocalRepository @Inject constructor(
 
     @WorkerThread
     suspend fun insert(listTravelerEntity: List<TravelerEntity>) =
-        travelerDao.createTraveler(listTravelerEntity)
+        travelerDao.createTravelers(listTravelerEntity)
 
     @WorkerThread
-    suspend fun insert(travelerEntity: TravelerEntity) = travelerDao.createTraveler(travelerEntity)
+    suspend fun insert(travelerEntity: TravelerEntity) = travelerDao.createTravelers(travelerEntity)
 }

@@ -23,6 +23,6 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideTravelerDao(database: GlobetrottingDb): TravelerDao {
-        return database.pokemonDao()
+        return database.travelerDao()
     }
 }

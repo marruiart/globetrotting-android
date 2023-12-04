@@ -13,13 +13,12 @@ data class CharacterApiModel(
 ) {
     fun asTravelerEntity(): TravelerEntity {
         return TravelerEntity(
-            id,
-            name,
-            status,
-            species,
-            type,
-            gender,
-            image
+            name = name,
+            status = status,
+            species = species,
+            type = type,
+            gender = gender,
+            image = image
         )
     }
 }

@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.travelerListFragment,
+                R.id.destinationsFragment,
                 R.id.bookingCreationFormFragment,
-                R.id.travelerListFragment
             )
         )
         navView.setupWithNavController(navController)

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/booking_creation_form"
     app:startDestination="@id/bookingCreationFormFragment">
-
     <fragment
         android:id="@+id/bookingCreationFormFragment"
         android:name="com.marina.ruiz.globetrotting.ui.fragments.BookingCreationFormFragment"

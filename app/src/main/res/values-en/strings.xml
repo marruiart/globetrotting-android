@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Globetrotting</string>
+
+    <!-- BOTTOM NAV MENU -->
+    <string name="menu_travelers">Travelers</string>
+    <string name="menu_destinations">Destinations</string>
+    <string name="menu_booking">Bookings</string>
+</resources>

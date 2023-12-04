@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/traveler_list"
-        android:title="Viajeros"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:title="@string/menu_travelers"
+        android:icon="@drawable/ic_travelers" />
+    <item android:id="@+id/destinations_list"
+        android:title="@string/menu_destinations"
+        android:icon="@drawable/ic_destinations" />
     <item android:id="@+id/booking_creation_form"
-        android:title="Reservar"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:title="@string/menu_booking"
+        android:icon="@drawable/ic_booking" />
 </menu>

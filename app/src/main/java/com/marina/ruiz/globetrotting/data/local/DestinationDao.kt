@@ -14,6 +14,6 @@ interface DestinationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createDestination(destinationEntity: DestinationEntity)
 
-    @Query("SELECT * FROM traveler")
+    @Query("SELECT * FROM destination")
     fun getAllDestinations(): Flow<List<DestinationEntity>>
 }

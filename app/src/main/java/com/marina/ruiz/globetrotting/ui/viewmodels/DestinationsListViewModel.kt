@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
-import com.marina.ruiz.globetrotting.data.repository.model.Traveler
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,20 +14,21 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class TravelerListViewModel @Inject constructor(
+class DestinationsListViewModel @Inject constructor(
     private val repository: GlobetrottingRepository
 ) : ViewModel() {
 
-    private val _travelers: MutableStateFlow<List<Traveler>> = MutableStateFlow(listOf())
-    val travelers: StateFlow<List<Traveler>>
-        get() = _travelers.asStateFlow()
+    private val _destinations: MutableStateFlow<List<Destination>> = MutableStateFlow(listOf())
+    val destinations: StateFlow<List<Destination>>
+        get() = _destinations.asStateFlow()
 
     init {
         viewModelScope.launch {
             try {
-                repository.refreshTravelersList()
-                repository.travelers.collect { travelers -> // subscription
-                    _travelers.value = travelers
+                repository.refreshDestinationsList()
+                // await for refreshDestinationsList()
+                repository.destinations.collect { destinations ->
+                    _destinations.value = destinations
                 }
             } catch (e: IOException) {
                 Log.ERROR

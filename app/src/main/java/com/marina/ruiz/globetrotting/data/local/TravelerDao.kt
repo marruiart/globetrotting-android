@@ -12,8 +12,8 @@ interface TravelerDao {
     suspend fun createTravelers(listTravelerEntity: List<TravelerEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createTravelers(travelerEntity: TravelerEntity)
+    suspend fun createTraveler(travelerEntity: TravelerEntity)
 
     @Query("SELECT * FROM traveler")
-    fun getAllTraveler(): Flow<List<TravelerEntity>>
+    fun getAllTravelers(): Flow<List<TravelerEntity>>
 }

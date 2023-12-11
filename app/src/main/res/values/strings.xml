@@ -6,5 +6,5 @@
     <string name="menu_destinations">Destinos</string>
     <string name="menu_booking">Reservas</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dest_btn_book_now">Reservar ahora</string>
 </resources>

@@ -27,7 +27,7 @@ data class TravelerEntity(
     }
 }
 
-fun List<TravelerEntity>.asListTraveler(): List<Traveler> {
+fun List<TravelerEntity>.asTravelerList(): List<Traveler> {
     // this is referred to List<TravelerEntity>
     return this.map {
         it.asTraveler()

@@ -65,7 +65,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
 
     // ROOM
-    val roomVersion = "2.6.0"
+    val roomVersion = "2.6.1"
     kapt("androidx.room:room-compiler:${roomVersion}")
     implementation("androidx.room:room-runtime:${roomVersion}")
     // para que funcione con observables
@@ -78,4 +78,9 @@ dependencies {
     val hiltVersion = "2.48.1"
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
+
+    // GLIDE
+    val glideVersion = "4.15.1"
+    implementation("com.github.bumptech.glide:glide:${glideVersion}")
+    annotationProcessor("com.github.bumptech.glide:compiler:${glideVersion}")
 }

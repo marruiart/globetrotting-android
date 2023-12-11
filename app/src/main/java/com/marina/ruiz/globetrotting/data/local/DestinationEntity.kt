@@ -11,7 +11,6 @@ data class DestinationEntity(
     val name: String,
     val type: String?,
     val dimension: String?,
-    val image: String?,
     val price: Float?,
     val description: String?,
     val fav: Boolean = false
@@ -21,7 +20,6 @@ data class DestinationEntity(
             name,
             type,
             dimension,
-            image,
             price,
             description,
             fav

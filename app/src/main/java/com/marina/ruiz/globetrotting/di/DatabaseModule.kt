@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.di
 
 import android.content.Context
+import com.marina.ruiz.globetrotting.data.local.DestinationDao
 import com.marina.ruiz.globetrotting.data.local.GlobetrottingDb
 import com.marina.ruiz.globetrotting.data.local.TravelerDao
 import dagger.Module
@@ -24,5 +25,11 @@ object DatabaseModule {
     @Provides
     fun provideTravelerDao(database: GlobetrottingDb): TravelerDao {
         return database.travelerDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDestinationDao(database: GlobetrottingDb): DestinationDao {
+        return database.destinationDao()
     }
 }

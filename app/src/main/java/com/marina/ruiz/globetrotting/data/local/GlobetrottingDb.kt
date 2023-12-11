@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TravelerEntity::class, DestinationEntity::class], version = 3)
+@Database(entities = [TravelerEntity::class, DestinationEntity::class], version = 1)
 abstract class GlobetrottingDb() : RoomDatabase() {
 
     companion object {
@@ -29,4 +29,6 @@ abstract class GlobetrottingDb() : RoomDatabase() {
     }
 
     abstract fun travelerDao(): TravelerDao
+    abstract fun destinationDao(): DestinationDao
+
 }

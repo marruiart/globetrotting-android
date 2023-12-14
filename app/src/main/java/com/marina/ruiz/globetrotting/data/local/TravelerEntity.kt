@@ -6,8 +6,8 @@ import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 
 @Entity(tableName = "traveler")
 data class TravelerEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey()
+    val id: Int,
     val name: String,
     val status: String,
     val species: String,

@@ -6,5 +6,5 @@
 
     <include app:graph="@navigation/traveler_list" />
     <include app:graph="@navigation/destinations_list" />
-    <include app:graph="@navigation/booking_creation_form" />
+    <include app:graph="@navigation/bookings" />
 </navigation>

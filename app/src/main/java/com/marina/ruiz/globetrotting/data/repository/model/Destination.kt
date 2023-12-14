@@ -10,5 +10,6 @@ data class Destination(
     val dimension: String?,
     val price: Float?,
     val description: String?,
-    val fav: Boolean = false
+    val fav: Boolean = false,
+    val imageRef: Int
 ) : Parcelable

@@ -4,10 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/destinations_list"
     app:startDestination="@id/destinationsFragment">
-
     <fragment
         android:id="@+id/destinationsFragment"
         android:name="com.marina.ruiz.globetrotting.ui.fragments.DestinationsFragment"
         android:label="fragment_destinations"
-        tools:layout="@layout/fragment_destinations" />
+        tools:layout="@layout/fragment_destinations" >
+        <action
+            android:id="@+id/action_destinationsFragment_to_bookingCreationFormFragment"
+            app:destination="@id/bookingCreationFormFragment" />
+        <action
+            android:id="@+id/action_destinationsFragment_to_destinationDetailFragment"
+            app:destination="@id/destinationDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookingCreationFormFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.fragments.BookingCreationFormFragment"
+        android:label="fragment_booking_creation_form"
+        tools:layout="@layout/fragment_booking_creation_form" >
+        <argument
+            android:name="destination"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/destinationDetailFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.fragments.DestinationDetailFragment"
+        android:label="fragment_destination_detail"
+        tools:layout="@layout/fragment_destination_detail" >
+        <argument
+            android:name="destination"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+    </fragment>
 </navigation>

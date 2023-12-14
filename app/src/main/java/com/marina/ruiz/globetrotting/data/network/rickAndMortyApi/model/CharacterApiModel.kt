@@ -13,6 +13,7 @@ data class CharacterApiModel(
 ) {
     fun asTravelerEntity(): TravelerEntity {
         return TravelerEntity(
+            id = id,
             name = name,
             status = status,
             species = species,

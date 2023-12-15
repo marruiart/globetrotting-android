@@ -8,13 +8,6 @@
     android:orientation="horizontal"
     android:padding="18dp">
 
-    <EditText
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:visibility="gone" />
-
     <ImageView
         android:id="@+id/item_img"
         android:layout_width="50dp"

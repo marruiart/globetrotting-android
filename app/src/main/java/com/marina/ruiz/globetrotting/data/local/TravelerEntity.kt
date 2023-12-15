@@ -17,6 +17,7 @@ data class TravelerEntity(
 ) {
     fun asTraveler(): Traveler {
         return Traveler(
+            id,
             name,
             status,
             species,

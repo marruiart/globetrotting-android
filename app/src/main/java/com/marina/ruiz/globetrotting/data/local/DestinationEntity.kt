@@ -7,8 +7,8 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 
 @Entity(tableName = "destination")
 data class DestinationEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey()
+    val id: Int,
     val name: String,
     val type: String?,
     val dimension: String?,
@@ -18,6 +18,7 @@ data class DestinationEntity(
 ) {
     fun asDestination(): Destination {
         return Destination(
+            id,
             name,
             type,
             dimension,

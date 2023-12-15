@@ -5,11 +5,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Destination(
-    val name: String,
+    override val id: Int,
+    override val name: String,
     val type: String?,
     val dimension: String?,
     val price: Float?,
     val description: String?,
     val fav: Boolean = false,
-    val imageRef: Int
-) : Parcelable
+    override val imageRef: Int,
+    override val image: String? = null
+) : Parcelable, SelectorItem

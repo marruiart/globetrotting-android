@@ -5,10 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Traveler(
-    val name: String,
+    override val id: Int,
+    override val name: String,
     val status: String,
     val species: String,
     val type: String,
     val gender: String,
-    val image: String
-) : Parcelable
+    override val image: String,
+    override val imageRef: Int? = null
+) : Parcelable, SelectorItem

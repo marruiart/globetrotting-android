@@ -13,6 +13,7 @@ data class LocationApiModel(
 ) {
     fun asDestinationEntity(): DestinationEntity {
         return DestinationEntity(
+            id = id,
             name = name,
             type = type,
             dimension = dimension,

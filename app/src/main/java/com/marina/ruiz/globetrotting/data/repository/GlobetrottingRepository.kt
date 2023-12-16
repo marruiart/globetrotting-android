@@ -1,10 +1,13 @@
 package com.marina.ruiz.globetrotting.data.repository
 
+import com.marina.ruiz.globetrotting.data.local.BookingEntity
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
+import com.marina.ruiz.globetrotting.data.local.asBookingList
 import com.marina.ruiz.globetrotting.data.local.asDestinationList
 import com.marina.ruiz.globetrotting.data.local.asTravelerList
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.asEntityModelList
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,13 @@ class GlobetrottingRepository @Inject constructor(
             }
         }
 
+    val bookings: Flow<List<Booking>>
+        get() {
+            return localRepository.bookings.map {
+                it.asBookingList()
+            }
+        }
+
     suspend fun refreshTravelersList() = withContext(Dispatchers.IO) {
         // SCOPE: suspendable code -> executed asynchronously in a coroutine.
         // Dispatchers.IO is a special thread for network operations
@@ -44,9 +54,10 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     suspend fun refreshDestinationsList() = withContext(Dispatchers.IO) {
-        // SCOPE: suspendable code -> executed asynchronously in a coroutine.
-        // Dispatchers.IO is a special thread for network operations
         val locationApiModelList = networkRepository.getAllLocations()
         localRepository.insertDestinations(locationApiModelList.asEntityModelList())
     }
+
+    suspend fun createBooking(booking: BookingEntity) = localRepository.insertBooking(booking)
+
 }

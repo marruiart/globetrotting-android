@@ -8,5 +8,18 @@
         android:id="@+id/bookingsFragment"
         android:name="com.marina.ruiz.globetrotting.ui.fragments.BookingsFragment"
         android:label="fragment_bookings"
-        tools:layout="@layout/fragment_bookings" />
+        tools:layout="@layout/fragment_bookings" >
+        <action
+            android:id="@+id/action_bookingsFragment_to_bookingCreationFormFragment"
+            app:destination="@id/bookingCreationFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookingCreationFormFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.fragments.BookingCreationFormFragment"
+        android:label="fragment_booking_creation_form"
+        tools:layout="@layout/fragment_booking_creation_form" >
+        <argument
+            android:name="destination"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+    </fragment>
 </navigation>

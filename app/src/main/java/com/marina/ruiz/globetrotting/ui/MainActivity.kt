@@ -23,17 +23,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navigation
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
         navController = navHostFragment.navController
         navView.setupWithNavController(navController)
 
-        hideNavController(R.id.bookingCreationFormFragment)
-        hideNavController(R.id.destinationDetailFragment)
+        hideNavController()
     }
 
-    private fun hideNavController(fragmentId: Int) {
+    private fun hideNavController() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == fragmentId) {
+            if (destination.id == R.id.bookingCreationFormFragment
+                || destination.id == R.id.destinationDetailFragment
+            ) {
                 binding.navigation.visibility = View.GONE
             } else {
                 binding.navigation.visibility = View.VISIBLE

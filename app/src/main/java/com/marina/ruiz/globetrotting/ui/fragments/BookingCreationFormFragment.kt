@@ -10,12 +10,15 @@ import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
@@ -35,7 +38,9 @@ import java.util.Locale
 @AndroidEntryPoint
 class BookingCreationFormFragment : Fragment() {
     private lateinit var binding: FragmentBookingCreationFormBinding
+    private lateinit var activity: FragmentActivity
     private val viewModel: BookingFormViewModel by viewModels()
+    private val args: BookingCreationFormFragmentArgs by navArgs()
     private lateinit var booking: Booking
     private var destination: Int = 0
     private var traveler: Int = 0
@@ -44,76 +49,64 @@ class BookingCreationFormFragment : Fragment() {
     private var numTravelers: Int = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBookingCreationFormBinding
-            .inflate(inflater, container, false)
+        binding = FragmentBookingCreationFormBinding.inflate(inflater, container, false)
+        activity = requireActivity()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? AppCompatActivity)?.setSupportActionBar(binding.topAppBar)
+        init()
+    }
 
+    private fun init() {
+        fetchItemsToPopulateSelects()
+        displaySelectedItemOnSelector(binding.acSelectDestination, args.destination, true)
+        setListeners()
+    }
+
+    private fun fetchItemsToPopulateSelects() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.travelers.collect { travelers ->
                     populateSelect(
-                        binding.selectTraveler,
-                        R.id.item_name,
-                        travelers
+                        binding.selectTraveler, R.id.item_name, travelers
                     )
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.destinations.collect { destinations ->
-                    populateSelect(
-                        binding.selectDestination,
-                        R.id.item_name,
-                        destinations
-                    )
-                }
-            }
-        }
-
+    private fun setListeners() {
         binding.calendar.setEndIconOnClickListener {
             showDatePickerDialog()
         }
-
         binding.numTravelersText.doAfterTextChanged { num ->
             val intNum: Int? = num.toString().toIntOrNull() ?: 0
             if (intNum != null) {
                 numTravelers = intNum
             }
         }
-
         binding.acceptFormBtn.setOnClickListener {
             booking = Booking(
-                travelerId = traveler,
-                destinationId = destination,
-                arrivalDate = Date(arrivalDate),
-                departureDate = Date(departureDate),
-                numTravelers = 3
+                traveler, destination, arrivalDate, departureDate, numTravelers
             )
-            Toast.makeText(context, booking.toString(), Toast.LENGTH_SHORT).show()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.createBooking(booking)
+            }
+            navigateBackToDestinations()
         }
     }
 
     private inline fun <reified T : SelectorItem> populateSelect(
-        textField: TextInputLayout?,
-        textView: Int,
-        items: List<T>
+        textField: TextInputLayout?, textView: Int, items: List<T>
     ) {
         if (textField != null) {
             val adapter = object : ArrayAdapter<T>(
-                requireContext(),
-                R.layout.selector_item,
-                textView,
-                items
+                requireContext(), R.layout.selector_item, textView, items
             ) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
@@ -143,30 +136,33 @@ class BookingCreationFormFragment : Fragment() {
      * it displays the name (String) of the item.
      */
     private inline fun <reified T : SelectorItem> addSelectorClickListener(
-        autocompleteTv: AutoCompleteTextView?,
-        items: List<T>
+        autocompleteTv: AutoCompleteTextView?, items: List<T>
     ) {
         if (autocompleteTv != null) {
             autocompleteTv.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, position, _ ->
                     val selectedItem = items[position]
-                    if (T::class == Destination::class) {
-                        destination = selectedItem.id
-                    } else if (T::class == Traveler::class) {
-                        traveler = selectedItem.id
-                    }
-                    autocompleteTv.setText(selectedItem.name, false)
+                    displaySelectedItemOnSelector(autocompleteTv, selectedItem)
                 }
         }
+    }
+
+    private inline fun <reified T : SelectorItem> displaySelectedItemOnSelector(
+        autocompleteTv: AutoCompleteTextView, selectedItem: T, filter: Boolean = false
+    ) {
+        if (T::class == Destination::class) {
+            destination = selectedItem.id
+        } else if (T::class == Traveler::class) {
+            traveler = selectedItem.id
+        }
+        autocompleteTv.setText(selectedItem.name, filter)
     }
 
     /**
      * Display a range datePicker on screen.
      */
     private fun showDatePickerDialog() {
-        val dateRangePicker =
-            MaterialDatePicker.Builder.dateRangePicker()
-                .build()
+        val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker().build()
 
         dateRangePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER")
         dateRangePicker.addOnPositiveButtonClickListener { selection ->
@@ -179,9 +175,7 @@ class BookingCreationFormFragment : Fragment() {
                 binding.calendarText.setText(formattedDateRange)
             } else {
                 Toast.makeText(
-                    context,
-                    "Se deben seleccionar fechas de salida y llegada",
-                    Toast.LENGTH_SHORT
+                    context, "Se deben seleccionar fechas de salida y llegada", Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -192,5 +186,9 @@ class BookingCreationFormFragment : Fragment() {
         val departureDate = dateFormat.format(Date(departureMillis))
         val arrivalDate = dateFormat.format(Date(arrivalMillis))
         return "$departureDate - $arrivalDate"
+    }
+
+    private fun navigateBackToDestinations() {
+        requireActivity().supportFragmentManager.popBackStack()
     }
 }

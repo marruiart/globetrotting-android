@@ -16,4 +16,5 @@
     <string name="booking_form_select_dates">Seleccionar las fechas del viaje</string>
     <string name="booking_form_accept_btn">Aceptar reserva</string>
     <string name="booking_form_num_travelers">Número de viajeros</string>
+    <string name="booking_form_create_booking">Realizar una reserva</string>
 </resources>

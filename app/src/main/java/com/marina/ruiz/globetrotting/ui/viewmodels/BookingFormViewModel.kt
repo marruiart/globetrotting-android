@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,11 @@ class BookingFormViewModel @Inject constructor(
     private val _travelers: MutableStateFlow<List<Traveler>> = MutableStateFlow(listOf())
     val travelers: StateFlow<List<Traveler>>
         get() = _travelers.asStateFlow()
+
+    suspend fun createBooking(booking: Booking) {
+        repository.createBooking(booking.asBookingEntity())
+        repository.refreshTravelersList()
+    }
 
     init {
         viewModelScope.launch {

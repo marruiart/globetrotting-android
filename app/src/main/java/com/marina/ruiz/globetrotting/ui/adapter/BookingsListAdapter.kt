@@ -2,6 +2,7 @@ package com.marina.ruiz.globetrotting.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +15,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class BookingsListAdapter() :
+class BookingsListAdapter(
+    private val onShare: (booking: Booking, view: View) -> Unit
+) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
     inner class BookingViewHolder(
@@ -32,6 +35,9 @@ class BookingsListAdapter() :
             binding.departureDate.text =
                 context.getString(R.string.booking_item_departure, departureDate)
             binding.arrivalDate.text = context.getString(R.string.booking_item_arrival, arrivalDate)
+            binding.shareBtn.setOnClickListener {
+                onShare(booking, it)
+            }
         }
     }
 

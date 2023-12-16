@@ -6,17 +6,29 @@
     android:id="@+id/destination_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="18dp">
+    android:paddingHorizontal="18dp">
 
     <TextView
         android:id="@+id/destination_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintEnd_toEndOf="@+id/booking_traveler_name"
+        app:layout_constraintBottom_toBottomOf="@+id/share_btn"
+        app:layout_constraintEnd_toStartOf="@+id/share_btn"
         app:layout_constraintStart_toStartOf="@+id/booking_traveler_img"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/share_btn"
         tools:text="Earth (C-137)" />
+
+    <Button
+        android:id="@+id/share_btn"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/booking_share"
+        app:icon="@drawable/ic_share"
+        app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/booking_traveler_img"

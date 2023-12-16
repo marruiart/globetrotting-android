@@ -18,8 +18,11 @@
     <string name="booking_form_display_calendar">Display the calendar to pick the dates</string>
     <string name="booking_form_select_dates">Select the travel dates</string>
     <string name="booking_form_num_travelers">Number of travelers</string>
-    <string name="booking_form_accept_btn">Accept booking</string>
+    <string name="booking_form_accept_btn">Make booking</string>
     <!-- BOOKING ITEM (FOR BOOKING LIST) -->
     <string name="booking_item_departure">Departure: %s</string>
     <string name="booking_item_arrival">Arrival: %s</string>
+    <string name="booking_share">Share</string>
+    <!-- BOOKINGS LIST -->
+    <string name="share_text">We are going on a trip to %s from %s to %s!</string>
 </resources>

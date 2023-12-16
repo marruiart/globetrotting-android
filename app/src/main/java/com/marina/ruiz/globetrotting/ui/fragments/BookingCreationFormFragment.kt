@@ -81,6 +81,9 @@ class BookingCreationFormFragment : Fragment() {
     }
 
     private fun setListeners() {
+        binding.topAppBar.setNavigationOnClickListener {
+            navigateBackToDestinations()
+        }
         binding.calendar.setEndIconOnClickListener {
             showDatePickerDialog()
         }
@@ -93,7 +96,11 @@ class BookingCreationFormFragment : Fragment() {
         binding.acceptFormBtn.setOnClickListener {
             if (traveler != null && destination != null) {
                 booking = Booking(
-                    traveler as Traveler, destination as Destination, arrivalDate, departureDate, numTravelers
+                    traveler as Traveler,
+                    destination as Destination,
+                    departureDate,
+                    arrivalDate,
+                    numTravelers
                 )
             }
             viewLifecycleOwner.lifecycleScope.launch {
@@ -170,8 +177,8 @@ class BookingCreationFormFragment : Fragment() {
         dateRangePicker.addOnPositiveButtonClickListener { selection ->
             departureDate = selection.first ?: 0L
             arrivalDate = selection.second ?: 0L
-            val formattedDateRange = formatDateRange(departureDate, arrivalDate)
             if (departureDate != 0L && arrivalDate != 0L) {
+                val formattedDateRange = formatDateRange(departureDate, arrivalDate)
                 departureDate = departureDate
                 arrivalDate = arrivalDate
                 binding.calendarText.setText(formattedDateRange)

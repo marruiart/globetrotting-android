@@ -6,13 +6,20 @@
     <string name="menu_travelers">Travelers</string>
     <string name="menu_destinations">Destinations</string>
     <string name="menu_booking">Bookings</string>
+    <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Book now</string>
     <string name="dest_btn_see_details">See details</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- BOOKING FORM -->
+    <string name="booking_form_header_title">Make a booking</string>
     <string name="booking_form_select_destination">Select destination</string>
     <string name="booking_form_select_traveler">Select traveler</string>
     <string name="booking_form_departure">Departure date</string>
     <string name="booking_form_arrival">Arrival date</string>
     <string name="booking_form_display_calendar">Display the calendar to pick the dates</string>
     <string name="booking_form_select_dates">Select the travel dates</string>
+    <string name="booking_form_num_travelers">Number of travelers</string>
+    <string name="booking_form_accept_btn">Accept booking</string>
+    <!-- BOOKING ITEM (FOR BOOKING LIST) -->
+    <string name="booking_item_departure">Departure: %s</string>
+    <string name="booking_item_arrival">Arrival: %s</string>
 </resources>

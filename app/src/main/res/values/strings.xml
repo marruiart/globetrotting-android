@@ -5,16 +5,20 @@
     <string name="menu_travelers">Viajeros</string>
     <string name="menu_destinations">Destinos</string>
     <string name="menu_booking">Reservas</string>
+    <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- BOOKING FORM -->
+    <string name="booking_form_header_title">Realizar una reserva</string>
     <string name="booking_form_select_destination">Seleccionar el destino</string>
     <string name="booking_form_select_traveler">Seleccionar el viajero</string>
     <string name="booking_form_departure">Fecha de salida</string>
     <string name="booking_form_arrival">Fecha de llegada</string>
     <string name="booking_form_display_calendar">Mostrar el calendario para elegir las fechas</string>
     <string name="booking_form_select_dates">Seleccionar las fechas del viaje</string>
-    <string name="booking_form_accept_btn">Aceptar reserva</string>
     <string name="booking_form_num_travelers">Número de viajeros</string>
-    <string name="booking_form_create_booking">Realizar una reserva</string>
+    <string name="booking_form_accept_btn">Aceptar reserva</string>
+    <!-- BOOKING ITEM (FOR BOOKING LIST) -->
+    <string name="booking_item_departure">Salida: %s</string>
+    <string name="booking_item_arrival">Llegada: %s</string>
 </resources>

@@ -8,65 +8,71 @@
     android:layout_height="wrap_content"
     android:padding="18dp">
 
-
-    <ImageView
-        android:id="@+id/destination_img"
-        android:layout_width="129dp"
-        android:layout_height="115dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="Rick and Morty traveleracter"
-        app:layout_constraintBottom_toTopOf="@+id/details_btn"
-        app:layout_constraintEnd_toEndOf="@+id/details_btn"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/details_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/default_avatar" />
-
     <TextView
         android:id="@+id/destination_name"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/destination_img"
-        app:layout_constraintTop_toTopOf="@+id/destination_img"
+        app:layout_constraintEnd_toEndOf="@+id/item_name"
+        app:layout_constraintStart_toStartOf="@+id/item_img"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Earth (C-137)" />
 
-    <Button
-        android:id="@+id/book_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dest_btn_book_now"
-        app:layout_constraintBaseline_toBaselineOf="@+id/details_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/details_btn" />
-
-    <Button
-        android:id="@+id/details_btn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/dest_btn_see_details"
-        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
-        app:layout_constraintEnd_toEndOf="@+id/destination_img"
-        app:layout_constraintEnd_toStartOf="@+id/book_btn"
+    <ImageView
+        android:id="@+id/item_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="18dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Rick and Morty traveleracter"
+        app:layout_constraintEnd_toStartOf="@+id/item_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destination_img" />
+        app:layout_constraintTop_toBottomOf="@+id/destination_name"
+        app:srcCompat="@drawable/default_avatar" />
+
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/item_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/item_img"
+        app:layout_constraintTop_toTopOf="@+id/item_img"
+        tools:text="Rick Sanchez" />
+
+    <TextView
+        android:id="@+id/departure_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/booking_item_departure"
+        app:layout_constraintStart_toStartOf="@+id/item_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_img" />
+
+    <TextView
+        android:id="@+id/arrival_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/booking_item_arrival"
+        app:layout_constraintBaseline_toBaselineOf="@+id/departure_date"
+        app:layout_constraintEnd_toEndOf="@+id/item_name"
+        app:layout_constraintStart_toEndOf="@+id/departure_date" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/departure_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.ui.viewmodels
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,13 +26,15 @@ class DestinationsListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
-                repository.refreshDestinationsList()
                 // await for refreshDestinationsList()
-                repository.destinations.collect { destinations ->
-                    _destinations.value = destinations
-                }
+                repository.refreshDestinationsList()
             } catch (e: IOException) {
                 Log.ERROR
+            } catch (e: NetworkErrorException) {
+                Log.ERROR
+            }
+            repository.destinations.collect { destinations ->
+                _destinations.value = destinations
             }
         }
     }

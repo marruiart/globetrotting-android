@@ -42,8 +42,8 @@ class BookingCreationFormFragment : Fragment() {
     private val viewModel: BookingFormViewModel by viewModels()
     private val args: BookingCreationFormFragmentArgs by navArgs()
     private lateinit var booking: Booking
-    private var destination: Int = 0
-    private var traveler: Int = 0
+    private var destination: Destination? = null
+    private var traveler: Traveler? = null
     private var departureDate: Long = 0
     private var arrivalDate: Long = 0
     private var numTravelers: Int = 0
@@ -73,7 +73,7 @@ class BookingCreationFormFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.travelers.collect { travelers ->
                     populateSelect(
-                        binding.selectTraveler, R.id.item_name, travelers
+                        binding.selectTraveler, R.id.booking_traveler_name, travelers
                     )
                 }
             }
@@ -91,9 +91,11 @@ class BookingCreationFormFragment : Fragment() {
             }
         }
         binding.acceptFormBtn.setOnClickListener {
-            booking = Booking(
-                traveler, destination, arrivalDate, departureDate, numTravelers
-            )
+            if (traveler != null && destination != null) {
+                booking = Booking(
+                    traveler as Traveler, destination as Destination, arrivalDate, departureDate, numTravelers
+                )
+            }
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.createBooking(booking)
             }
@@ -111,8 +113,8 @@ class BookingCreationFormFragment : Fragment() {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
 
-                    val imageView = view.findViewById<ImageView>(R.id.item_img)
-                    val textViewName = view.findViewById<TextView>(R.id.item_name)
+                    val imageView = view.findViewById<ImageView>(R.id.booking_traveler_img)
+                    val textViewName = view.findViewById<TextView>(R.id.booking_traveler_name)
 
                     val item = items[position]
                     if (item.image != null) {
@@ -151,9 +153,9 @@ class BookingCreationFormFragment : Fragment() {
         autocompleteTv: AutoCompleteTextView, selectedItem: T, filter: Boolean = false
     ) {
         if (T::class == Destination::class) {
-            destination = selectedItem.id
+            destination = selectedItem as Destination
         } else if (T::class == Traveler::class) {
-            traveler = selectedItem.id
+            traveler = selectedItem as Traveler
         }
         autocompleteTv.setText(selectedItem.name, filter)
     }

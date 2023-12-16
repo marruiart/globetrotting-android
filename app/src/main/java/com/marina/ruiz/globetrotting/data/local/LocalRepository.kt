@@ -35,6 +35,7 @@ class LocalRepository @Inject constructor(
 
     // BOOKING
     val bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()
+    val bookingWithTravelersAndDestinations: Flow<List<FullBooking>> = bookingDao.getAllBookingsWithTravelerAndDestination()
 
     @WorkerThread
     suspend fun insertBooking(bookingEntity: BookingEntity) =

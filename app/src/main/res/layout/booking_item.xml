@@ -13,37 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintEnd_toEndOf="@+id/item_name"
-        app:layout_constraintStart_toStartOf="@+id/item_img"
+        app:layout_constraintEnd_toEndOf="@+id/booking_traveler_name"
+        app:layout_constraintStart_toStartOf="@+id/booking_traveler_img"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Earth (C-137)" />
 
-    <ImageView
-        android:id="@+id/item_img"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/booking_traveler_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="18dp"
         android:adjustViewBounds="true"
-        android:contentDescription="Rick and Morty traveleracter"
-        app:layout_constraintEnd_toStartOf="@+id/item_name"
+        android:contentDescription="Rick and Morty character"
+        app:layout_constraintEnd_toStartOf="@+id/booking_traveler_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/destination_name"
+        app:shapeAppearanceOverlay="@style/Circular"
         app:srcCompat="@drawable/default_avatar" />
 
-
     <TextView
-        android:id="@+id/item_name"
+        android:id="@+id/booking_traveler_name"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
         android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/item_img"
+        app:layout_constraintBottom_toBottomOf="@+id/booking_traveler_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/item_img"
-        app:layout_constraintTop_toTopOf="@+id/item_img"
+        app:layout_constraintStart_toEndOf="@+id/booking_traveler_img"
+        app:layout_constraintTop_toTopOf="@+id/booking_traveler_img"
         tools:text="Rick Sanchez" />
 
     <TextView
@@ -52,8 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="@string/booking_item_departure"
-        app:layout_constraintStart_toStartOf="@+id/item_img"
-        app:layout_constraintTop_toBottomOf="@+id/item_img" />
+        app:layout_constraintStart_toStartOf="@+id/booking_traveler_img"
+        app:layout_constraintTop_toBottomOf="@+id/booking_traveler_img" />
 
     <TextView
         android:id="@+id/arrival_date"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="@string/booking_item_arrival"
         app:layout_constraintBaseline_toBaselineOf="@+id/departure_date"
-        app:layout_constraintEnd_toEndOf="@+id/item_name"
+        app:layout_constraintEnd_toEndOf="@+id/booking_traveler_name"
         app:layout_constraintStart_toEndOf="@+id/departure_date" />
 
     <com.google.android.material.divider.MaterialDivider

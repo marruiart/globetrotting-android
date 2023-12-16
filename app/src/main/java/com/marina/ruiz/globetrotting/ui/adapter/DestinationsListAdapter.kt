@@ -18,7 +18,9 @@ class DestinationsListAdapter(
     inner class DestinationViewHolder(private val binding: DestinationItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindDestination(destination: Destination) {
-            binding.destinationImg.setImageResource(destination.imageRef)
+            if (destination.imageRef != null) {
+                binding.destinationImg.setImageResource(destination.imageRef)
+            }
             binding.destinationName.text = destination.name
             binding.destinationItem.setOnClickListener {
                 onShowDetail(destination, binding.root)

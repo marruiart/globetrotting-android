@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.databinding.BookingItemBinding
@@ -22,6 +23,9 @@ class BookingsListAdapter() :
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindBooking(booking: Booking) {
+            binding.destinationName.text = booking.destination.name
+            binding.bookingTravelerName.text = booking.traveler.name
+            binding.bookingTravelerImg.load(booking.traveler.image)
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val departureDate = dateFormat.format(Date(booking.departureDate))
             val arrivalDate = dateFormat.format(Date(booking.arrivalDate))

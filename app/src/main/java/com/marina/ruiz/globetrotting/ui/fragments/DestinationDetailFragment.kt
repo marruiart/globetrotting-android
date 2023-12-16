@@ -26,6 +26,8 @@ class DestinationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.destinationName.text = args.destination.name
-        binding.destinationImg.setImageResource(args.destination.imageRef)
+        if (args.destination.imageRef != null) {
+            binding.destinationImg.setImageResource(args.destination.imageRef as Int)
+        }
     }
 }

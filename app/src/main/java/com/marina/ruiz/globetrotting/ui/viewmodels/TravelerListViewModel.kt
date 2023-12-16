@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.ui.viewmodels
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,14 +24,18 @@ class TravelerListViewModel @Inject constructor(
         get() = _travelers.asStateFlow()
 
     init {
+        repository.travelers
         viewModelScope.launch {
             try {
+                // await for refreshDestinationsList()
                 repository.refreshTravelersList()
-                repository.travelers.collect { travelers -> // subscription
-                    _travelers.value = travelers
-                }
             } catch (e: IOException) {
                 Log.ERROR
+            } catch (e: NetworkErrorException) {
+                Log.ERROR
+            }
+            repository.travelers.collect { travelers -> // subscription
+                _travelers.value = travelers
             }
         }
     }

@@ -2,8 +2,8 @@ package com.marina.ruiz.globetrotting.data.repository
 
 import com.marina.ruiz.globetrotting.data.local.BookingEntity
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
-import com.marina.ruiz.globetrotting.data.local.asBookingList
 import com.marina.ruiz.globetrotting.data.local.asDestinationList
+import com.marina.ruiz.globetrotting.data.local.asFullBookingList
 import com.marina.ruiz.globetrotting.data.local.asTravelerList
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.asEntityModelList
@@ -41,8 +41,8 @@ class GlobetrottingRepository @Inject constructor(
 
     val bookings: Flow<List<Booking>>
         get() {
-            return localRepository.bookings.map {
-                it.asBookingList()
+            return localRepository.bookingWithTravelersAndDestinations.map {
+                it.asFullBookingList()
             }
         }
 

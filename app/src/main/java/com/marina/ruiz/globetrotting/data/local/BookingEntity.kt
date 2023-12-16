@@ -5,29 +5,28 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import java.util.Date
 
 @Entity(
     tableName = "booking",
     foreignKeys = [
-        // INNER JOIN traveler ON traveler.id = booking.travelerId
         ForeignKey(
             entity = TravelerEntity::class,
             parentColumns = ["id"],
             childColumns = ["travelerId"]
         ),
-        // INNER JOIN destination ON destination.id = booking.destinationId
         ForeignKey(
             entity = DestinationEntity::class,
             parentColumns = ["id"],
             childColumns = ["destinationId"]
         )
-    ]/*,
+    ],
     indices = [
         Index(value = ["travelerId"]),
         Index(value = ["destinationId"])
-    ]*/
+    ]
 )
 data class BookingEntity(
     @PrimaryKey(autoGenerate = true)
@@ -37,11 +36,34 @@ data class BookingEntity(
     var departureDate: Long,
     var arrivalDate: Long,
     var numTravelers: Int
+)
+
+data class FullBooking(
+    val id: Int,
+    val travelerName: String,
+    val travelerImage: String,
+    val destinationName: String,
+    val destinationType: String?,
+    val destinationDimension: String?,
+    val destinationPrice: Float?,
+    val destinationDescription: String?,
+    var departureDate: Long,
+    var arrivalDate: Long,
+    var numTravelers: Int
 ) {
     fun asBooking(): Booking {
         return Booking(
-            travelerId,
-            destinationId,
+            Traveler(
+                name = travelerName,
+                image = travelerImage
+            ),
+            Destination(
+                name = destinationName,
+                type = destinationType,
+                dimension = destinationDimension,
+                price = destinationPrice,
+                description = destinationDescription
+            ),
             departureDate,
             arrivalDate,
             numTravelers
@@ -49,7 +71,7 @@ data class BookingEntity(
     }
 }
 
-fun List<BookingEntity>.asBookingList(): List<Booking> {
+fun List<FullBooking>.asFullBookingList(): List<Booking> {
     return this.map {
         it.asBooking()
     }

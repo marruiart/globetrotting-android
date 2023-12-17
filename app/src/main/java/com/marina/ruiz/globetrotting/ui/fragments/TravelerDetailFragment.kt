@@ -38,16 +38,7 @@ class TravelerDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.topAppBar)
-        val resource = getResource(args.traveler.name)
-        if (resource != -1) {
-            val description = resources.getString(resource)
-            viewModel.updateDescription(args.traveler, description)
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.traveler.collect { traveler ->
-                    bindView(traveler)
-                }
-            }
-        }
+        fetchDescription()
         bindView(args.traveler)
     }
 
@@ -69,6 +60,19 @@ class TravelerDetailFragment : Fragment() {
 
     private fun navigateBack() {
         requireActivity().supportFragmentManager.popBackStack()
+    }
+
+    private fun fetchDescription() {
+        val resource = getResource(args.traveler.name)
+        if (resource != -1) {
+            val description = resources.getString(resource)
+            viewModel.updateDescription(args.traveler, description)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.traveler.collect { traveler ->
+                    bindView(traveler)
+                }
+            }
+        }
     }
 
     private fun getResource(name: String): Int {

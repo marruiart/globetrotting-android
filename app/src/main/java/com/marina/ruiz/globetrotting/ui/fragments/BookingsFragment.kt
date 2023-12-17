@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
@@ -40,12 +41,28 @@ class BookingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var adapter = BookingsListAdapter(::onShareItem)
-        bindView(adapter)
+        bindView(adapter, view)
     }
 
-    private fun bindView(adapter: BookingsListAdapter) {
+    private fun bindView(adapter: BookingsListAdapter, view: View) {
         val rv = binding.bookingsList
         rv.adapter = adapter
+        if (viewModel.bookings.value.isEmpty()) {
+            binding.bookingsRecycler.visibility = View.GONE
+            binding.noBookingImg.visibility = View.VISIBLE
+            binding.noBookingText.visibility = View.VISIBLE
+            binding.noBookingBtn.visibility = View.VISIBLE
+            binding.noBookingBtn.setOnClickListener {
+                val action =
+                    BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment()
+                view.findNavController().navigate(action)
+            }
+        } else {
+            binding.bookingsRecycler.visibility = View.VISIBLE
+            binding.noBookingImg.visibility = View.GONE
+            binding.noBookingText.visibility = View.GONE
+            binding.noBookingBtn.visibility = View.GONE
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.bookings.collect {
@@ -59,7 +76,8 @@ class BookingsFragment : Fragment() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val departureDate = dateFormat.format(Date(booking.departureDate))
         val arrivalDate = dateFormat.format(Date(booking.arrivalDate))
-        val shareText = getString(R.string.share_text, booking.destination.name, departureDate, arrivalDate)
+        val shareText =
+            getString(R.string.share_text, booking.destination.name, departureDate, arrivalDate)
 
         val intent = Intent().apply {
             action = Intent.ACTION_SEND // this intent is going to send sth

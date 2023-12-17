@@ -1,13 +1,16 @@
 package com.marina.ruiz.globetrotting.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.DestinationItemBinding
+import java.text.NumberFormat
 
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination, view: View) -> Unit,
@@ -15,7 +18,10 @@ class DestinationsListAdapter(
 ) :
     ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
-    inner class DestinationViewHolder(private val binding: DestinationItemBinding) :
+    inner class DestinationViewHolder(
+        private val binding: DestinationItemBinding,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindDestination(destination: Destination) {
             if (destination.imageRef != null) {
@@ -23,6 +29,7 @@ class DestinationsListAdapter(
             }
             binding.destinationName.text = destination.name
             binding.shortDescription.text = destination.shortDescription
+            binding.price.text = context.getString(R.string.destination_item_price, NumberFormat.getCurrencyInstance().format(destination.price))
             binding.destinationItem.setOnClickListener {
                 onShowDetail(destination, binding.root)
             }
@@ -46,7 +53,7 @@ class DestinationsListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinationViewHolder {
         val binding = DestinationItemBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return DestinationViewHolder(binding)
+        return DestinationViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: DestinationViewHolder, position: Int) {

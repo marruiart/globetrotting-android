@@ -20,6 +20,8 @@
         tools:layout="@layout/fragment_booking_creation_form" >
         <argument
             android:name="destination"
-            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

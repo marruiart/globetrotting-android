@@ -22,6 +22,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
@@ -64,16 +65,47 @@ class BookingCreationFormFragment : Fragment() {
 
     private fun init() {
         fetchItemsToPopulateSelects()
-        displaySelectedItemOnSelector(binding.acSelectDestination, args.destination, true)
+        if (args.destination != null) {
+            displaySelectedItemOnSelector(
+                binding.acSelectDestination,
+                args.destination as Destination,
+                true
+            )
+            binding.selectDestination.isClickable = false
+            binding.selectDestination.endIconMode = END_ICON_NONE
+            binding.selectDestination.boxStrokeWidth = 0
+            binding.selectDestination.boxStrokeWidthFocused = 0
+            binding.selectDestination.hint = ""
+            binding.acSelectDestination.textSize = 20f
+        }
         setListeners()
     }
 
     private fun fetchItemsToPopulateSelects() {
+        fecthItemsToPopulateTravelers()
+        if (args.destination == null) {
+            fecthItemsToPopulateDestinations()
+        }
+    }
+
+    private fun fecthItemsToPopulateTravelers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.travelers.collect { travelers ->
                     populateSelect(
-                        binding.selectTraveler, R.id.booking_traveler_name, travelers
+                        binding.selectTraveler, R.id.booking_item_name, travelers
+                    )
+                }
+            }
+        }
+    }
+
+    private fun fecthItemsToPopulateDestinations() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.destinations.collect { destinations ->
+                    populateSelect(
+                        binding.selectDestination, R.id.booking_item_name, destinations
                     )
                 }
             }
@@ -110,6 +142,9 @@ class BookingCreationFormFragment : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     private inline fun <reified T : SelectorItem> populateSelect(
         textField: TextInputLayout?, textView: Int, items: List<T>
     ) {
@@ -120,8 +155,8 @@ class BookingCreationFormFragment : Fragment() {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
 
-                    val imageView = view.findViewById<ImageView>(R.id.booking_traveler_img)
-                    val textViewName = view.findViewById<TextView>(R.id.booking_traveler_name)
+                    val imageView = view.findViewById<ImageView>(R.id.booking_item_img)
+                    val textViewName = view.findViewById<TextView>(R.id.booking_item_name)
 
                     val item = items[position]
                     if (item.image != null) {

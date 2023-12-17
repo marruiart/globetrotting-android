@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationDetailBinding
 
 class DestinationDetailFragment : Fragment() {
@@ -31,9 +30,16 @@ class DestinationDetailFragment : Fragment() {
     }
 
     private fun bindView() {
+        binding.topAppBar.setNavigationOnClickListener {
+            navigateBack()
+        }
         binding.destinationName.text = args.destination.name
         if (args.destination.imageRef != null) {
             binding.destinationImg.setImageResource(args.destination.imageRef as Int)
         }
+    }
+
+    private fun navigateBack() {
+        requireActivity().supportFragmentManager.popBackStack()
     }
 }

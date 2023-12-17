@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toTopOf="@+id/details_btn"
         app:layout_constraintEnd_toEndOf="@+id/details_btn"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/details_btn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintVertical_chainStyle="packed"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
 
-        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/destination_img"
@@ -43,11 +43,36 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/destination_img"
         app:layout_constraintTop_toBottomOf="@+id/destination_name"
         tools:text="Un planeta alienígena lleno de aventuras y locuras intergalácticas." />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="@+id/short_description"
+        app:layout_constraintStart_toStartOf="@+id/destination_img"
+        app:layout_constraintTop_toBottomOf="@+id/destination_img"
+        tools:text="30€/persona/noche" />
+
+    <Button
+        android:id="@+id/details_btn"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dest_btn_see_details"
+        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
+        app:layout_constraintEnd_toEndOf="@+id/destination_img"
+        app:layout_constraintEnd_toStartOf="@+id/book_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
 
     <Button
         android:id="@+id/book_btn"
@@ -59,19 +84,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/details_btn" />
 
-    <Button
-        android:id="@+id/details_btn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/dest_btn_see_details"
-        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
-        app:layout_constraintEnd_toEndOf="@+id/destination_img"
-        app:layout_constraintEnd_toStartOf="@+id/book_btn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destination_img" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"

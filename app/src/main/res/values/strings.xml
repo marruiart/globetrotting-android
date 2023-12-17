@@ -8,6 +8,8 @@
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>
+    <!-- DESTINATION ITEM (FOR DESTINATIONS LIST -->
+    <string name="destination_item_price">%s/persona/noche</string>
     <!-- BOOKING FORM -->
     <string name="booking_form_header_title">Realizar una reserva</string>
     <string name="booking_form_select_destination">Seleccionar el destino</string>
@@ -49,4 +51,6 @@
     <string name="AntennaMorty">Otra variante de Morty, caracterizada por tener antenas, posiblemente de una dimensión alternativa o universo paralelo.</string>
     <string name="AntennaRick">Similar a Antenna Morty, es una versión de Rick con antenas, lo que indica su origen en algún universo distinto.</string>
     <string name="AntsinmyEyesJohnson">Un personaje peculiar conocido por su eslogan publicitario. A pesar de su aparente carencia de ojos, vende productos con entusiasmo en comerciales dentro de la serie.</string>
+    <string name="make_your_booking">Haz tu reserva ahora</string>
+    <string name="no_bookings_yet">¡Aún no hay reservas!</string>
 </resources>

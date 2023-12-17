@@ -9,6 +9,8 @@
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Book now</string>
     <string name="dest_btn_see_details">See details</string>
+    <!-- DESTINATION ITEM (FOR DESTINATIONS LIST -->
+    <string name="destination_item_price">%s/person/night</string>
     <!-- BOOKING FORM -->
     <string name="booking_form_header_title">Make a booking</string>
     <string name="booking_form_select_destination">Select destination</string>

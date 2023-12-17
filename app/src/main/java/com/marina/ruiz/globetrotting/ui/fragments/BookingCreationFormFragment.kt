@@ -42,7 +42,6 @@ class BookingCreationFormFragment : Fragment() {
     private lateinit var activity: FragmentActivity
     private val viewModel: BookingFormViewModel by viewModels()
     private val args: BookingCreationFormFragmentArgs by navArgs()
-    private lateinit var booking: Booking
     private var destination: Destination? = null
     private var traveler: Traveler? = null
     private var departureDate: Long = 0
@@ -138,18 +137,26 @@ class BookingCreationFormFragment : Fragment() {
         }
         binding.acceptFormBtn.setOnClickListener {
             if (traveler != null && destination != null) {
-                booking = Booking(
-                    id,
-                    traveler as Traveler,
-                    destination as Destination,
-                    departureDate,
-                    arrivalDate,
-                    numTravelers
-                )
                 viewLifecycleOwner.lifecycleScope.launch {
                     if (args.booking != null) {
+                        val booking = Booking(
+                            id,
+                            traveler as Traveler,
+                            destination as Destination,
+                            departureDate,
+                            arrivalDate,
+                            numTravelers
+                        )
                         viewModel.updateBooking(booking)
                     } else {
+                        val booking = Booking(
+                            0,
+                            traveler as Traveler,
+                            destination as Destination,
+                            departureDate,
+                            arrivalDate,
+                            numTravelers
+                        )
                         viewModel.createBooking(booking)
                     }
                 }

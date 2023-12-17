@@ -14,13 +14,23 @@ data class Booking(
     var numTravelers: Int = 0
 ) : Parcelable {
     fun asBookingEntity(): BookingEntity {
-        return BookingEntity(
-            id = id,
-            travelerId = traveler.id,
-            destinationId = destination.id,
-            departureDate = departureDate,
-            arrivalDate = arrivalDate,
-            numTravelers = numTravelers
-        )
+        if (id != 0) {
+            return BookingEntity(
+                id = id,
+                travelerId = traveler.id,
+                destinationId = destination.id,
+                departureDate = departureDate,
+                arrivalDate = arrivalDate,
+                numTravelers = numTravelers
+            )
+        } else {
+            return BookingEntity(
+                travelerId = traveler.id,
+                destinationId = destination.id,
+                departureDate = departureDate,
+                arrivalDate = arrivalDate,
+                numTravelers = numTravelers
+            )
+        }
     }
 }

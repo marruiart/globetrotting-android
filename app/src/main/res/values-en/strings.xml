@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Globetrotting</string>
 
     <!-- BOTTOM NAV MENU -->
     <string name="menu_travelers">Travelers</string>
@@ -28,9 +27,9 @@
     <string name="make_your_booking">Make your booking now</string>
     <string name="no_bookings_yet">¡There are no bookings yet!</string>
     <string name="menu_action_edit">Edit</string>
-    <string name="menu_action_delete">Eliminar</string>
-    <string name="bookings_booking_deleted_toast">Reserva eliminada</string>
-    <string name="booking_form_edit_btn">Editar reserva</string>
+    <string name="menu_action_delete">Delete</string>
+    <string name="bookings_booking_deleted_toast">Booking deleted</string>
+    <string name="booking_form_edit_btn">Edit booking</string>
     <!-- BOOKINGS LIST -->
     <string name="share_text">We are going on a trip to %s from %s to %s!</string>
     <!-- TRAVELER DETAIL -->
@@ -40,7 +39,7 @@
     <string name="RickSanchez">An eccentric, alcoholic scientist with exceptional intelligence but rather questionable behavior. He is Morty\'s grandfather and often takes his grandson on dangerous intergalactic adventures.</string>
     <string name="MortySmith">Rick\'s grandson is a normal teenager who often accompanies his grandfather on his adventures. Despite being naive, Morty has a kind heart and tries to do the right thing in difficult situations.</string>
     <string name="SummerSmith">Morty\'s older sister, she is a popular teenager and often worries about issues typical of her age. Despite this, throughout the series she proves to be intelligent and brave in various situations.</string>
-    <string name="BethSmith">\'s daughter and Morty and Summer\'s mother. She is a smart surgeon but insecure in her personal life. She has a complex relationship with her father and tries to find a balance between her family and professional life.</string>
+    <string name="BethSmith">Rick\'s daughter and Morty and Summer\'s mother. She is a smart surgeon but insecure in her personal life. She has a complex relationship with her father and tries to find a balance between her family and professional life.</string>
     <string name="JerrySmith">He is Beth\'s husband and Rick\'s father-in-law. He has a mundane job and is often shown as an insecure and clumsy person. Despite his flaws, he tries to be a good father and husband.</string>
     <string name="AbadangoClusterPrincess">A mysterious and powerful character from the series who resides on the planet Abadango. He possesses exceptional abilities and an important role in some stories.</string>
     <string name="AbradolfLincler">A clone created by Rick that combines characteristics of Abraham Lincoln and Adolf Hitler. He struggles with his identity and seeks to be morally correct, but his contradictions make him a complex character.</string>

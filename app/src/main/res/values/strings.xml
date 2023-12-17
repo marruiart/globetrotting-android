@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Globetrotting</string>
+    <string name="app_name" translatable="false">Globetrotting</string>
 
     <!-- BOTTOM NAV MENU -->
     <string name="menu_travelers">Viajeros</string>

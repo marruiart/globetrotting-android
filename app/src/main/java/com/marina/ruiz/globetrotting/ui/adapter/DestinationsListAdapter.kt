@@ -29,7 +29,10 @@ class DestinationsListAdapter(
             }
             binding.destinationName.text = destination.name
             binding.shortDescription.text = destination.shortDescription
-            binding.price.text = context.getString(R.string.destination_item_price, NumberFormat.getCurrencyInstance().format(destination.price))
+            binding.price.text = context.getString(
+                R.string.destination_item_price,
+                NumberFormat.getCurrencyInstance().format(destination.price)
+            )
             binding.destinationItem.setOnClickListener {
                 onShowDetail(destination, binding.root)
             }

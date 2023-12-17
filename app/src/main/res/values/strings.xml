@@ -53,4 +53,7 @@
     <string name="AntsinmyEyesJohnson">Un personaje peculiar conocido por su eslogan publicitario. A pesar de su aparente carencia de ojos, vende productos con entusiasmo en comerciales dentro de la serie.</string>
     <string name="make_your_booking">Haz tu reserva ahora</string>
     <string name="no_bookings_yet">¡Aún no hay reservas!</string>
+    <string name="menu_action_edit">Editar</string>
+    <string name="menu_action_delete">Eliminar</string>
+    <string name="bookings_booking_deleted_toast">Reserva eliminada</string>
 </resources>

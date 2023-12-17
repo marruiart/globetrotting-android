@@ -54,12 +54,25 @@ class LocalRepository @Inject constructor(
         return flowOf(destination.asDestination())
     }
 
+    @WorkerThread
+    suspend fun deleteDestination(destination: DestinationEntity) {
+        destinationDao.deleteDestination(destination)
+        destinations = destinationDao.getAllDestinations()
+    }
+
+
     // BOOKING
-    val bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()
+    var bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()
     val bookingWithTravelersAndDestinations: Flow<List<FullBooking>> =
         bookingDao.getAllBookingsWithTravelerAndDestination()
 
     @WorkerThread
     suspend fun insertBooking(bookingEntity: BookingEntity) =
         bookingDao.createBooking(bookingEntity)
+
+    @WorkerThread
+    suspend fun deleteBooking(booking: BookingEntity) {
+        bookingDao.deleteBooking(booking)
+        bookings = bookingDao.getAllBookings()
+    }
 }

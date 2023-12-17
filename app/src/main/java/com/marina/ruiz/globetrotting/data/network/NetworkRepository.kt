@@ -36,7 +36,7 @@ class NetworkRepository @Inject constructor(
         val requestBody =
             createRequestBody("Crea una descripción corta (10 palabras máximo) sobre el destino de viaje '${destination}' basado en la serie Rick & Morty. No digas que es ficticio")
         val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
-        return response.asApiModel().text
+        return response.asApiModel().text.trim().replace("\"", "")
     }
 
     suspend fun getLongDescription(destination: String): String {

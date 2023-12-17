@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -32,5 +35,19 @@ class BookingsListViewModel @Inject constructor(
                 Log.ERROR
             }
         }
+    }
+
+    fun deleteBooking(booking: Booking): Flow<Boolean> {
+        var success = false
+        viewModelScope.launch {
+            try {
+                repository.deleteBooking(booking.asBookingEntity())
+                success = true
+            } catch (e: Exception) {
+                Log.ERROR
+                success = false
+            }
+        }
+        return flowOf(success)
     }
 }

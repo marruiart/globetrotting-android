@@ -27,6 +27,16 @@
         android:text="@string/booking_share"
         app:icon="@drawable/ic_share"
         app:iconTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/menu_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/menu_btn"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_threedots_menu"
+        app:iconTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

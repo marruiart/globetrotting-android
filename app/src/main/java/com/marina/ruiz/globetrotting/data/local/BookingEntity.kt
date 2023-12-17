@@ -54,6 +54,7 @@ data class FullBooking(
 ) {
     fun asBooking(): Booking {
         return Booking(
+            id,
             Traveler(
                 name = travelerName,
                 image = travelerImage

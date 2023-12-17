@@ -1,9 +1,13 @@
 package com.marina.ruiz.globetrotting.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +20,8 @@ import java.util.Date
 import java.util.Locale
 
 class BookingsListAdapter(
-    private val onShare: (booking: Booking, view: View) -> Unit
+    private val onShare: (booking: Booking, view: View) -> Unit,
+    private val onDeleteBooking: (booking: Booking) -> Unit
 ) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
@@ -38,6 +43,33 @@ class BookingsListAdapter(
             binding.shareBtn.setOnClickListener {
                 onShare(booking, it)
             }
+            binding.menuBtn.setOnClickListener { view ->
+                showMenu(view, R.menu.more_actions_menu, booking)
+            }
+        }
+
+        private fun showMenu(view: View, @MenuRes menuRes: Int, booking: Booking) {
+            val popup = PopupMenu(view.context, view)
+            popup.menuInflater.inflate(menuRes, popup.menu)
+
+            popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.edit_booking -> {
+                        Log.d("MENU", "edición")
+                        true
+                    }
+
+                    R.id.delete_booking -> {
+                        Log.d("MENU", "eliminar")
+                        onDeleteBooking(booking)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            // Show the popup menu
+            popup.show()
         }
     }
 

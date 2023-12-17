@@ -25,13 +25,14 @@ class DestinationDetailViewModel @Inject constructor(
     fun updateDescription(destination: Destination) {
         viewModelScope.launch {
             val description = repository.fetchDescription(destination.name)
+            val shortDescription = repository.fetchShortDescription(destination.name)
             val updatedDestination = DestinationEntity(
                 destination.id,
                 destination.name,
                 destination.type,
                 destination.dimension,
                 destination.price,
-                destination.shortDescription,
+                shortDescription,
                 description,
                 destination.fav,
                 destination.imageRef

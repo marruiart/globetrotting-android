@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.data.repository.model
 
 import android.os.Parcelable
+import com.marina.ruiz.globetrotting.data.local.DestinationEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -15,4 +16,18 @@ data class Destination(
     val fav: Boolean = false,
     override val imageRef: Int? = null,
     override val image: String? = null
-) : Parcelable, SelectorItem
+) : Parcelable, SelectorItem {
+    fun asDestinationEntity(): DestinationEntity {
+        return DestinationEntity(
+            id,
+            name,
+            type,
+            dimension,
+            price,
+            shortDescription,
+            description,
+            fav,
+            imageRef
+        )
+    }
+}

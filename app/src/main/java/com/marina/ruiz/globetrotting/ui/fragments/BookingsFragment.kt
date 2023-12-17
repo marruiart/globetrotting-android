@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
 import com.marina.ruiz.globetrotting.ui.adapter.BookingsListAdapter
 import com.marina.ruiz.globetrotting.ui.viewmodels.BookingsListViewModel
@@ -40,7 +42,7 @@ class BookingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var adapter = BookingsListAdapter(::onShareItem)
+        var adapter = BookingsListAdapter(::onShareItem, ::onDeleteBooking)
         bindView(adapter, view)
     }
 
@@ -55,8 +57,12 @@ class BookingsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.bookings.collect {
-                    adapter.submitList(it)
-                    displayBookingsList()
+                    if (it.isNotEmpty()) {
+                        adapter.submitList(it)
+                        displayBookingsList()
+                    } else {
+                        displayNoBookingsMessage(view)
+                    }
                 }
             }
         }
@@ -69,7 +75,9 @@ class BookingsFragment : Fragment() {
         binding.noBookingBtn.visibility = View.VISIBLE
         binding.noBookingBtn.setOnClickListener {
             val action =
-                BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment()
+                BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(
+                    Destination()
+                )
             view.findNavController().navigate(action)
         }
     }
@@ -96,5 +104,17 @@ class BookingsFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(intent, null) // shows all apps available to share
         startActivity(shareIntent)
+    }
+
+    private fun onDeleteBooking(booking: Booking) {
+        lifecycleScope.launch {
+            viewModel.deleteBooking(booking).collect {
+                Toast.makeText(
+                    context,
+                    getString(R.string.bookings_booking_deleted_toast),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 }

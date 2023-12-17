@@ -8,7 +8,7 @@ data class LocationApiModel(
     val name: String,
     val type: String?,
     val dimension: String?,
-    var price: Float = 0f,
+    var price: Float = (50f + Math.random() * (500f - 50f)).toFloat(),
     var shortDescription: String = "",
     var description: String = ""
 ) {

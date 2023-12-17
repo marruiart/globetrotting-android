@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,4 +21,7 @@ interface DestinationDao {
 
     @Update
     suspend fun updateDestination(destinationEntity: DestinationEntity)
+
+    @Delete
+    suspend fun deleteDestination(destinationEntity: DestinationEntity)
 }

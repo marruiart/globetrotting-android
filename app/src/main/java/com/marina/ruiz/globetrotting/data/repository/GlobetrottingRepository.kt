@@ -65,33 +65,7 @@ class GlobetrottingRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             val locationApiModelList = networkRepository.getAllLocations()
             localRepository.insertDestinations(locationApiModelList.asEntityModelList())
-            getPrices(locationApiModelList)
             //getDescriptions(locationApiModelList)
-        }
-    }
-
-    @WorkerThread
-    private suspend fun getPrices(locationApiModelList: List<LocationApiModel>) {
-        try {
-            for (destination in locationApiModelList) {
-                val min = 50f
-                val max = 500f
-                val price = (min + Math.random() * (max - min)).toFloat()
-                val updatedDestination = DestinationEntity(
-                    id = destination.id,
-                    name = destination.name,
-                    type = destination.type,
-                    dimension = destination.dimension,
-                    price = price,
-                    shortDescription = destination.shortDescription,
-                    description = destination.description
-                )
-                localRepository.updateDestination(updatedDestination)
-            }
-        } catch (e: IOException) {
-            Log.ERROR
-        } catch (e: NetworkErrorException) {
-            Log.ERROR
         }
     }
 
@@ -142,12 +116,39 @@ class GlobetrottingRepository @Inject constructor(
         return description
     }
 
+    @WorkerThread
+    suspend fun fetchShortDescription(name: String): String {
+        var description = ""
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d("DESCRIPTION", "Solicitando descripción corta...")
+                delay(10000)
+                val gptShortDescription = networkRepository.getShortDescription(name)
+                Log.d("DESCRIPTION", gptShortDescription)
+                description = gptShortDescription
+            } catch (e: IOException) {
+                Log.ERROR
+            } catch (e: NetworkErrorException) {
+                Log.ERROR
+            }
+        }
+        return description
+    }
+
     suspend fun updateTraveler(traveler: TravelerEntity): Flow<Traveler> {
         return localRepository.updateTraveler(traveler)
     }
 
-    suspend fun updateDestination(destination: DestinationEntity):Flow<Destination> {
+    suspend fun updateDestination(destination: DestinationEntity): Flow<Destination> {
         return localRepository.updateDestination(destination)
+    }
+
+    suspend fun deleteDestination(destination: DestinationEntity) {
+        localRepository.deleteDestination(destination)
+    }
+
+    suspend fun deleteBooking(booking: BookingEntity) {
+        localRepository.deleteBooking(booking)
     }
 
     suspend fun createBooking(booking: BookingEntity) = localRepository.insertBooking(booking)

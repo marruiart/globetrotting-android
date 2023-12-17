@@ -65,10 +65,10 @@ class BookingCreationFormFragment : Fragment() {
 
     private fun init() {
         fetchItemsToPopulateSelects()
-        if (args.destination != null) {
+        if (args.destination.id != 0) {
             displaySelectedItemOnSelector(
                 binding.acSelectDestination,
-                args.destination as Destination,
+                args.destination,
                 true
             )
             binding.selectDestination.isClickable = false
@@ -83,7 +83,7 @@ class BookingCreationFormFragment : Fragment() {
 
     private fun fetchItemsToPopulateSelects() {
         fecthItemsToPopulateTravelers()
-        if (args.destination == null) {
+        if (args.destination.id == 0) {
             fecthItemsToPopulateDestinations()
         }
     }
@@ -128,6 +128,7 @@ class BookingCreationFormFragment : Fragment() {
         binding.acceptFormBtn.setOnClickListener {
             if (traveler != null && destination != null) {
                 booking = Booking(
+                    id,
                     traveler as Traveler,
                     destination as Destination,
                     departureDate,

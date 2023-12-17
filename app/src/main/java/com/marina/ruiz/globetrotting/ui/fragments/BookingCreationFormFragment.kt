@@ -147,7 +147,7 @@ class BookingCreationFormFragment : Fragment() {
                     numTravelers
                 )
                 viewLifecycleOwner.lifecycleScope.launch {
-                    if (args.booking?.id != 0) {
+                    if (args.booking != null) {
                         viewModel.updateBooking(booking)
                     } else {
                         viewModel.createBooking(booking)

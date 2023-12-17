@@ -78,7 +78,7 @@ class BookingsFragment : Fragment() {
         }
     }
 
-    private fun navigateToBookingForm(view: View, destination: Destination, booking: Booking = Booking()) {
+    private fun navigateToBookingForm(view: View, destination: Destination, booking: Booking? = null) {
         val action =
             BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(destination, booking)
         view.findNavController().navigate(action)

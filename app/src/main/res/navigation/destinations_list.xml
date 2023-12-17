@@ -26,7 +26,9 @@
             app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
         <argument
             android:name="booking"
-            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Booking" />
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Booking"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/destinationDetailFragment"

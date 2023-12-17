@@ -62,7 +62,7 @@ class DestinationsFragment : Fragment() {
     private fun onBookNow(destination: Destination, view: View) {
         val action =
             DestinationsFragmentDirections.actionDestinationsFragmentToBookingCreationFormFragment(
-                destination, Booking()
+                destination
             )
         view.findNavController().navigate(action)
     }

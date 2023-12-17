@@ -60,7 +60,7 @@ class DestinationDetailFragment : Fragment() {
 
     private fun fetchDescription() {
         if (args.destination.description.isEmpty()) {
-            viewModel.updateDescription(args.destination)
+            viewModel.updateDescription(args.destination, requireActivity().lifecycleScope)
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.destination.collect { destination ->
                     bindView(destination)

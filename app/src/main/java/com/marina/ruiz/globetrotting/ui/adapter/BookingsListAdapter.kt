@@ -21,7 +21,8 @@ import java.util.Locale
 
 class BookingsListAdapter(
     private val onShare: (booking: Booking, view: View) -> Unit,
-    private val onDeleteBooking: (booking: Booking) -> Unit
+    private val onDeleteBooking: (booking: Booking) -> Unit,
+    private val onUpdateBooking: (view: View, booking: Booking) -> Unit
 ) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
@@ -55,12 +56,11 @@ class BookingsListAdapter(
             popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 when (menuItem.itemId) {
                     R.id.edit_booking -> {
-                        Log.d("MENU", "edición")
+                        onUpdateBooking(view, booking)
                         true
                     }
 
                     R.id.delete_booking -> {
-                        Log.d("MENU", "eliminar")
                         onDeleteBooking(booking)
                         true
                     }

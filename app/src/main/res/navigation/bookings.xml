@@ -18,8 +18,10 @@
         android:name="com.marina.ruiz.globetrotting.ui.fragments.BookingCreationFormFragment"
         android:label="fragment_booking_creation_form"
         tools:layout="@layout/fragment_booking_creation_form" >
-        <argument
-            android:name="destination"
+        <argument android:name="destination"
             app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+        <argument
+            android:name="booking"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Booking" />
     </fragment>
 </navigation>

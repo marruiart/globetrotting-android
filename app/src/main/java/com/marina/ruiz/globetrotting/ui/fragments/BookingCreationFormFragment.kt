@@ -65,6 +65,15 @@ class BookingCreationFormFragment : Fragment() {
 
     private fun init() {
         fetchItemsToPopulateSelects()
+        bindView()
+        setListeners()
+    }
+
+    private fun bindView() {
+        viewIfNavigationFromDestinations()
+    }
+
+    private fun viewIfNavigationFromDestinations() {
         if (args.destination.id != 0) {
             displaySelectedItemOnSelector(
                 binding.acSelectDestination,
@@ -77,8 +86,10 @@ class BookingCreationFormFragment : Fragment() {
             binding.selectDestination.boxStrokeWidthFocused = 0
             binding.selectDestination.hint = ""
             binding.acSelectDestination.textSize = 20f
+            if (args.booking != null) {
+                binding.acceptFormBtn.text = getString(R.string.booking_form_edit_btn)
+            }
         }
-        setListeners()
     }
 
     private fun fetchItemsToPopulateSelects() {
@@ -135,17 +146,18 @@ class BookingCreationFormFragment : Fragment() {
                     arrivalDate,
                     numTravelers
                 )
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.createBooking(booking)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (args.booking?.id != 0) {
+                        viewModel.updateBooking(booking)
+                    } else {
+                        viewModel.createBooking(booking)
+                    }
+                }
             }
             navigateBackToDestinations()
         }
     }
 
-    /**
-     *
-     */
     private inline fun <reified T : SelectorItem> populateSelect(
         textField: TextInputLayout?, textView: Int, items: List<T>
     ) {

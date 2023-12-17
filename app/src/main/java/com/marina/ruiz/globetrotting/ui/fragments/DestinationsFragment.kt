@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
 import com.marina.ruiz.globetrotting.ui.adapter.DestinationsListAdapter
@@ -61,7 +62,7 @@ class DestinationsFragment : Fragment() {
     private fun onBookNow(destination: Destination, view: View) {
         val action =
             DestinationsFragmentDirections.actionDestinationsFragmentToBookingCreationFormFragment(
-                destination
+                destination, Booking()
             )
         view.findNavController().navigate(action)
     }

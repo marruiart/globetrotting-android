@@ -147,6 +147,10 @@ class GlobetrottingRepository @Inject constructor(
         localRepository.deleteDestination(destination)
     }
 
+    suspend fun updateBooking(booking: BookingEntity) {
+        localRepository.updateBooking(booking)
+    }
+
     suspend fun deleteBooking(booking: BookingEntity) {
         localRepository.deleteBooking(booking)
     }

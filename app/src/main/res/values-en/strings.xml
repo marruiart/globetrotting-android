@@ -25,8 +25,36 @@
     <string name="booking_item_departure">Departure: %s</string>
     <string name="booking_item_arrival">Arrival: %s</string>
     <string name="booking_share">Share</string>
+    <string name="make_your_booking">Make your booking now</string>
+    <string name="no_bookings_yet">¡There are no bookings yet!</string>
+    <string name="menu_action_edit">Edit</string>
+    <string name="menu_action_delete">Eliminar</string>
+    <string name="bookings_booking_deleted_toast">Reserva eliminada</string>
+    <string name="booking_form_edit_btn">Editar reserva</string>
     <!-- BOOKINGS LIST -->
     <string name="share_text">We are going on a trip to %s from %s to %s!</string>
     <!-- TRAVELER DETAIL -->
     <string name="traveler_detail">Traveler detail</string>
+    <string name="destination_detail">Destination Detail</string>
+    <!-- DESCRIPTION MOCK -->
+    <string name="RickSanchez">An eccentric, alcoholic scientist with exceptional intelligence but rather questionable behavior. He is Morty\'s grandfather and often takes his grandson on dangerous intergalactic adventures.</string>
+    <string name="MortySmith">Rick\'s grandson is a normal teenager who often accompanies his grandfather on his adventures. Despite being naive, Morty has a kind heart and tries to do the right thing in difficult situations.</string>
+    <string name="SummerSmith">Morty\'s older sister, she is a popular teenager and often worries about issues typical of her age. Despite this, throughout the series she proves to be intelligent and brave in various situations.</string>
+    <string name="BethSmith">\'s daughter and Morty and Summer\'s mother. She is a smart surgeon but insecure in her personal life. She has a complex relationship with her father and tries to find a balance between her family and professional life.</string>
+    <string name="JerrySmith">He is Beth\'s husband and Rick\'s father-in-law. He has a mundane job and is often shown as an insecure and clumsy person. Despite his flaws, he tries to be a good father and husband.</string>
+    <string name="AbadangoClusterPrincess">A mysterious and powerful character from the series who resides on the planet Abadango. He possesses exceptional abilities and an important role in some stories.</string>
+    <string name="AbradolfLincler">A clone created by Rick that combines characteristics of Abraham Lincoln and Adolf Hitler. He struggles with his identity and seeks to be morally correct, but his contradictions make him a complex character.</string>
+    <string name="AdjudicatorRick">He is a high-ranking character on the Galactic Council. He has the authority to rule over Ricks and Mortys throughout the multiverse.</string>
+    <string name="AgencyDirector">A character who leads a secret agency, he is a man with great authority and control over his organization.</string>
+    <string name="AlanRails">A superhero who has the ability to control trains and is part of a superhero team known as the Vindicators.</string>
+    <string name="AlbertEinstein">In the context of the series, he is a famous and renowned scientist whose existence is present in the multiverse.</string>
+    <string name="Alexander">A character who appears in some episodes, he is known for his cunning and handling of complicated situations.</string>
+    <string name="AlienGoogah">An alien character who appears in the series, although he does not have a prominent role or specific information in the main plot.</string>
+    <string name="AlienMorty">He is an alien version of Morty Smith, with some characteristics and attributes different from the original version.</string>
+    <string name="AlienRick">Similar to Alien Morty, this version is an alien representation of Rick Sanchez, with variations on his traits and personality.</string>
+    <string name="AmishCyborg">A unique character who mixes elements of cyborg technology with the lifestyle and practices of the Amish community, making him intriguing in the series.</string>
+    <string name="Annie">A recurring character in some episodes, she is known for her relationship with one of the main characters and for her participation in some adventures.</string>
+    <string name="AntennaMorty">Another variant of Morty, characterized by having antennas, possibly from an alternate dimension or parallel universe.</string>
+    <string name="AntennaRick">Similar to Antenna Morty, he is a version of Rick with antennas, indicating his origin in some different universe.</string>
+    <string name="AntsinmyEyesJohnson">A quirky character known for his advertising slogan. Despite his apparent lack of eyes, he enthusiastically sells products in commercials within the series.</string>
 </resources>

@@ -24,6 +24,9 @@
         <argument
             android:name="destination"
             app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+        <argument
+            android:name="booking"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Booking" />
     </fragment>
     <fragment
         android:id="@+id/destinationDetailFragment"

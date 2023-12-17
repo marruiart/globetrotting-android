@@ -42,7 +42,7 @@ class BookingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var adapter = BookingsListAdapter(::onShareItem, ::onDeleteBooking)
+        var adapter = BookingsListAdapter(::onShareItem, ::onDeleteBooking, ::onUpdateBooking)
         bindView(adapter, view)
     }
 
@@ -74,12 +74,14 @@ class BookingsFragment : Fragment() {
         binding.noBookingText.visibility = View.VISIBLE
         binding.noBookingBtn.visibility = View.VISIBLE
         binding.noBookingBtn.setOnClickListener {
-            val action =
-                BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(
-                    Destination()
-                )
-            view.findNavController().navigate(action)
+            navigateToBookingForm(view, Destination())
         }
+    }
+
+    private fun navigateToBookingForm(view: View, destination: Destination, booking: Booking = Booking()) {
+        val action =
+            BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(destination, booking)
+        view.findNavController().navigate(action)
     }
 
     private fun displayBookingsList() {
@@ -104,6 +106,10 @@ class BookingsFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(intent, null) // shows all apps available to share
         startActivity(shareIntent)
+    }
+
+    private fun onUpdateBooking(view: View, booking: Booking) {
+        navigateToBookingForm(view, booking.destination, booking)
     }
 
     private fun onDeleteBooking(booking: Booking) {

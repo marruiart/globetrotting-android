@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import kotlinx.coroutines.flow.Flow
 
@@ -25,6 +26,9 @@ interface BookingDao {
                 "INNER JOIN destination AS d ON d.id = b.destinationId"
     )
     fun getAllBookingsWithTravelerAndDestination(): Flow<List<FullBooking>>
+
+    @Update
+    suspend fun updateBooking(bookingEntity: BookingEntity)
 
     @Delete
     suspend fun deleteBooking(booking: BookingEntity)

@@ -67,8 +67,16 @@ class LocalRepository @Inject constructor(
         bookingDao.getAllBookingsWithTravelerAndDestination()
 
     @WorkerThread
-    suspend fun insertBooking(bookingEntity: BookingEntity) =
+    suspend fun insertBooking(bookingEntity: BookingEntity) {
         bookingDao.createBooking(bookingEntity)
+        bookings = bookingDao.getAllBookings()
+    }
+
+    @WorkerThread
+    suspend fun updateBooking(booking: BookingEntity) {
+        bookingDao.updateBooking(booking)
+        bookings = bookingDao.getAllBookings()
+    }
 
     @WorkerThread
     suspend fun deleteBooking(booking: BookingEntity) {

@@ -1,11 +1,13 @@
 package com.marina.ruiz.globetrotting.ui.viewmodels
 
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.local.DestinationEntity
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,8 +24,8 @@ class DestinationDetailViewModel @Inject constructor(
     val destination: StateFlow<Destination>
         get() = _destination.asStateFlow()
 
-    fun updateDescription(destination: Destination) {
-        viewModelScope.launch {
+    fun updateDescription(destination: Destination, activityScope: CoroutineScope) {
+        activityScope.launch {
             val description = repository.fetchDescription(destination.name)
             val shortDescription = repository.fetchShortDescription(destination.name)
             val updatedDestination = DestinationEntity(

@@ -8,9 +8,11 @@ import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -30,6 +32,11 @@ class BookingFormViewModel @Inject constructor(
 
     suspend fun createBooking(booking: Booking) {
         repository.createBooking(booking.asBookingEntity())
+        repository.refreshTravelersList()
+    }
+
+    suspend fun updateBooking(booking: Booking) {
+        repository.updateBooking(booking.asBookingEntity())
         repository.refreshTravelersList()
     }
 

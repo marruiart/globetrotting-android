@@ -56,4 +56,5 @@
     <string name="menu_action_edit">Editar</string>
     <string name="menu_action_delete">Eliminar</string>
     <string name="bookings_booking_deleted_toast">Reserva eliminada</string>
+    <string name="booking_form_edit_btn">Editar reserva</string>
 </resources>

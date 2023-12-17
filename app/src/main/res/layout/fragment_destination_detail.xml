@@ -78,18 +78,37 @@
                 app:layout_constraintTop_toTopOf="@+id/card_constraint"
                 tools:text="Earth (C-137)" />
 
-            <TextView
-                android:id="@+id/destination_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="32dp"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="16sp"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/card_constraint"
-                app:layout_constraintTop_toBottomOf="@+id/destination_name"
-                tools:text="Descripción del traveler" />
+                app:layout_constraintTop_toBottomOf="@+id/destination_name">
+
+                <TextView
+                    android:id="@+id/destination_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="32dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp"
+                    tools:text="Descripción del traveler" />
+            </ScrollView>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible"
+                android:translationZ="20dp"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -1,19 +1,27 @@
 package com.marina.ruiz.globetrotting.data.repository
 
+import android.accounts.NetworkErrorException
+import android.util.Log
+import androidx.annotation.WorkerThread
 import com.marina.ruiz.globetrotting.data.local.BookingEntity
+import com.marina.ruiz.globetrotting.data.local.DestinationEntity
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
+import com.marina.ruiz.globetrotting.data.local.TravelerEntity
 import com.marina.ruiz.globetrotting.data.local.asDestinationList
 import com.marina.ruiz.globetrotting.data.local.asFullBookingList
 import com.marina.ruiz.globetrotting.data.local.asTravelerList
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
+import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.LocationApiModel
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.asEntityModelList
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -53,9 +61,93 @@ class GlobetrottingRepository @Inject constructor(
         localRepository.insertTravelers(characterApiModelList.asEntityModelList())
     }
 
-    suspend fun refreshDestinationsList() = withContext(Dispatchers.IO) {
-        val locationApiModelList = networkRepository.getAllLocations()
-        localRepository.insertDestinations(locationApiModelList.asEntityModelList())
+    suspend fun refreshDestinationsList() {
+        withContext(Dispatchers.IO) {
+            val locationApiModelList = networkRepository.getAllLocations()
+            localRepository.insertDestinations(locationApiModelList.asEntityModelList())
+            getPrices(locationApiModelList)
+            //getDescriptions(locationApiModelList)
+        }
+    }
+
+    @WorkerThread
+    private suspend fun getPrices(locationApiModelList: List<LocationApiModel>) {
+        try {
+            for (destination in locationApiModelList) {
+                val min = 50f
+                val max = 500f
+                val price = (min + Math.random() * (max - min)).toFloat()
+                val updatedDestination = DestinationEntity(
+                    id = destination.id,
+                    name = destination.name,
+                    type = destination.type,
+                    dimension = destination.dimension,
+                    price = price,
+                    shortDescription = destination.shortDescription,
+                    description = destination.description
+                )
+                localRepository.updateDestination(updatedDestination)
+            }
+        } catch (e: IOException) {
+            Log.ERROR
+        } catch (e: NetworkErrorException) {
+            Log.ERROR
+        }
+    }
+
+    /*@WorkerThread
+    suspend fun fetchShortDescriptions(locationApiModelList: List<LocationApiModel>) {
+        withContext(Dispatchers.IO) {
+            try {
+                for (destination in locationApiModelList) {
+                    val shortDescription =
+                        networkRepository.getShortDescription(destination.name)
+                    Log.d("DESCRIPTION", shortDescription)
+                    delay(30000)
+                    val updatedDestination = DestinationEntity(
+                        id = destination.id,
+                        name = destination.name,
+                        type = destination.type,
+                        dimension = destination.dimension,
+                        price = destination.price,
+                        shortDescription = shortDescription,
+                        description = description
+                    )
+                    localRepository.updateDestination(updatedDestination)
+                }
+            } catch (e: IOException) {
+                Log.ERROR
+            } catch (e: NetworkErrorException) {
+                Log.ERROR
+            }
+        }
+    }*/
+
+    @WorkerThread
+    suspend fun fetchDescription(name: String): String {
+        var description = ""
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d("DESCRIPTION", "Solicitando descripción...")
+                delay(30000)
+                val gptDescription = networkRepository.getLongDescription(name)
+                Log.d("DESCRIPTION", gptDescription)
+                description = gptDescription
+            } catch (e: IOException) {
+                Log.ERROR
+            } catch (e: NetworkErrorException) {
+                Log.ERROR
+            }
+        }
+        return description
+    }
+
+    suspend fun updateTraveler(traveler: TravelerEntity): Flow<Traveler> {
+        return localRepository.updateTraveler(traveler)
+    }
+
+    suspend fun updateDestination(destination: DestinationEntity):Flow<Destination> {
+        return localRepository.updateDestination(destination)
     }
 
     suspend fun createBooking(booking: BookingEntity) = localRepository.insertBooking(booking)

@@ -48,28 +48,37 @@ class BookingsFragment : Fragment() {
         val rv = binding.bookingsList
         rv.adapter = adapter
         if (viewModel.bookings.value.isEmpty()) {
-            binding.bookingsRecycler.visibility = View.GONE
-            binding.noBookingImg.visibility = View.VISIBLE
-            binding.noBookingText.visibility = View.VISIBLE
-            binding.noBookingBtn.visibility = View.VISIBLE
-            binding.noBookingBtn.setOnClickListener {
-                val action =
-                    BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment()
-                view.findNavController().navigate(action)
-            }
+            displayNoBookingsMessage(view)
         } else {
-            binding.bookingsRecycler.visibility = View.VISIBLE
-            binding.noBookingImg.visibility = View.GONE
-            binding.noBookingText.visibility = View.GONE
-            binding.noBookingBtn.visibility = View.GONE
+            displayBookingsList()
         }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.bookings.collect {
                     adapter.submitList(it)
+                    displayBookingsList()
                 }
             }
         }
+    }
+
+    private fun displayNoBookingsMessage(view: View) {
+        binding.bookingsRecycler.visibility = View.GONE
+        binding.noBookingImg.visibility = View.VISIBLE
+        binding.noBookingText.visibility = View.VISIBLE
+        binding.noBookingBtn.visibility = View.VISIBLE
+        binding.noBookingBtn.setOnClickListener {
+            val action =
+                BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment()
+            view.findNavController().navigate(action)
+        }
+    }
+
+    private fun displayBookingsList() {
+        binding.bookingsRecycler.visibility = View.VISIBLE
+        binding.noBookingImg.visibility = View.GONE
+        binding.noBookingText.visibility = View.GONE
+        binding.noBookingBtn.visibility = View.GONE
     }
 
     private fun onShareItem(booking: Booking, view: View) {

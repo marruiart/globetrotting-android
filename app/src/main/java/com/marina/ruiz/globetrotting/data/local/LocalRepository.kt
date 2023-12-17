@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.data.local
 
 import androidx.annotation.WorkerThread
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -47,9 +48,10 @@ class LocalRepository @Inject constructor(
         destinationDao.createDestination(destinationEntity)
 
     @WorkerThread
-    suspend fun updateDestination(destination: DestinationEntity) {
+    suspend fun updateDestination(destination: DestinationEntity): Flow<Destination> {
         destinationDao.updateDestination(destination)
         destinations = destinationDao.getAllDestinations()
+        return flowOf(destination.asDestination())
     }
 
     // BOOKING

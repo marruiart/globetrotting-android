@@ -6,24 +6,22 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    >
+    android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="18dp">
+        android:background="?attr/colorSurfaceContainerLow">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/traveler_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:adjustViewBounds="true"
             android:contentDescription="Rick and Morty traveleracter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/default_avatar"
-            app:shapeAppearanceOverlay="@style/RoundedSquare"/>
+            app:srcCompat="@drawable/default_avatar" />
 
 
         <TextView
@@ -31,32 +29,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@+id/traveler_img"
             app:layout_constraintStart_toEndOf="@+id/traveler_img"
             app:layout_constraintTop_toTopOf="@+id/traveler_img"
             tools:text="Rick Sanchez" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/traveler_species"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/traveler_img"
-            app:layout_constraintEnd_toStartOf="@+id/traveler_gender"
-            app:layout_constraintStart_toStartOf="@+id/traveler_name"
-            app:layout_constraintTop_toBottomOf="@+id/traveler_name"
-            tools:text="Human" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/traveler_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/traveler_species"
-            app:layout_constraintTop_toTopOf="@+id/traveler_species"
-            tools:text="Male" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

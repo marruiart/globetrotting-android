@@ -24,4 +24,27 @@
     <string name="booking_share">Compartir</string>
     <!-- BOOKINGS LIST -->
     <string name="share_text">¡Nos vamos de viaje a %s del %s al %s!</string>
+    <!-- TRAVELER DETAIL -->
+    <string name="traveler_detail">Detalle del viajero</string>
+    <!-- DESCRIPTION MOCK -->
+    <string name="RickSanchez">Un científico excéntrico y alcohólico con una inteligencia excepcional pero un comportamiento bastante cuestionable. Es el abuelo de Morty y suele llevar a su nieto en aventuras intergalácticas peligrosas.</string>
+    <string name="MortySmith">El nieto de Rick, es un adolescente normal y corriente que a menudo acompaña a su abuelo en sus aventuras. A pesar de ser ingenuo, Morty tiene un corazón noble y trata de hacer lo correcto en situaciones difíciles.</string>
+    <string name="SummerSmith">La hermana mayor de Morty, es una adolescente popular y a menudo se preocupa por asuntos típicos de su edad. A pesar de ello, a lo largo de la serie demuestra ser inteligente y valiente en diversas situaciones.</string>
+    <string name="BethSmith">La hija de Rick y madre de Morty y Summer. Es una cirujana inteligente pero insegura en su vida personal. Tiene una relación compleja con su padre y trata de encontrar un equilibrio entre su vida familiar y profesional.</string>
+    <string name="JerrySmith">Es el esposo de Beth y suegro de Rick. Tiene un trabajo mundano y a menudo se muestra como una persona insegura y torpe. A pesar de sus defectos, trata de ser un buen padre y esposo.</string>
+    <string name="AbadangoClusterPrincess">Un personaje misterioso y poderoso de la serie que reside en el planeta Abadango. Posee habilidades excepcionales y un rol importante en algunas historias.</string>
+    <string name="AbradolfLincler">Un clon creado por Rick que combina características de Abraham Lincoln y Adolf Hitler. Lucha con su identidad y busca ser moralmente correcto, pero sus contradicciones lo hacen un personaje complejo.</string>
+    <string name="AdjudicatorRick">Es un personaje de alto rango en el Consejo Galáctico. Tiene autoridad para dictaminar sobre los Ricks y Mortys en todo el multiverso.</string>
+    <string name="AgencyDirector">Un personaje que lidera una agencia secreta, es un hombre con gran autoridad y control sobre su organización.</string>
+    <string name="AlanRails">Un superhéroe que tiene la habilidad de controlar los trenes y forma parte de un equipo de superhéroes conocido como los Vindicadores.</string>
+    <string name="AlbertEinstein">En el contexto de la serie, es un científico famoso y reconocido cuya existencia está presente en el multiverso.</string>
+    <string name="Alexander">Un personaje que aparece en algunos episodios, es conocido por su astucia y manejo de situaciones complicadas.</string>
+    <string name="AlienGoogah">Un personaje alienígena que aparece en la serie, aunque no tiene un papel destacado o información específica en la trama principal.</string>
+    <string name="AlienMorty">Es una versión alienígena de Morty Smith, con algunas características y atributos distintos de la versión original.</string>
+    <string name="AlienRick">Similar a Alien Morty, esta versión es una representación alienígena de Rick Sanchez, con variaciones en sus rasgos y personalidad.</string>
+    <string name="AmishCyborg">Un personaje único que mezcla elementos de la tecnología cyborg con el estilo de vida y las prácticas de la comunidad Amish, lo que lo hace intrigante en la serie.</string>
+    <string name="Annie">Un personaje recurrente en algunos episodios, es conocida por su relación con uno de los personajes principales y por su participación en algunas aventuras.</string>
+    <string name="AntennaMorty">Otra variante de Morty, caracterizada por tener antenas, posiblemente de una dimensión alternativa o universo paralelo.</string>
+    <string name="AntennaRick">Similar a Antenna Morty, es una versión de Rick con antenas, lo que indica su origen en algún universo distinto.</string>
+    <string name="AntsinmyEyesJohnson">Un personaje peculiar conocido por su eslogan publicitario. A pesar de su aparente carencia de ojos, vende productos con entusiasmo en comerciales dentro de la serie.</string>
 </resources>

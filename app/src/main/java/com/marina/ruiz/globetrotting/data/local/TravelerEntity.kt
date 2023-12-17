@@ -13,7 +13,8 @@ data class TravelerEntity(
     val species: String,
     val type: String,
     val gender: String,
-    val image: String
+    val image: String,
+    val description: String = ""
 ) {
     fun asTraveler(): Traveler {
         return Traveler(
@@ -23,7 +24,8 @@ data class TravelerEntity(
             species,
             type,
             gender,
-            image
+            image,
+            description
         )
     }
 }

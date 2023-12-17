@@ -19,8 +19,6 @@ class TravelerListAdapter(
         fun bindTraveler(c: Traveler) {
             binding.travelerName.text = c.name
             binding.travelerImg.load(c.image)
-            binding.travelerSpecies.text = c.species
-            binding.travelerGender.text = c.gender
             binding.card.setOnClickListener {
                 onShowDetail(c, binding.root)
             }

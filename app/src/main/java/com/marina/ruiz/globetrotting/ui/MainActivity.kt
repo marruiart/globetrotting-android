@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.bookingCreationFormFragment
                 || destination.id == R.id.destinationDetailFragment
+                || destination.id == R.id.travelerDetailFragment
             ) {
                 binding.navigation.visibility = View.GONE
             } else {

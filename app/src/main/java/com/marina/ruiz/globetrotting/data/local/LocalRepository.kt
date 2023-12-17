@@ -1,7 +1,9 @@
 package com.marina.ruiz.globetrotting.data.local
 
 import androidx.annotation.WorkerThread
+import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +14,7 @@ class LocalRepository @Inject constructor(
     private val bookingDao: BookingDao
 ) {
     // TRAVELER
-    val travelers: Flow<List<TravelerEntity>> = travelerDao.getAllTravelers()
+    var travelers: Flow<List<TravelerEntity>> = travelerDao.getAllTravelers()
 
     @WorkerThread
     suspend fun insertTravelers(listTravelerEntity: List<TravelerEntity>) =
@@ -27,11 +29,14 @@ class LocalRepository @Inject constructor(
         travelerDao.getTraveler(id)
 
     @WorkerThread
-    suspend fun updateTraveler(traveler: TravelerEntity) =
+    suspend fun updateTraveler(traveler: TravelerEntity): Flow<Traveler> {
         travelerDao.updateTraveler(traveler)
+        travelers = travelerDao.getAllTravelers()
+        return flowOf(traveler.asTraveler())
+    }
 
     // DESTINATION
-    val destinations: Flow<List<DestinationEntity>> = destinationDao.getAllDestinations()
+    var destinations: Flow<List<DestinationEntity>> = destinationDao.getAllDestinations()
 
     @WorkerThread
     suspend fun insertDestinations(listDestinationEntity: List<DestinationEntity>) =
@@ -42,8 +47,10 @@ class LocalRepository @Inject constructor(
         destinationDao.createDestination(destinationEntity)
 
     @WorkerThread
-    suspend fun updateDestination(destination: DestinationEntity) =
+    suspend fun updateDestination(destination: DestinationEntity) {
         destinationDao.updateDestination(destination)
+        destinations = destinationDao.getAllDestinations()
+    }
 
     // BOOKING
     val bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()

@@ -25,4 +25,6 @@
     <string name="booking_share">Share</string>
     <!-- BOOKINGS LIST -->
     <string name="share_text">We are going on a trip to %s from %s to %s!</string>
+    <!-- TRAVELER DETAIL -->
+    <string name="traveler_detail">Traveler detail</string>
 </resources>

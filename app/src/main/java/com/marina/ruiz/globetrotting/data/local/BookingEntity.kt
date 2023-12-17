@@ -43,10 +43,11 @@ data class FullBooking(
     val travelerName: String,
     val travelerImage: String,
     val destinationName: String,
-    val destinationType: String?,
-    val destinationDimension: String?,
-    val destinationPrice: Float?,
-    val destinationDescription: String?,
+    val type: String?,
+    val dimension: String?,
+    val price: Float,
+    val shortDescription: String,
+    val description: String,
     var departureDate: Long,
     var arrivalDate: Long,
     var numTravelers: Int
@@ -59,10 +60,11 @@ data class FullBooking(
             ),
             Destination(
                 name = destinationName,
-                type = destinationType,
-                dimension = destinationDimension,
-                price = destinationPrice,
-                description = destinationDescription
+                type = type,
+                dimension = dimension,
+                price = price,
+                shortDescription = shortDescription,
+                description = description
             ),
             departureDate,
             arrivalDate,

@@ -9,8 +9,9 @@ data class Destination(
     override val name: String,
     val type: String?,
     val dimension: String?,
-    val price: Float?,
-    val description: String?,
+    val price: Float,
+    val shortDescription: String,
+    val description: String,
     val fav: Boolean = false,
     override val imageRef: Int? = null,
     override val image: String? = null

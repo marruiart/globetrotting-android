@@ -8,8 +8,9 @@ data class LocationApiModel(
     val name: String,
     val type: String?,
     val dimension: String?,
-    val price: Float?,
-    val description: String?
+    var price: Float = 0f,
+    var shortDescription: String = "",
+    var description: String = ""
 ) {
     fun asDestinationEntity(): DestinationEntity {
         return DestinationEntity(
@@ -18,6 +19,7 @@ data class LocationApiModel(
             type = type,
             dimension = dimension,
             price = price,
+            shortDescription = shortDescription,
             description = description
         )
     }

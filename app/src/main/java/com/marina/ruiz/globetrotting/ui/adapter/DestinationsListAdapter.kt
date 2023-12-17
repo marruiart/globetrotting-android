@@ -22,6 +22,7 @@ class DestinationsListAdapter(
                 binding.destinationImg.setImageResource(destination.imageRef)
             }
             binding.destinationName.text = destination.name
+            binding.shortDescription.text = destination.shortDescription
             binding.destinationItem.setOnClickListener {
                 onShowDetail(destination, binding.root)
             }

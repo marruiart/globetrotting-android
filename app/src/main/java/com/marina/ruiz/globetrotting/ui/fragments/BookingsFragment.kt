@@ -40,6 +40,10 @@ class BookingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var adapter = BookingsListAdapter(::onShareItem)
+        bindView(adapter)
+    }
+
+    private fun bindView(adapter: BookingsListAdapter) {
         val rv = binding.bookingsList
         rv.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {

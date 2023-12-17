@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.marina.ruiz.globetrotting.databinding.FragmentTravelerDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TravelerDetailFragment : Fragment() {
     private lateinit var binding: FragmentTravelerDetailBinding
     private val args: TravelerDetailFragmentArgs by navArgs()
@@ -25,6 +27,10 @@ class TravelerDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindView()
+    }
+
+    private fun bindView() {
         binding.travelerName.text = args.traveler.name
         binding.travelerImg.load(args.traveler.image)
         binding.travelerSpecies.text = args.traveler.species

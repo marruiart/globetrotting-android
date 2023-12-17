@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,4 +17,7 @@ interface DestinationDao {
 
     @Query("SELECT * FROM destination")
     fun getAllDestinations(): Flow<List<DestinationEntity>>
+
+    @Update
+    suspend fun updateDestination(destinationEntity: DestinationEntity)
 }

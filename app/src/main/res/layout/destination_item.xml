@@ -11,10 +11,10 @@
 
     <ImageView
         android:id="@+id/destination_img"
-        android:layout_width="129dp"
-        android:layout_height="115dp"
+        android:layout_width="112dp"
+        android:layout_height="101dp"
         android:adjustViewBounds="true"
-        android:contentDescription="Rick and Morty traveleracter"
+        android:contentDescription="Rick and Morty"
         app:layout_constraintBottom_toTopOf="@+id/details_btn"
         app:layout_constraintEnd_toEndOf="@+id/details_btn"
         app:layout_constraintHorizontal_bias="0"
@@ -29,11 +29,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+
         android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/destination_img"
         app:layout_constraintTop_toTopOf="@+id/destination_img"
         tools:text="Earth (C-137)" />
+
+    <TextView
+        android:id="@+id/short_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/destination_img"
+        app:layout_constraintTop_toBottomOf="@+id/destination_name"
+        tools:text="Un planeta alienígena lleno de aventuras y locuras intergalácticas." />
 
     <Button
         android:id="@+id/book_btn"

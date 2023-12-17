@@ -36,6 +36,10 @@ class TravelerListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var adapter = TravelerListAdapter(::onShowDetail)
+        bindView(adapter)
+    }
+
+    private fun bindView(adapter: TravelerListAdapter) {
         val rv = binding.travelersList
         rv.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {

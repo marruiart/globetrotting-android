@@ -16,8 +16,8 @@ interface BookingDao {
 
     @Query("SELECT b.id AS id, b.departureDate AS departureDate, b.arrivalDate AS arrivalDate, b.numTravelers AS numTravelers, " +
             "t.name AS travelerName, t.image AS travelerImage, " +
-            "d.name AS destinationName, d.type AS destinationType, d.dimension AS destinationDimension, d.price AS destinationPrice, " +
-            "d.description AS destinationDescription " +
+            "d.name AS destinationName, d.type AS type, d.dimension AS dimension, d.price AS price, " +
+            "d.description AS description, d.shortDescription AS shortDescription " +
             "FROM booking AS b " +
             "INNER JOIN traveler AS t ON t.id = b.travelerId " +
             "INNER JOIN destination AS d ON d.id = b.destinationId")

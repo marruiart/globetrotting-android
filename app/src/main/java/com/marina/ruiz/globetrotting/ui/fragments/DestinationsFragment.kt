@@ -35,6 +35,10 @@ class DestinationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow)
+        bindView(adapter)
+    }
+
+    private fun bindView(adapter: DestinationsListAdapter) {
         val rv = binding.destinationsList
         rv.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {

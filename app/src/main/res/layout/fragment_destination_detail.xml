@@ -7,6 +7,16 @@
     android:layout_height="wrap_content"
     android:padding="18dp">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_close"
+        app:title="@string/booking_form_header_title" />
 
     <ImageView
         android:id="@+id/destination_img"
@@ -16,7 +26,7 @@
         android:contentDescription="Rick and Morty traveleracter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
         app:srcCompat="@drawable/default_avatar" />
 
     <TextView

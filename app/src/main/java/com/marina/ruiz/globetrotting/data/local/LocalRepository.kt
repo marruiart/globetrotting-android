@@ -22,6 +22,14 @@ class LocalRepository @Inject constructor(
     suspend fun insertTraveler(travelerEntity: TravelerEntity) =
         travelerDao.createTraveler(travelerEntity)
 
+    @WorkerThread
+    fun getTraveler(id: Int): Flow<TravelerEntity> =
+        travelerDao.getTraveler(id)
+
+    @WorkerThread
+    suspend fun updateTraveler(traveler: TravelerEntity) =
+        travelerDao.updateTraveler(traveler)
+
     // DESTINATION
     val destinations: Flow<List<DestinationEntity>> = destinationDao.getAllDestinations()
 
@@ -33,9 +41,14 @@ class LocalRepository @Inject constructor(
     suspend fun insertDestination(destinationEntity: DestinationEntity) =
         destinationDao.createDestination(destinationEntity)
 
+    @WorkerThread
+    suspend fun updateDestination(destination: DestinationEntity) =
+        destinationDao.updateDestination(destination)
+
     // BOOKING
     val bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()
-    val bookingWithTravelersAndDestinations: Flow<List<FullBooking>> = bookingDao.getAllBookingsWithTravelerAndDestination()
+    val bookingWithTravelersAndDestinations: Flow<List<FullBooking>> =
+        bookingDao.getAllBookingsWithTravelerAndDestination()
 
     @WorkerThread
     suspend fun insertBooking(bookingEntity: BookingEntity) =

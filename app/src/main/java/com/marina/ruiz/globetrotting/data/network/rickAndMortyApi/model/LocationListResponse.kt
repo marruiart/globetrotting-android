@@ -16,9 +16,7 @@ data class LocationResponse(
             id,
             name,
             type,
-            dimension,
-            null,
-            null
+            dimension
         )
     }
 }

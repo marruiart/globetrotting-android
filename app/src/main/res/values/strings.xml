@@ -26,6 +26,8 @@
     <string name="share_text">¡Nos vamos de viaje a %s del %s al %s!</string>
     <!-- TRAVELER DETAIL -->
     <string name="traveler_detail">Detalle del viajero</string>
+    <!-- DESTINATION DETAIL -->
+    <string name="destination_detail">Detalle del destino</string>
     <!-- DESCRIPTION MOCK -->
     <string name="RickSanchez">Un científico excéntrico y alcohólico con una inteligencia excepcional pero un comportamiento bastante cuestionable. Es el abuelo de Morty y suele llevar a su nieto en aventuras intergalácticas peligrosas.</string>
     <string name="MortySmith">El nieto de Rick, es un adolescente normal y corriente que a menudo acompaña a su abuelo en sus aventuras. A pesar de ser ingenuo, Morty tiene un corazón noble y trata de hacer lo correcto en situaciones difíciles.</string>

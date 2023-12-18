@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface ChatGptApi {
-    @Headers("Authorization: Bearer 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")
+    @Headers("Authorization: Bearer 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")
     @POST("v1/completions")
     suspend fun getResponse(@Body requestBody: RequestBody): ChatGptResponse
 }

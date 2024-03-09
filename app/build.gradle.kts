@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,7 +47,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -55,7 +56,7 @@ dependencies {
     // FRAGMENTS
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     // NAVIGATION
-    val navVersion = "2.7.5"
+    val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:${navVersion}")
     implementation("androidx.navigation:navigation-ui-ktx:${navVersion}")
 
@@ -83,4 +84,12 @@ dependencies {
     val glideVersion = "4.15.1"
     implementation("com.github.bumptech.glide:glide:${glideVersion}")
     annotationProcessor("com.github.bumptech.glide:compiler:${glideVersion}")
+
+    // FIREBASE
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-database")
+
 }

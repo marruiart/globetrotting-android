@@ -2,7 +2,8 @@
 <resources>
 
     <!-- BOTTOM NAV MENU -->
-    <string name="menu_travelers">Travelers</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_destinations">Destinations</string>
     <string name="menu_booking">Bookings</string>
     <!-- DESTINATIONS LIST -->

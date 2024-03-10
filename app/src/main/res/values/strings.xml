@@ -2,7 +2,8 @@
     <string name="app_name" translatable="false">Globetrotting</string>
 
     <!-- BOTTOM NAV MENU -->
-    <string name="menu_travelers">Viajeros</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_profile">Perfil</string>
     <string name="menu_destinations">Destinos</string>
     <string name="menu_booking">Reservas</string>
     <!-- DESTINATIONS LIST -->

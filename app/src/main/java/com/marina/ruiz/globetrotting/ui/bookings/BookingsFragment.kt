@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.fragments
+package com.marina.ruiz.globetrotting.ui.bookings
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,8 +16,7 @@ import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
-import com.marina.ruiz.globetrotting.ui.adapter.BookingsListAdapter
-import com.marina.ruiz.globetrotting.ui.viewmodels.BookingsListViewModel
+import com.marina.ruiz.globetrotting.ui.bookings.adapter.BookingsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.fragments
+package com.marina.ruiz.globetrotting.ui.auth.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

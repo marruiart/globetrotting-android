@@ -1,10 +1,11 @@
-package com.marina.ruiz.globetrotting.ui.fragments
+package com.marina.ruiz.globetrotting.ui.auth.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,12 +31,18 @@ class LoginFragment : Fragment() {
     private fun initListeners() {
         with(binding) {
             createAccount.setOnClickListener { navigateToRegisterForm() }
+            loginBtn.setOnClickListener { navigateHome() }
         }
     }
 
-    private fun navigateToRegisterForm() {
-        val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+    private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
     }
+
+    private fun navigateToRegisterForm() =
+        navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+
+    private fun navigateHome() =
+        navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
 
 }

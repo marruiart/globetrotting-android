@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.adapter
+package com.marina.ruiz.globetrotting.ui.travelers.adapter
 
 import android.view.LayoutInflater
 import android.view.View

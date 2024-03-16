@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.fragments
+package com.marina.ruiz.globetrotting.ui.destinations
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
-import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
-import com.marina.ruiz.globetrotting.ui.adapter.DestinationsListAdapter
-import com.marina.ruiz.globetrotting.ui.viewmodels.DestinationsListViewModel
+import com.marina.ruiz.globetrotting.ui.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.viewmodels
+package com.marina.ruiz.globetrotting.ui.destinations
 
 import android.accounts.NetworkErrorException
 import android.util.Log

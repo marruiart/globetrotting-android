@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.viewmodels
+package com.marina.ruiz.globetrotting.ui.bookings
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

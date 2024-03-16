@@ -7,14 +7,22 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.fragments.LoginFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.LoginFragment"
         android:label="login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.fragments.RegisterFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.RegisterFragment"
         android:label="register"/>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.marina.ruiz.globetrotting.ui.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

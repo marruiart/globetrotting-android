@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name" translatable="false">Globetrotting</string>
 
+    <string name="imagotype_description">Imagotipo de Globetrotting</string>
     <!-- BOTTOM NAV MENU -->
     <string name="menu_home">Inicio</string>
     <string name="menu_profile">Perfil</string>
     <string name="menu_destinations">Destinos</string>
     <string name="menu_booking">Reservas</string>
+    <!-- AUTH -->
+    <string name="form_email_hint">Email</string>
+    <string name="form_password_hint">Contraseña</string>
+    <string name="form_repeat_password_hint">Repetir contraseña</string>
+    <string name="form_username_hint">Usuario</string>
+    <string name="login_forgot_password">Olvidé la contraseña</string>
+    <string name="login_btn">Entrar</string>
+    <string name="login_new_account">¿No tienes cuenta?</string>
+    <string name="login_create_account">Crear una</string>
+    <string name="create_account_btn">Crear cuenta</string>
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>

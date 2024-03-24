@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="imagotype_description">Globetrotting imagotype</string>
 
     <!-- BOTTOM NAV MENU -->
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_destinations">Destinations</string>
     <string name="menu_booking">Bookings</string>
+    <!-- LOGIN -->
+    <string name="form_email_hint">Email</string>
+    <string name="form_password_hint">Password</string>
+    <string name="form_repeat_password_hint">Repeat password</string>
+    <string name="form_username_hint">Username</string>
+    <string name="login_forgot_password">Forgot my password</string>
+    <string name="login_btn">Log in</string>
+    <string name="login_new_account">No account?</string>
+    <string name="login_create_account">Create one</string>
+    <string name="create_account_btn">Create account</string>
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Book now</string>
     <string name="dest_btn_see_details">See details</string>

@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.ui.auth
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,8 +35,7 @@ class AuthViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewMo
 
     fun onFieldsChanged(email: String, password: String) {
         _viewState.value = LoginViewState(
-            isValidEmail = isValidEmail(email),
-            isValidPassword = isValidPassword(password)
+            isValidEmail = isValidEmail(email), isValidPassword = isValidPassword(password)
         )
     }
 
@@ -58,7 +58,15 @@ class AuthViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewMo
                 }
 
                 is LoginResult.Success -> {
-                    _navigateToHome.value = true
+                    val role = loginUseCase.getUserRole()
+                    Log.d("LOGIN", role.toString())
+                    if (role == "AUTHENTICATED") {
+                        _navigateToHome.value = true
+                    } else {
+                        _showErrorDialog.value =
+                            UserLogin(email = email, password = password, showErrorDialog = true)
+                        _viewState.value = LoginViewState(isLoading = false)
+                    }
                 }
             }
             _viewState.value = LoginViewState(isLoading = false)

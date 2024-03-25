@@ -1,6 +1,8 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
+import android.util.Log
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
 import com.marina.ruiz.globetrotting.data.network.firebase.model.LoginResult
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -36,6 +38,7 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient) {
     private fun Result<AuthResult>.toLoginResult() = when (val result = getOrNull()) {
         null -> LoginResult.Error
         else -> {
+            Log.d("LOGIN", firebase.auth.currentUser.toString())
             val userId = result.user
             checkNotNull(userId)
             LoginResult.Success

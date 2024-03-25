@@ -28,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:contentDescription="Destination image"
         android:translationZ="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+        app:layout_constraintBottom_toTopOf="@+id/cv_login_form"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_app_bar"
@@ -43,7 +43,7 @@
         app:layout_constraintGuide_begin="200dp" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
+        android:id="@+id/cv_login_form"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_constraint"
+            android:id="@+id/clay_login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -74,8 +74,8 @@
                 android:textSize="28sp"
                 android:translationZ="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/card_constraint"
-                app:layout_constraintTop_toTopOf="@+id/card_constraint"
+                app:layout_constraintStart_toStartOf="@+id/clay_login_form"
+                app:layout_constraintTop_toTopOf="@+id/clay_login_form"
                 tools:text="Earth (C-137)" />
 
             <ScrollView
@@ -83,7 +83,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/card_constraint"
+                app:layout_constraintStart_toStartOf="@+id/clay_login_form"
                 app:layout_constraintTop_toBottomOf="@+id/destination_name">
 
                 <TextView

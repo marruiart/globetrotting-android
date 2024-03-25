@@ -14,7 +14,7 @@
         android:background="?attr/colorSurfaceContainerLow">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/traveler_img"
+            android:id="@+id/iv_login_imagotype"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:adjustViewBounds="true"
@@ -31,9 +31,9 @@
             android:layout_marginStart="16dp"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textColor="?attr/colorOnSurface"
-            app:layout_constraintBottom_toBottomOf="@+id/traveler_img"
-            app:layout_constraintStart_toEndOf="@+id/traveler_img"
-            app:layout_constraintTop_toTopOf="@+id/traveler_img"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_login_imagotype"
+            app:layout_constraintStart_toEndOf="@+id/iv_login_imagotype"
+            app:layout_constraintTop_toTopOf="@+id/iv_login_imagotype"
             tools:text="Rick Sanchez" />
 
 

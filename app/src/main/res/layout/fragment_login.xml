@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/traveler_img"
+        android:id="@+id/iv_login_imagotype"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="55dp"
@@ -17,25 +17,25 @@
         app:srcCompat="@drawable/imagotype" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
+        android:id="@+id/cv_login_form"
         style="?attr/materialCardViewElevatedStyle"
-        app:cardBackgroundColor="?attr/colorOnPrimary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
+        app:cardBackgroundColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/traveler_img">
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_imagotype">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_constraint"
+            android:id="@+id/clay_login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/form_email"
+                android:id="@+id/til_form_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/form_email_hint"
@@ -45,13 +45,18 @@
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login_email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/form_password"
+                android:id="@+id/til_form_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -59,18 +64,21 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_email"
+                app:layout_constraintTop_toBottomOf="@id/til_form_email"
                 app:startIconDrawable="@drawable/ic_key">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_login_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/forgot_password"
+                android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -78,21 +86,21 @@
                 android:text="@string/login_forgot_password"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="?attr/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/form_password"
-                app:layout_constraintTop_toBottomOf="@+id/form_password" />
+                app:layout_constraintEnd_toEndOf="@+id/til_form_password"
+                app:layout_constraintTop_toBottomOf="@+id/til_form_password" />
 
             <Button
-                android:id="@+id/login_btn"
+                android:id="@+id/btn_login"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/login_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
             <TextView
-                android:id="@+id/no_account_quest"
+                android:id="@+id/tv_no_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -101,13 +109,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/create_account"
+                app:layout_constraintEnd_toStartOf="@+id/tv_create_account"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/create_account"
+                android:id="@+id/tv_create_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -119,7 +127,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/no_account_quest" />
+                app:layout_constraintStart_toEndOf="@+id/tv_no_account" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

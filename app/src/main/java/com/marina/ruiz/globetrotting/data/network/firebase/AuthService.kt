@@ -35,6 +35,10 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient) {
         return firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }
 
+    fun logout() = runCatching {
+        firebase.auth.signOut()
+    }
+
     private fun Result<AuthResult>.toLoginResult() = when (val result = getOrNull()) {
         null -> LoginResult.Error
         else -> {

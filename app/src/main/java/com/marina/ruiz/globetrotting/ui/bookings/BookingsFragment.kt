@@ -11,11 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
+import com.marina.ruiz.globetrotting.ui.auth.AuthViewModel
 import com.marina.ruiz.globetrotting.ui.bookings.adapter.BookingsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,6 +30,7 @@ import java.util.Locale
 class BookingsFragment : Fragment() {
     private lateinit var binding: FragmentBookingsBinding
     private val viewModel: BookingsListViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,5 +125,22 @@ class BookingsFragment : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun initObservers() {
+        val owner = viewLifecycleOwner
+
+        authViewModel.navigateToHome.observe(owner) { isLogged ->
+            if (!isLogged) {
+                navigateToLogin()
+            }
+        }
+    }
+
+    private fun navigate(action: NavDirections) {
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToLogin() {
     }
 }

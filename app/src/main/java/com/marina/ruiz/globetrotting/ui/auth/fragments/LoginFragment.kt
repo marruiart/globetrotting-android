@@ -80,7 +80,9 @@ class LoginFragment : Fragment() {
     private fun navigateToRegisterForm() =
         navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
 
-    private fun navigateHome() =
+    private fun navigateHome() {
         navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+        requireActivity().finish()
+    }
 
 }

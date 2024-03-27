@@ -8,5 +8,10 @@
         android:id="@+id/homeFragment"
         android:name="com.marina.ruiz.globetrotting.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_nav_auth"
+            app:destination="@id/nav_auth" />
+    </fragment>
+    <include app:graph="@navigation/nav_auth" />
 </navigation>

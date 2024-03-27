@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.network.firebase.model.LoginResult
 import com.marina.ruiz.globetrotting.domain.LoginUseCase
+import com.marina.ruiz.globetrotting.domain.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewModel() {
+class AuthViewModel @Inject constructor(
+    val loginUseCase: LoginUseCase,
+    val logoutUseCase: LogoutUseCase
+) : ViewModel() {
 
     private companion object {
         const val MIN_PASSWORD_LENGTH = 6
@@ -45,6 +49,12 @@ class AuthViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewMo
         } else {
             onFieldsChanged(email, password)
         }
+    }
+
+    fun onLogout() {
+        logoutUseCase()
+        UserLogin(email = "", password = "")
+        _navigateToHome.value = false
     }
 
     private fun loginUser(email: String, password: String) {

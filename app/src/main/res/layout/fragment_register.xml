@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+        android:id="@+id/main_top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -22,7 +22,7 @@
         android:contentDescription="@string/imagotype_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
+        app:layout_constraintTop_toBottomOf="@id/main_top_app_bar"
         app:srcCompat="@drawable/imagotype" />
 
     <com.google.android.material.card.MaterialCardView

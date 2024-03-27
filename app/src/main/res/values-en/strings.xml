@@ -7,6 +7,9 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_destinations">Destinations</string>
     <string name="menu_booking">Bookings</string>
+    <!-- PROFILE MENU -->
+    <string name="profile_menu_logout">Logout</string>
+    <string name="profile_menu_my_profile">My profile</string>
     <!-- LOGIN -->
     <string name="form_email_hint">Email</string>
     <string name="form_password_hint">Password</string>

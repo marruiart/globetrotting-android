@@ -8,7 +8,7 @@
     android:background="?attr/colorPrimary">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/top_app_bar"
+        android:id="@+id/main_top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#43FFFFFF"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cv_login_form"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
+        app:layout_constraintTop_toBottomOf="@id/main_top_app_bar"
         app:layout_constraintVertical_bias="0.0"
         app:shapeAppearanceOverlay="@style/Circular"
         app:srcCompat="@drawable/default_avatar" />

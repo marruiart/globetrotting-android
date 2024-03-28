@@ -57,7 +57,7 @@ class BookingCreationFormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as? AppCompatActivity)?.setSupportActionBar(binding.topAppBar)
+        (activity as? AppCompatActivity)?.setSupportActionBar(binding.mainTopAppBar)
         init()
     }
 
@@ -122,7 +122,7 @@ class BookingCreationFormFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.topAppBar.setNavigationOnClickListener {
+        binding.mainTopAppBar.setNavigationOnClickListener {
             navigateBackToDestinations()
         }
         binding.calendar.setEndIconOnClickListener {

@@ -1,22 +1,22 @@
-package com.marina.ruiz.globetrotting.ui.profile
+package com.marina.ruiz.globetrotting.ui.profile.fragments
 
+import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.ui.auth.AuthViewModel
+import com.marina.ruiz.globetrotting.ui.profile.ProfileViewModel
 
-class ProfileFragment : Fragment() {
-    private val authViewModel: AuthViewModel by viewModels()
+class MyProfileFragment : Fragment() {
+    private val viewModel: ProfileViewModel by viewModels()
 
     companion object {
-        fun newInstance() = ProfileFragment()
+        fun newInstance() = MyProfileFragment()
     }
 
 
@@ -28,25 +28,20 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
         initObservers()
+        return inflater.inflate(R.layout.fragment_my_profile, container, false)
     }
 
     private fun initObservers() {
         val owner = viewLifecycleOwner
-
-        authViewModel.navigateToHome.observe(owner) { isLogged ->
-            if (!isLogged) {
-                navigateToLogin()
-            }
-        }
     }
 
     private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
     }
 
-    private fun navigateToLogin() {
+    private fun navigateBack() {
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
 }

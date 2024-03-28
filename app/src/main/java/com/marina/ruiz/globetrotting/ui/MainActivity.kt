@@ -22,6 +22,7 @@ import com.marina.ruiz.globetrotting.databinding.ActivityMainBinding
 import com.marina.ruiz.globetrotting.ui.auth.AuthActivity
 import com.marina.ruiz.globetrotting.ui.auth.AuthViewModel
 import com.marina.ruiz.globetrotting.ui.home.HomeFragmentDirections
+import com.marina.ruiz.globetrotting.ui.profile.ProfileActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setWindowInsets()
+        //setWindowInsets()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
         val navView: BottomNavigationView = binding.navigation
@@ -48,14 +49,13 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         initListeners()
         initObservers()
-        //hideNavController()
     }
 
     private fun initListeners() {
         binding.mainTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_my_profile -> {
-                    Log.d("MENU", "my profile")
+                    startActivity(ProfileActivity.create(this))
                     true
                 }
 
@@ -71,26 +71,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.app_bar_layout)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
-
-    private fun hideNavController() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.bookingCreationFormFragment
-                || destination.id == R.id.destinationDetailFragment
-                || destination.id == R.id.nav_profile
-            ) {
-                binding.navigation.visibility = View.GONE
-            } else {
-                binding.navigation.visibility = View.VISIBLE
-            }
-        }
-    }
-
 
     private fun initObservers() {
 

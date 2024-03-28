@@ -32,18 +32,18 @@ class DestinationDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.topAppBar)
+        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mainTopAppBar)
         fetchDescription()
         bindView(args.destination)
     }
 
     private fun bindView(destination: Destination) {
-        binding.topAppBar.setNavigationOnClickListener {
+        binding.mainTopAppBar.setNavigationOnClickListener {
             navigateBack()
         }
         binding.destinationName.text = destination.name
         if (destination.imageRef != null) {
-            binding.destinationImg.setImageResource(destination.imageRef as Int)
+            binding.destinationImg.setImageResource(destination.imageRef)
         }
         binding.destinationDescription.text = destination.description
         if (binding.destinationDescription.text.isEmpty()) {

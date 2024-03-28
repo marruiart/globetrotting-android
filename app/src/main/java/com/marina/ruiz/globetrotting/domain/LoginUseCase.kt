@@ -1,6 +1,5 @@
 package com.marina.ruiz.globetrotting.domain
 
-import com.google.firebase.auth.FirebaseUser
 import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
 import com.marina.ruiz.globetrotting.data.network.firebase.model.LoginResult
@@ -16,5 +15,9 @@ class LoginUseCase @Inject constructor(
 
     suspend fun getUserRole(): String? {
         return userSvc.getUserRole()
+    }
+
+    fun isLogged(): Boolean {
+        return authSvc.isLogged() != null
     }
 }

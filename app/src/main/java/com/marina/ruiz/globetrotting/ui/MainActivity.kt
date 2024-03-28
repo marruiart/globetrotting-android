@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setWindowInsets()
+        setWindowInsets()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
         val navView: BottomNavigationView = binding.navigation
@@ -71,9 +71,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.app_bar_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
     }

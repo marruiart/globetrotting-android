@@ -49,6 +49,7 @@ dependencies {
     val roomVersion = "2.6.1"
     val hiltVersion = "2.48.1"
     val glideVersion = "4.15.1"
+    val sharedPreferences = "1.1.0-alpha06"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -91,7 +92,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:${glideVersion}")
 
     // FIREBASE
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
@@ -100,4 +101,7 @@ dependencies {
     // LOTTIES
 /*    val lottieVersion = "6.4.0"
     implementation("om.airbnb.android:lottie:$lottieVersion")*/
+
+    // SECURED SHARED PREFERENCES
+    implementation("androidx.security:security-crypto:${sharedPreferences}")
 }

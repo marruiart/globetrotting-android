@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.marina.ruiz.globetrotting.R
@@ -18,6 +18,7 @@ import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var dialog: FullScreenDialogFragment
+    private lateinit var systemBars: Insets
     private var user: User? = null
 
     companion object {
@@ -44,7 +45,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.profile_app_bar_layout)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
@@ -61,6 +62,7 @@ class ProfileActivity : AppCompatActivity() {
                 positiveBtnResId = R.id.btn_accept_edit_profile,
                 neutralBtnResId = R.id.btn_cancel_edit_profile
             )
+                .setPaddings(systemBars.left + 100, systemBars.top + 100, systemBars.right + 100, 100)
                 .setOnAcceptFunction {
                     Log.d(TAG, "Dismiss")
                 }.setOnCancelFunction {

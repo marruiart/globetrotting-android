@@ -7,10 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
-import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -25,6 +21,10 @@ open class FullScreenDialogFragment(
     private var onAcceptFunction: () -> Unit = {}
     private var onCancelFunction: () -> Unit = {}
     private var onRejectFunction: () -> Unit = {}
+    private var _paddingTop: Int = 0
+    private var _paddingBottom: Int = 0
+    private var _paddingLeft: Int = 0
+    private var _paddingRight: Int = 0
 
     fun setOnAcceptFunction(fn: () -> Unit): FullScreenDialogFragment {
         onAcceptFunction = fn
@@ -38,6 +38,19 @@ open class FullScreenDialogFragment(
 
     fun setOnCancelFunction(fn: () -> Unit): FullScreenDialogFragment {
         onCancelFunction = fn
+        return this
+    }
+
+    fun setPaddings(
+        paddingLeft: Int = 0,
+        paddingTop: Int = 0,
+        paddingRight: Int = 0,
+        paddingBottom: Int = 0
+    ): FullScreenDialogFragment {
+        _paddingTop = paddingTop
+        _paddingBottom = paddingBottom
+        _paddingLeft = paddingLeft
+        _paddingRight = paddingRight
         return this
     }
 
@@ -61,6 +74,7 @@ open class FullScreenDialogFragment(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(layout, container, false)
+        setWindowInsets(view)
         initListeners(view)
         return view
     }
@@ -69,6 +83,12 @@ open class FullScreenDialogFragment(
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return dialog
+    }
+
+    private fun setWindowInsets(view: View) {
+        view.doOnLayout { v ->
+            v.setPadding(_paddingLeft, _paddingTop, _paddingRight, _paddingBottom)
+        }
     }
 
     private fun initListeners(view: View) {

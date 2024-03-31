@@ -2,7 +2,6 @@ package com.marina.ruiz.globetrotting.ui.auth.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.marina.ruiz.globetrotting.core.SecureSharedPrefs
 import com.marina.ruiz.globetrotting.core.extension.dismissKeyboard
 import com.marina.ruiz.globetrotting.databinding.FragmentLoginBinding
-import com.marina.ruiz.globetrotting.ui.auth.AuthViewModel
+import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: AuthViewModel by activityViewModels()
-    private var observer = null
+    private val authVM: AuthViewModel by activityViewModels()
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG LOGIN_FRAGMENT"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,13 +30,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        Log.d("FRAGMENT", "onCreateView")
-/*        lifecycleScope.launch {
-            val role = viewModel.loginUseCase.getUserRole()
-            if (role != null) {
-                viewModel.allowAccess()
-            }
-        }*/
         return binding.root
     }
 
@@ -55,30 +49,14 @@ class LoginFragment : Fragment() {
                 it.dismissKeyboard()
                 val email = binding.etLoginEmail.text.toString()
                 val password = binding.etLoginPassword.text.toString()
-                viewModel.onLogin(email, password)
+                authVM.onLogin(email, password)
             }
         }
     }
 
     private fun initObservers() {
         val owner = viewLifecycleOwner
-        with(viewModel) {
-            userCredentials.observe(owner) { credentials ->
-                val email = credentials.email
-                val passwd = credentials.password
-                val sharedPreferences = SecureSharedPrefs.getSharedPreferences(requireContext())
-                val editor = sharedPreferences.edit()
-                editor.putString("email", email)
-                editor.putString("passwd", passwd)
-                editor.apply()
-                Log.d("FRAGMENT", "initObservers")
-            }
-
-            navigateToHome.observeForever { navigate ->
-                if (navigate) {
-                    navigateHome()
-                }
-            }
+        with(authVM) {
             showErrorDialog.observe(owner) { showError ->
                 if (showError) {
                     showErrorDialog("No es posible la autenticación")
@@ -103,10 +81,5 @@ class LoginFragment : Fragment() {
 
     private fun navigateToRegisterForm() =
         navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
-
-    private fun navigateHome() {
-        navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
-        requireActivity().finish()
-    }
 
 }

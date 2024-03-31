@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.bookings.adapter
+package com.marina.ruiz.globetrotting.ui.main.bookings.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

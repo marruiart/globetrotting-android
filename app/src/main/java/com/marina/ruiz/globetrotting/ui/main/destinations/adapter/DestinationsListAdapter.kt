@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.destinations.adapter
+package com.marina.ruiz.globetrotting.ui.main.destinations.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

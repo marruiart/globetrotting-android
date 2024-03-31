@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Globetrotting"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.main.profile.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false" />
     </application>
 

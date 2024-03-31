@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.destinations
+package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

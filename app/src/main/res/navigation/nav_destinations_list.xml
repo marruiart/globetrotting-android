@@ -6,7 +6,7 @@
     app:startDestination="@id/destinationsFragment">
     <fragment
         android:id="@+id/destinationsFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.destinations.DestinationsFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationsFragment"
         android:label="fragment_destinations"
         tools:layout="@layout/fragment_destinations" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookingCreationFormFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.bookings.BookingCreationFormFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.bookings.BookingCreationFormFragment"
         android:label="fragment_booking_creation_form"
         tools:layout="@layout/fragment_booking_creation_form" >
         <argument
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/destinationDetailFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.destinations.DestinationDetailFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailFragment"
         android:label="fragment_destination_detail"
         tools:layout="@layout/fragment_destination_detail" >
         <argument

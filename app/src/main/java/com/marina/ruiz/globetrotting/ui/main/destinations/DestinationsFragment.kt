@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.destinations
+package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,8 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
-import com.marina.ruiz.globetrotting.ui.auth.AuthViewModel
-import com.marina.ruiz.globetrotting.ui.destinations.adapter.DestinationsListAdapter
+import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
+import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 class DestinationsFragment : Fragment() {
     private lateinit var binding: FragmentDestinationsBinding
     private val viewModel: DestinationsListViewModel by viewModels()
-    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,12 +70,6 @@ class DestinationsFragment : Fragment() {
 
     private fun initObservers() {
         val owner = viewLifecycleOwner
-
-        authViewModel.navigateToHome.observe(owner) { isLogged ->
-            if (!isLogged) {
-                navigateToLogin()
-            }
-        }
     }
 
     private fun navigate(action: NavDirections) {

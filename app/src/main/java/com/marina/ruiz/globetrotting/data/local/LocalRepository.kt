@@ -1,10 +1,12 @@
 package com.marina.ruiz.globetrotting.data.local
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +14,8 @@ import javax.inject.Singleton
 class LocalRepository @Inject constructor(
     private val travelerDao: TravelerDao,
     private val destinationDao: DestinationDao,
-    private val bookingDao: BookingDao
+    private val bookingDao: BookingDao,
+    private val userDao: UserDao
 ) {
     // TRAVELER
     var travelers: Flow<List<TravelerEntity>> = travelerDao.getAllTravelers()
@@ -82,5 +85,20 @@ class LocalRepository @Inject constructor(
     suspend fun deleteBooking(booking: BookingEntity) {
         bookingDao.deleteBooking(booking)
         bookings = bookingDao.getAllBookings()
+    }
+
+    // USER
+    var user: Flow<UserEntity?> = userDao.getUser()
+
+    @WorkerThread
+    suspend fun insertUser(userEntity: UserEntity) {
+        userDao.createUser(userEntity)
+        user = userDao.getUser()
+    }
+
+    @WorkerThread
+    suspend fun deleteUser() {
+        userDao.deleteUser()
+        user = flowOf(null)
     }
 }

@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.data.repository.model
+package com.marina.ruiz.globetrotting.ui.auth.model
 
 data class UserCredentials(
     val username: String,

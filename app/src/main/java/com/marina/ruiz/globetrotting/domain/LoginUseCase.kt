@@ -13,11 +13,4 @@ class LoginUseCase @Inject constructor(
     suspend operator fun invoke(email: String, password: String): LoginResult =
         authSvc.login(email, password)
 
-    suspend fun getUserRole(): String? {
-        return userSvc.getUserRole()
-    }
-
-    fun isLogged(): Boolean {
-        return authSvc.isLogged() != null
-    }
 }

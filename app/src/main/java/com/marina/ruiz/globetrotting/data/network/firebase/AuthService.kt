@@ -1,13 +1,32 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.marina.ruiz.globetrotting.data.network.firebase.model.LoginResult
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthService @Inject constructor(private val firebase: FirebaseClient) {
+@Singleton
+class AuthService @Inject constructor(val firebase: FirebaseService) {
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG AUTH_SERVICE"
+    }
+
+    private val _uid = MutableLiveData<String?>()
+    val uid: LiveData<String?>
+        get() = _uid
+
+    init {
+        firebase.client.auth.addAuthStateListener { auth ->
+            Log.i(TAG, "Listening uid: ${auth.currentUser?.uid}")
+            _uid.value = auth.currentUser?.uid
+        }
+    }
 
     /**
      * Performs user authentication using the provided email and password.
@@ -19,7 +38,7 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient) {
      * @throws Exception If an error occurs during the authentication process.
      */
     suspend fun login(email: String, password: String): LoginResult = runCatching {
-        firebase.auth.signInWithEmailAndPassword(email, password).await()
+        firebase.client.auth.signInWithEmailAndPassword(email, password).await()
     }.toLoginResult()
 
     /**
@@ -32,23 +51,21 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient) {
      * @throws Exception If an error occurs during the account creation process.
      */
     suspend fun createAccount(email: String, password: String): AuthResult? {
-        return firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        return firebase.client.auth.createUserWithEmailAndPassword(email, password).await()
     }
 
-    fun isLogged(): FirebaseUser? {
-        return firebase.auth.currentUser
+    fun getCurrentUser(): FirebaseUser? {
+        return firebase.client.auth.currentUser
     }
 
     fun logout() = runCatching {
-        firebase.auth.signOut()
+        firebase.logout()
     }
 
     private fun Result<AuthResult>.toLoginResult() = when (val result = getOrNull()) {
         null -> LoginResult.Error
         else -> {
-            Log.d("LOGIN", firebase.auth.currentUser.toString())
-            val userId = result.user
-            checkNotNull(userId)
+            checkNotNull(result.user)
             LoginResult.Success
         }
     }

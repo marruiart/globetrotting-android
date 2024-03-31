@@ -6,7 +6,7 @@
     app:startDestination="@id/myProfileFragment">
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.profile.fragments.MyProfileFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.profile.fragments.MyProfileFragment"
         android:label="MyProfileFragment" >
         <action
             android:id="@+id/action_myProfileFragment_to_editProfileFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.profile.fragments.EditProfileFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
 </navigation>

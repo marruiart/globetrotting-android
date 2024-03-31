@@ -5,6 +5,7 @@ import com.marina.ruiz.globetrotting.data.local.BookingDao
 import com.marina.ruiz.globetrotting.data.local.DestinationDao
 import com.marina.ruiz.globetrotting.data.local.GlobetrottingDb
 import com.marina.ruiz.globetrotting.data.local.TravelerDao
+import com.marina.ruiz.globetrotting.data.local.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +39,11 @@ object DatabaseModule {
     @Provides
     fun provideBookingDao(database: GlobetrottingDb): BookingDao {
         return database.bookingDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDao(database: GlobetrottingDb): UserDao {
+        return database.userDao()
     }
 }

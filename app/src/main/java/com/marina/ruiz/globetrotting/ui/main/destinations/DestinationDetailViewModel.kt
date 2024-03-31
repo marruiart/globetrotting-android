@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.destinations
+package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import android.app.Activity
 import androidx.lifecycle.ViewModel

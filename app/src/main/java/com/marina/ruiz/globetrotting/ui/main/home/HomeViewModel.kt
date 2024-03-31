@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.ui.home
+package com.marina.ruiz.globetrotting.ui.main.home
 
 import androidx.lifecycle.ViewModel
 

@@ -1,10 +1,16 @@
 package com.marina.ruiz.globetrotting.data.network
 
+import android.util.Log
+import androidx.lifecycle.distinctUntilChanged
 import com.marina.ruiz.globetrotting.data.network.chatGpt.ChatGptApiService
 import com.marina.ruiz.globetrotting.data.network.chatGpt.model.ChatGptResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
+import com.marina.ruiz.globetrotting.data.network.firebase.UserService
+import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.RickAndMortyApiService
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.CharacterApiModel
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.LocationApiModel
+import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -14,19 +20,40 @@ import javax.inject.Singleton
 
 @Singleton
 class NetworkRepository @Inject constructor(
-    private val service: RickAndMortyApiService,
-    private val chatGpt: ChatGptApiService
+    private val rickAndMortySvc: RickAndMortyApiService,
+    private val chatGpt: ChatGptApiService,
+    private val userSvc: UserService,
+    private val authSvc: AuthService
 ) {
 
+    private var _isLogged: Boolean = false
+    val userData: StateFlow<UserDataResponse?> = userSvc.userData
+    val logout: StateFlow<Boolean?> = userSvc.logout
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG NETWORK_REPOSITORY"
+    }
+
+    init {
+        _isLogged = authSvc.firebase.client.auth.currentUser != null
+        authSvc.uid.distinctUntilChanged().observeForever { uid ->
+            userSvc.fetchUserDocument(uid)
+        }
+    }
+
+    fun checkAccess(): Boolean {
+        return _isLogged
+    }
+
     suspend fun getAllCharacters(): List<CharacterApiModel> {
-        val response = service.api.getAllCharacters()
+        val response = rickAndMortySvc.api.getAllCharacters()
         return response.results.map {
             it.asApiModel()
         }
     }
 
     suspend fun getAllLocations(): List<LocationApiModel> {
-        val response = service.api.getAllLocations()
+        val response = rickAndMortySvc.api.getAllLocations()
         return response.results.map { result ->
             result.asApiModel()
         }

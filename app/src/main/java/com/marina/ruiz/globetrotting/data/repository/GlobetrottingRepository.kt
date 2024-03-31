@@ -3,22 +3,26 @@ package com.marina.ruiz.globetrotting.data.repository
 import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import com.marina.ruiz.globetrotting.data.local.BookingEntity
 import com.marina.ruiz.globetrotting.data.local.DestinationEntity
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
 import com.marina.ruiz.globetrotting.data.local.TravelerEntity
+import com.marina.ruiz.globetrotting.data.local.UserEntity
 import com.marina.ruiz.globetrotting.data.local.asDestinationList
 import com.marina.ruiz.globetrotting.data.local.asFullBookingList
 import com.marina.ruiz.globetrotting.data.local.asTravelerList
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
-import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.LocationApiModel
 import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.asEntityModelList
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Traveler
+import com.marina.ruiz.globetrotting.data.repository.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -30,6 +34,17 @@ class GlobetrottingRepository @Inject constructor(
     private val localRepository: LocalRepository,
     private val networkRepository: NetworkRepository
 ) {
+    var _isLogged: Boolean = false
+    val logout: StateFlow<Boolean?> = networkRepository.logout
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG GLOBETROTTING_REPOSITORY"
+    }
+
+    init {
+        _isLogged = networkRepository.checkAccess()
+    }
+
     // Expose data operations
     val travelers: Flow<List<Traveler>>
         get() {
@@ -49,10 +64,34 @@ class GlobetrottingRepository @Inject constructor(
 
     val bookings: Flow<List<Booking>>
         get() {
+            // offline first
             return localRepository.bookingWithTravelersAndDestinations.map {
                 it.asFullBookingList()
             }
         }
+
+    val localUser: Flow<User?>
+        get() {
+            // offline first
+            return localRepository.user.distinctUntilChangedBy { user -> user?.id }.map { user ->
+                Log.i(TAG, "User changed in room: ${user?.uid}")
+                user?.asUser()
+            }
+        }
+
+    fun checkAccess(): Boolean {
+        return _isLogged
+    }
+
+    suspend fun collectUserData(): Unit = withContext(Dispatchers.IO) {
+        networkRepository.userData.distinctUntilChangedBy { userData -> userData?.uid }
+            .collect { userData ->
+                Log.w(TAG, "Collected user network repo: ${userData?.uid}")
+                userData?.let { data ->
+                    createUser(data.asUserEntity())
+                }
+            }
+    }
 
     suspend fun refreshTravelersList() = withContext(Dispatchers.IO) {
         // SCOPE: suspendable code -> executed asynchronously in a coroutine.
@@ -61,51 +100,20 @@ class GlobetrottingRepository @Inject constructor(
         localRepository.insertTravelers(characterApiModelList.asEntityModelList())
     }
 
-    suspend fun refreshDestinationsList() {
-        withContext(Dispatchers.IO) {
-            val locationApiModelList = networkRepository.getAllLocations()
-            localRepository.insertDestinations(locationApiModelList.asEntityModelList())
-            //getDescriptions(locationApiModelList)
-        }
+    suspend fun refreshDestinationsList() = withContext(Dispatchers.IO) {
+        val locationApiModelList = networkRepository.getAllLocations()
+        localRepository.insertDestinations(locationApiModelList.asEntityModelList())
     }
-
-    /*@WorkerThread
-    suspend fun fetchShortDescriptions(locationApiModelList: List<LocationApiModel>) {
-        withContext(Dispatchers.IO) {
-            try {
-                for (destination in locationApiModelList) {
-                    val shortDescription =
-                        networkRepository.getShortDescription(destination.name)
-                    Log.d("DESCRIPTION", shortDescription)
-                    delay(30000)
-                    val updatedDestination = DestinationEntity(
-                        id = destination.id,
-                        name = destination.name,
-                        type = destination.type,
-                        dimension = destination.dimension,
-                        price = destination.price,
-                        shortDescription = shortDescription,
-                        description = description
-                    )
-                    localRepository.updateDestination(updatedDestination)
-                }
-            } catch (e: IOException) {
-                Log.ERROR
-            } catch (e: NetworkErrorException) {
-                Log.ERROR
-            }
-        }
-    }*/
 
     @WorkerThread
     suspend fun fetchDescription(name: String): String {
         var description = ""
         withContext(Dispatchers.IO) {
             try {
-                Log.d("DESCRIPTION", "Solicitando descripción...")
+                Log.d(TAG, "Solicitando descripción...")
                 delay(30000)
                 val gptDescription = networkRepository.getLongDescription(name)
-                Log.d("DESCRIPTION", gptDescription)
+                Log.d(TAG, gptDescription)
                 description = gptDescription
             } catch (e: IOException) {
                 Log.ERROR
@@ -121,10 +129,10 @@ class GlobetrottingRepository @Inject constructor(
         var description = ""
         withContext(Dispatchers.IO) {
             try {
-                Log.d("DESCRIPTION", "Solicitando descripción corta...")
+                Log.d(TAG, "Solicitando descripción corta...")
                 delay(10000)
                 val gptShortDescription = networkRepository.getShortDescription(name)
-                Log.d("DESCRIPTION", gptShortDescription)
+                Log.d(TAG, gptShortDescription)
                 description = gptShortDescription
             } catch (e: IOException) {
                 Log.ERROR
@@ -156,5 +164,9 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     suspend fun createBooking(booking: BookingEntity) = localRepository.insertBooking(booking)
+
+    private suspend fun createUser(user: UserEntity) = localRepository.insertUser(user)
+
+    suspend fun deleteUser() = localRepository.deleteUser()
 
 }

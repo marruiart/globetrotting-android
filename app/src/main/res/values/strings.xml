@@ -26,6 +26,9 @@
     <string name="profile_username_label">Usuario:</string>
     <string name="profile_email_label">Email:</string>
     <string name="profile_edit_btn">Modificar</string>
+    <!-- EDIT PROFILE -->
+    <string name="edit_profile_cancel_btn">Cancelar</string>
+    <string name="edit_profile_accept_btn">Aceptar</string>
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>

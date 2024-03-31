@@ -4,19 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.marina.ruiz.globetrotting.R
+import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var dialog: FullScreenDialogFragment
     private var user: User? = null
 
     companion object {
+        private const val TAG = "GLOB_DEBUG PROFILE_ACTIVITY"
         fun create(context: Context): Intent =
             Intent(context, ProfileActivity::class.java)
     }
@@ -50,6 +55,20 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
+        binding.btnEdit.setOnClickListener {
+            dialog = FullScreenDialogFragment(
+                R.layout.fragment_edit_profile,
+                positiveBtnResId = R.id.btn_accept_edit_profile,
+                neutralBtnResId = R.id.btn_cancel_edit_profile
+            )
+                .setOnAcceptFunction {
+                    Log.d(TAG, "Dismiss")
+                }.setOnCancelFunction {
+                    Log.d(TAG, "Cancel")
+                }
+            dialog.show(supportFragmentManager, "EditProfileFragment")
+        }
+
         binding.profileTopAppBar.setNavigationOnClickListener { this.finish() }
         user?.let {
             with(binding) {

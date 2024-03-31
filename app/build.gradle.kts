@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    val activityVersion = "1.8.2"
+    val fragmentVersion = "1.6.2"
     val navVersion = "2.7.7"
     val retrofitVersion = "2.9.0"
     val roomVersion = "2.6.1"
@@ -63,8 +65,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // FRAGMENTS
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    // ACTIVITIES & FRAGMENTS
+    implementation("androidx.activity:activity-ktx:${activityVersion}")
+    implementation("androidx.fragment:fragment-ktx:${fragmentVersion}")
 
     // NAVIGATION
     implementation("androidx.navigation:navigation-fragment-ktx:${navVersion}")

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Globetrotting</string>
+    <string name="full_name" translatable="false">%1$s %2$s</string>
 
     <string name="imagotype_description">Imagotipo de Globetrotting</string>
     <!-- BOTTOM NAV MENU -->
@@ -20,6 +21,11 @@
     <string name="login_new_account">¿No tienes cuenta?</string>
     <string name="login_create_account">Crear una</string>
     <string name="create_account_btn">Crear cuenta</string>
+    <!-- MY PROFILE -->
+    <string name="profile_avatar">Avatar del usuario</string>
+    <string name="profile_username_label">Usuario:</string>
+    <string name="profile_email_label">Email:</string>
+    <string name="profile_edit_btn">Modificar</string>
     <!-- DESTINATIONS LIST -->
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>

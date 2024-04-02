@@ -27,6 +27,11 @@
     <string name="profile_email_label">Email:</string>
     <string name="profile_edit_btn">Modificar</string>
     <!-- EDIT PROFILE -->
+    <string name="form_name_hint">Nombre</string>
+    <string name="form_surname_hint">Apellidos</string>
+    <string name="form_nickname_hint">Nickname</string>
+    <string name="edit_profile_change_avatar_btn">Cambiar</string>
+    <string name="edit_profile_remove_avatar_btn">Retirar</string>
     <string name="edit_profile_cancel_btn">Cancelar</string>
     <string name="edit_profile_accept_btn">Aceptar</string>
     <!-- DESTINATIONS LIST -->

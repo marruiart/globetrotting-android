@@ -11,14 +11,15 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.marina.ruiz.globetrotting.R
-import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
+import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragment
+import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragmentListener
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var dialog: FullScreenDialogFragment
     private lateinit var systemBars: Insets
+    private lateinit var dialog: EditProfileDialogFragment
     private var user: User? = null
 
     companion object {
@@ -56,20 +57,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.btnEdit.setOnClickListener {
-            dialog = FullScreenDialogFragment(
-                R.layout.fragment_edit_profile,
-                positiveBtnResId = R.id.btn_accept_edit_profile,
-                neutralBtnResId = R.id.btn_cancel_edit_profile
-            )
-                .setPaddings(systemBars.left + 100, systemBars.top + 100, systemBars.right + 100, 100)
-                .setOnAcceptFunction {
-                    Log.d(TAG, "Dismiss")
-                }.setOnCancelFunction {
-                    Log.d(TAG, "Cancel")
-                }
-            dialog.show(supportFragmentManager, "EditProfileFragment")
-        }
+        binding.btnEdit.setOnClickListener { showDialog() }
 
         binding.profileTopAppBar.setNavigationOnClickListener { this.finish() }
         user?.let {
@@ -80,6 +68,21 @@ class ProfileActivity : AppCompatActivity() {
                 tvEmail.text = it.email
             }
         }
+    }
+
+    private fun showDialog() {
+        dialog = EditProfileDialogFragment(this)
+        dialog.show(supportFragmentManager, "EditProfileFragment")
+    }
+
+    override fun onAccept(data: String) {
+        Log.d(TAG, "Accept " + data)
+        dialog.dismiss()
+    }
+
+    override fun onCancel() {
+        Log.d(TAG, "Cancel")
+        dialog.dismiss()
     }
 
 }

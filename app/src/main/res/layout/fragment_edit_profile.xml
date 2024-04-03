@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.main.MainActivity"
+    tools:padding="50dp">
 
     <ImageView
         android:id="@+id/iv_avatar_edit_profile"
@@ -18,6 +18,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_avatar" />
+
+    <Button
+        android:id="@+id/btn_change_avatar_profile"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/edit_profile_change_avatar_btn"
+        app:icon="@drawable/ic_edit"
+        app:layout_constraintBottom_toTopOf="@+id/btn_remove_avatar_profile"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatar_edit_profile"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar_edit_profile" />
+
+    <Button
+        android:id="@+id/btn_remove_avatar_profile"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_profile_remove_avatar_btn"
+        app:icon="@drawable/ic_trash"
+        app:layout_constraintBottom_toBottomOf="@id/iv_avatar_edit_profile"
+        app:layout_constraintStart_toStartOf="@+id/btn_change_avatar_profile"
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_avatar_profile" />
 
     <TextView
         android:id="@+id/tv_username_label"
@@ -70,11 +93,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="@string/form_username_hint"
+        android:hint="@string/form_name_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_email_label"
-        app:startIconDrawable="@drawable/ic_email">
+        app:layout_constraintTop_toBottomOf="@id/tv_email_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -87,12 +109,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="@string/form_password_hint"
-        app:endIconMode="password_toggle"
+        android:hint="@string/form_surname_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/form_username"
-        app:startIconDrawable="@drawable/ic_key">
+        app:layout_constraintTop_toBottomOf="@id/form_username">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -106,12 +126,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="@string/form_repeat_password_hint"
-        app:endIconMode="password_toggle"
+        android:hint="@string/form_nickname_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_form_password"
-        app:startIconDrawable="@drawable/ic_key">
+        app:layout_constraintTop_toBottomOf="@id/til_form_password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

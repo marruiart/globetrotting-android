@@ -6,109 +6,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import androidx.core.view.doOnLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
-open class FullScreenDialogFragment(
-    private val layout: Int,
-    private val positiveBtnResId: Int? = null,
-    private val negativeBtnResId: Int? = null,
-    private val neutralBtnResId: Int? = null
-) : DialogFragment() {
-    private var onAcceptFunction: () -> Unit = {}
-    private var onCancelFunction: () -> Unit = {}
-    private var onRejectFunction: () -> Unit = {}
-    private var _paddingTop: Int = 0
-    private var _paddingBottom: Int = 0
-    private var _paddingLeft: Int = 0
-    private var _paddingRight: Int = 0
+abstract class FullScreenDialogFragment(private val layout: Int) : DialogFragment() {
 
-    fun setOnAcceptFunction(fn: () -> Unit): FullScreenDialogFragment {
-        onAcceptFunction = fn
-        return this
-    }
-
-    fun setOnRejectFunction(fn: () -> Unit): FullScreenDialogFragment {
-        onRejectFunction = fn
-        return this
-    }
-
-    fun setOnCancelFunction(fn: () -> Unit): FullScreenDialogFragment {
-        onCancelFunction = fn
-        return this
-    }
-
-    fun setPaddings(
-        paddingLeft: Int = 0,
-        paddingTop: Int = 0,
-        paddingRight: Int = 0,
-        paddingBottom: Int = 0
-    ): FullScreenDialogFragment {
-        _paddingTop = paddingTop
-        _paddingBottom = paddingBottom
-        _paddingLeft = paddingLeft
-        _paddingRight = paddingRight
-        return this
-    }
-
-    fun accept() {
-        onAcceptFunction()
-        super.dismiss()
-    }
-
-    fun cancel() {
-        onCancelFunction()
-        this.dismiss()
-    }
-
-    override fun show(manager: FragmentManager, tag: String?) {
-        val transaction = manager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.add(android.R.id.content, this, tag).addToBackStack(null).commit()
+    companion object {
+        const val TAG = "FullScreenDialogFragment"
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(layout, container, false)
-        setWindowInsets(view)
-        initListeners(view)
-        return view
+        isCancelable = false
+        return inflater.inflate(layout, container, false)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
         return dialog
     }
 
-    private fun setWindowInsets(view: View) {
-        view.doOnLayout { v ->
-            v.setPadding(_paddingLeft, _paddingTop, _paddingRight, _paddingBottom)
-        }
+    override fun show(manager: FragmentManager, tag: String?) {
+        val transaction = manager.beginTransaction()
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        transaction
+            .add(android.R.id.content, this, tag)
+            .addToBackStack(null)
+            .commit()
     }
 
-    private fun initListeners(view: View) {
-        positiveBtnResId?.let { btn ->
-            val acceptButton = view.findViewById<Button>(btn)
-            acceptButton.setOnClickListener {
-                accept()
-            }
-        }
-        negativeBtnResId?.let { btn ->
-            val cancelButton = view.findViewById<Button>(btn)
-            cancelButton.setOnClickListener {
-                cancel()
-            }
-        }
-        neutralBtnResId?.let { btn ->
-            val cancelButton = view.findViewById<Button>(btn)
-            cancelButton.setOnClickListener {
-                cancel()
-            }
-        }
-    }
 }

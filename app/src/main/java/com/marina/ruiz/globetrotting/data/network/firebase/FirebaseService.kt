@@ -30,6 +30,10 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
         client.db.collection(collectionName).document(docId).set(data).await()
     }
 
+    suspend fun updateDocument(collectionName: String, data: HashMap<String, Any>, docId: String) {
+        client.db.collection(collectionName).document(docId).update(data).await()
+    }
+
     fun logout() {
         client.auth.signOut()
     }

@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
@@ -15,9 +16,12 @@ import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragment
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragmentListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     private lateinit var binding: ActivityProfileBinding
+    private val profileVM: ProfileViewModel by viewModels()
     private lateinit var systemBars: Insets
     private lateinit var dialog: EditProfileDialogFragment
     private var user: User? = null
@@ -75,8 +79,8 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
         dialog.show(supportFragmentManager, "EditProfileFragment")
     }
 
-    override fun onAccept(data: String) {
-        Log.d(TAG, "Accept " + data)
+    override fun onAccept(data: Profile) {
+        profileVM.editProfile(data)
         dialog.dismiss()
     }
 

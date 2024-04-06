@@ -89,7 +89,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/form_username"
+        android:id="@+id/form_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -99,8 +99,10 @@
         app:layout_constraintTop_toBottomOf="@id/tv_email_label">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_form_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,12 +114,13 @@
         android:hint="@string/form_surname_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/form_username">
+        app:layout_constraintTop_toBottomOf="@id/form_name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_form_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,9 +135,10 @@
         app:layout_constraintTop_toBottomOf="@id/til_form_password">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/til_form_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

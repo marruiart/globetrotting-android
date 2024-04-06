@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
+import com.marina.ruiz.globetrotting.ui.main.profile.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.ProfileForm
 
 interface EditProfileDialogFragmentListener {
-    fun onAccept(data: String)
+    fun onAccept(data: Profile)
     fun onCancel()
 }
 
@@ -21,8 +22,7 @@ class EditProfileDialogFragment(
 ) : FullScreenDialogFragment(R.layout.fragment_edit_profile) {
     private val padding = 100
     private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var positiveBtn: Button
-    private lateinit var neutralBtn: Button
+    private lateinit var form: ProfileForm
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +36,14 @@ class EditProfileDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setWindowInsets(view)
-        positiveBtn = binding.btnAcceptEditProfile
-        neutralBtn = binding.btnCancelEditProfile
+        form = ProfileForm(
+            tilName = binding.tilFormName,
+            tilSurname = binding.tilFormSurname,
+            tilNickname = binding.tilFormNickname,
+            positiveBtn = binding.btnAcceptEditProfile,
+            neutralBtn = binding.btnCancelEditProfile
+        )
+
         initListeners()
     }
 
@@ -55,10 +61,15 @@ class EditProfileDialogFragment(
     }
 
     private fun initListeners() {
-        positiveBtn.setOnClickListener {
-            callback.onAccept("Hola mundo")
+        form.positiveBtn.setOnClickListener {
+            val profile = Profile(
+                name = form.tilName.text.toString(),
+                surname = form.tilSurname.text.toString(),
+                nickname = form.tilNickname.text.toString()
+            )
+            callback.onAccept(profile)
         }
-        neutralBtn.setOnClickListener {
+        form.neutralBtn.setOnClickListener {
             callback.onCancel()
         }
     }

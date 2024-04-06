@@ -1,11 +1,10 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asUserDataResponse
 import com.marina.ruiz.globetrotting.ui.auth.model.UserCredentials
+import com.marina.ruiz.globetrotting.ui.main.profile.Profile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -39,6 +38,18 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
         )
 
         firebase.createDocumentWithId(USER_COLLECTION, user, uid)
+
+    }.isSuccess
+
+    suspend fun editUserDocument(uid: String, data: Profile) = runCatching {
+
+        val user = hashMapOf(
+            "name" to data.name as Any,
+            "surname" to data.surname as Any,
+            "nickname" to data.nickname as Any
+        )
+
+        firebase.updateDocument(USER_COLLECTION, user, uid)
 
     }.isSuccess
 

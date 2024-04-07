@@ -2,7 +2,7 @@ package com.marina.ruiz.globetrotting.domain
 
 import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
-import com.marina.ruiz.globetrotting.ui.main.profile.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import javax.inject.Inject
 
 class EditProfileUseCase @Inject constructor(

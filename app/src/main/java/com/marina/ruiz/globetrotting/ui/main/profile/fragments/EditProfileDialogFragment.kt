@@ -9,8 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
-import com.marina.ruiz.globetrotting.ui.main.profile.Profile
-import com.marina.ruiz.globetrotting.ui.main.profile.ProfileForm
+import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 
 interface EditProfileDialogFragmentListener {
     fun onAccept(data: Profile)

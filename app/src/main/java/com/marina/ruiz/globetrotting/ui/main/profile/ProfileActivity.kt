@@ -16,6 +16,7 @@ import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragment
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragmentListener
+import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,22 +25,20 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     private val profileVM: ProfileViewModel by viewModels()
     private lateinit var systemBars: Insets
     private lateinit var dialog: EditProfileDialogFragment
-    private var user: User? = null
+    private var _user: User? = null
 
     companion object {
         private const val TAG = "GLOB_DEBUG PROFILE_ACTIVITY"
+
         fun create(context: Context): Intent =
             Intent(context, ProfileActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = intent
-        user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("user", User::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra("user")
+        profileVM.user.observe(this) { user ->
+            _user = user
+            bindView()
         }
         enableEdgeToEdge()
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -57,14 +56,12 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     }
 
     private fun initUI() {
+        bindView()
         initListeners()
     }
 
-    private fun initListeners() {
-        binding.btnEdit.setOnClickListener { showDialog() }
-
-        binding.profileTopAppBar.setNavigationOnClickListener { this.finish() }
-        user?.let {
+    private fun bindView() {
+        _user?.let {
             with(binding) {
                 tvName.text = getString(R.string.full_name, it.name, it.surname)
                 tvNickname.text = it.nickname
@@ -72,6 +69,12 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
                 tvEmail.text = it.email
             }
         }
+    }
+
+    private fun initListeners() {
+        binding.btnEdit.setOnClickListener { showDialog() }
+
+        binding.profileTopAppBar.setNavigationOnClickListener { this.finish() }
     }
 
     private fun showDialog() {

@@ -1,13 +1,7 @@
-package com.marina.ruiz.globetrotting.ui.main.profile
+package com.marina.ruiz.globetrotting.ui.main.profile.model
 
 import android.widget.Button
 import com.google.android.material.textfield.TextInputEditText
-
-data class Profile(
-    val name: String,
-    val surname: String,
-    val nickname: String
-)
 
 data class ProfileForm(
     val tilName: TextInputEditText,

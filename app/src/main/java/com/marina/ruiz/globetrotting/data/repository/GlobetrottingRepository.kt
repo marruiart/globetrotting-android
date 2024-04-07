@@ -3,7 +3,6 @@ package com.marina.ruiz.globetrotting.data.repository
 import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import com.marina.ruiz.globetrotting.data.local.BookingEntity
 import com.marina.ruiz.globetrotting.data.local.DestinationEntity
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
@@ -21,8 +20,8 @@ import com.marina.ruiz.globetrotting.data.repository.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -70,10 +69,14 @@ class GlobetrottingRepository @Inject constructor(
             }
         }
 
+    private val _user = MutableStateFlow<User?>(null)
+    val user: StateFlow<User?>
+        get() = _user
+
     val localUser: Flow<User?>
         get() {
             // offline first
-            return localRepository.user.distinctUntilChangedBy { user -> user?.id }.map { user ->
+            return localRepository.localUser.map { user ->
                 Log.i(TAG, "User changed in room: ${user?.uid}")
                 user?.asUser()
             }
@@ -84,8 +87,7 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     suspend fun collectUserData(): Unit = withContext(Dispatchers.IO) {
-        networkRepository.userData.distinctUntilChangedBy { userData -> userData?.uid }
-            .collect { userData ->
+        networkRepository.userData.collect { userData ->
                 Log.w(TAG, "Collected user network repo: ${userData?.uid}")
                 userData?.let { data ->
                     createUser(data.asUserEntity())

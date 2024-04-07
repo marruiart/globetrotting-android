@@ -2,7 +2,6 @@ package com.marina.ruiz.globetrotting.ui.main.profile
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -78,8 +77,13 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     }
 
     private fun showDialog() {
-        dialog = EditProfileDialogFragment(this)
-        dialog.show(supportFragmentManager, "EditProfileFragment")
+        _user?.let { user ->
+            dialog = EditProfileDialogFragment(
+                this,
+                Profile(user.name ?: "", user.surname ?: "", user.nickname)
+            )
+            dialog.show(supportFragmentManager, "EditProfileFragment")
+        }
     }
 
     override fun onAccept(data: Profile) {

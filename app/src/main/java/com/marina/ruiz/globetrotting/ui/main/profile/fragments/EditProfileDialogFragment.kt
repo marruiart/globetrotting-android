@@ -18,7 +18,8 @@ interface EditProfileDialogFragmentListener {
 }
 
 class EditProfileDialogFragment(
-    private val callback: EditProfileDialogFragmentListener
+    private val callback: EditProfileDialogFragmentListener,
+    private val profile: Profile
 ) : FullScreenDialogFragment(R.layout.fragment_edit_profile) {
     private val padding = 100
     private lateinit var binding: FragmentEditProfileBinding
@@ -43,8 +44,14 @@ class EditProfileDialogFragment(
             positiveBtn = binding.btnAcceptEditProfile,
             neutralBtn = binding.btnCancelEditProfile
         )
-
+        bindView()
         initListeners()
+    }
+
+    private fun bindView() {
+        form.tilName.setText(profile.name)
+        form.tilSurname.setText(profile.surname)
+        form.tilNickname.setText(profile.nickname)
     }
 
     private fun setWindowInsets(view: View) {

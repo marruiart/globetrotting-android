@@ -111,6 +111,9 @@ class AuthViewModel @Inject constructor(
     private fun isValidPassword(password: String): Boolean =
         password.length >= MIN_PASSWORD_LENGTH || password.isEmpty()
 
+
+    // PUBLIC FUNCTIONS
+
     fun onLogin(email: String, password: String) {
         if (isValidEmail(email) && isValidPassword(password)) {
             Log.d(TAG, "Init login...")
@@ -127,10 +130,5 @@ class AuthViewModel @Inject constructor(
             repository.deleteUser()
         }
         resetData()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.i(TAG, "onCleared")
     }
 }

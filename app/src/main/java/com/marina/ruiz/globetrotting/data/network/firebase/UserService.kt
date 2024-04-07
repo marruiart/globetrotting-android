@@ -4,7 +4,7 @@ import android.util.Log
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asUserDataResponse
 import com.marina.ruiz.globetrotting.ui.auth.model.UserCredentials
-import com.marina.ruiz.globetrotting.ui.main.profile.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

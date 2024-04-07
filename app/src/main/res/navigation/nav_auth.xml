@@ -5,21 +5,6 @@
     android:id="@+id/nav_auth"
     app:startDestination="@id/loginFragment">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.LoginFragment"
-        android:label="login">
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-    </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.RegisterFragment"
-        android:label="register"/>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.marina.ruiz.globetrotting.ui.main.MainActivity"
@@ -30,4 +15,21 @@
             app:argType="com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse"
             app:nullable="true" />
     </activity>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

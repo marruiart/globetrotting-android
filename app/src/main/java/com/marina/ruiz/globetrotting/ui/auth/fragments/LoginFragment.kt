@@ -51,6 +51,7 @@ class LoginFragment : Fragment() {
                 val password = binding.etLoginPassword.text.toString()
                 authVM.onLogin(email, password)
             }
+            tvCreateAccount.setOnClickListener { navigateToRegisterForm() }
         }
     }
 

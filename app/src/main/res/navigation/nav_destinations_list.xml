@@ -10,25 +10,8 @@
         android:label="fragment_destinations"
         tools:layout="@layout/fragment_destinations" >
         <action
-            android:id="@+id/action_destinationsFragment_to_bookingCreationFormFragment"
-            app:destination="@id/bookingCreationFormFragment" />
-        <action
             android:id="@+id/action_destinationsFragment_to_destinationDetailFragment"
             app:destination="@id/destinationDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bookingCreationFormFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.main.bookings.BookingCreationFormFragment"
-        android:label="fragment_booking_creation_form"
-        tools:layout="@layout/fragment_booking_creation_form" >
-        <argument
-            android:name="destination"
-            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
-        <argument
-            android:name="booking"
-            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Booking"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/destinationDetailFragment"

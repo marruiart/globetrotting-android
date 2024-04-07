@@ -7,9 +7,6 @@ import com.marina.ruiz.globetrotting.data.network.chatGpt.model.ChatGptResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
-import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.RickAndMortyApiService
-import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.CharacterApiModel
-import com.marina.ruiz.globetrotting.data.network.rickAndMortyApi.model.LocationApiModel
 import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -20,7 +17,6 @@ import javax.inject.Singleton
 
 @Singleton
 class NetworkRepository @Inject constructor(
-    private val rickAndMortySvc: RickAndMortyApiService,
     private val chatGpt: ChatGptApiService,
     private val userSvc: UserService,
     private val authSvc: AuthService
@@ -43,20 +39,6 @@ class NetworkRepository @Inject constructor(
 
     fun checkAccess(): Boolean {
         return _isLogged
-    }
-
-    suspend fun getAllCharacters(): List<CharacterApiModel> {
-        val response = rickAndMortySvc.api.getAllCharacters()
-        return response.results.map {
-            it.asApiModel()
-        }
-    }
-
-    suspend fun getAllLocations(): List<LocationApiModel> {
-        val response = rickAndMortySvc.api.getAllLocations()
-        return response.results.map { result ->
-            result.asApiModel()
-        }
     }
 
     suspend fun getShortDescription(destination: String): String {

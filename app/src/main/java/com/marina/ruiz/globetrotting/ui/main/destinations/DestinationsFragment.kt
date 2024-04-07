@@ -1,10 +1,10 @@
 package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
-import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,7 +27,7 @@ class DestinationsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDestinationsBinding
             .inflate(inflater, container, false)
         return binding.root
@@ -61,11 +60,7 @@ class DestinationsFragment : Fragment() {
     }
 
     private fun onBookNow(destination: Destination, view: View) {
-        val action =
-            DestinationsFragmentDirections.actionDestinationsFragmentToBookingCreationFormFragment(
-                destination
-            )
-        view.findNavController().navigate(action)
+        // TODO
     }
 
     private fun initObservers() {

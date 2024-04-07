@@ -95,7 +95,7 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textSize="16sp"
-                    tools:text="Descripción del traveler" />
+                    tools:text="Lorem ipsum dolor sit amet" />
             </ScrollView>
 
             <com.google.android.material.progressindicator.CircularProgressIndicator

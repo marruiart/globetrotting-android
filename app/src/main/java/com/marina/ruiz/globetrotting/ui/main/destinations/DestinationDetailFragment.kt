@@ -33,7 +33,7 @@ class DestinationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mainTopAppBar)
-        fetchDescription()
+       // fetchDescription()
         bindView(args.destination)
     }
 
@@ -57,7 +57,7 @@ class DestinationDetailFragment : Fragment() {
         requireActivity().supportFragmentManager.popBackStack()
     }
 
-    private fun fetchDescription() {
+    /*private fun fetchDescription() {
         if (args.destination.description.isEmpty()) {
             viewModel.updateDescription(args.destination, requireActivity().lifecycleScope)
             viewLifecycleOwner.lifecycleScope.launch {
@@ -66,5 +66,5 @@ class DestinationDetailFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 }

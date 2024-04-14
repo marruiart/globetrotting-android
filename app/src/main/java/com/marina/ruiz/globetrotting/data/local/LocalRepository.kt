@@ -11,6 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class LocalRepository @Inject constructor(
     private val destinationDao: DestinationDao,
+    //private val bookingDao: BookingDao,
     private val userDao: UserDao
 ) {
 
@@ -22,25 +23,34 @@ class LocalRepository @Inject constructor(
     var destinations: Flow<List<DestinationEntity>> = destinationDao.getAllDestinations()
 
     @WorkerThread
-    suspend fun insertDestinations(listDestinationEntity: List<DestinationEntity>) =
+    suspend fun insertDestinations(listDestinationEntity: List<DestinationEntity>) {
         destinationDao.createDestinations(listDestinationEntity)
-
-    @WorkerThread
-    suspend fun insertDestination(destinationEntity: DestinationEntity) =
-        destinationDao.createDestination(destinationEntity)
-
-    @WorkerThread
-    suspend fun updateDestination(destination: DestinationEntity): Flow<Destination> {
-        destinationDao.updateDestination(destination)
         destinations = destinationDao.getAllDestinations()
-        return flowOf(destination.asDestination())
+        Log.d(TAG, "Insert destinations")
+    }
+
+    // BOOKING
+/*    var bookings: Flow<List<BookingEntity>> = bookingDao.getAllBookings()
+    val bookingWithTravelersAndDestinations: Flow<List<FullBooking>> =
+        bookingDao.getAllBookingsWithTravelerAndDestination()
+
+    @WorkerThread
+    suspend fun insertBooking(bookingEntity: BookingEntity) {
+        bookingDao.createBooking(bookingEntity)
+        bookings = bookingDao.getAllBookings()
     }
 
     @WorkerThread
-    suspend fun deleteDestination(destination: DestinationEntity) {
-        destinationDao.deleteDestination(destination)
-        destinations = destinationDao.getAllDestinations()
+    suspend fun updateBooking(booking: BookingEntity) {
+        bookingDao.updateBooking(booking)
+        bookings = bookingDao.getAllBookings()
     }
+
+    @WorkerThread
+    suspend fun deleteBooking(booking: BookingEntity) {
+        bookingDao.deleteBooking(booking)
+        bookings = bookingDao.getAllBookings()
+    }*/
 
     // USER
     var localUser: Flow<UserEntity?> = userDao.getUser()

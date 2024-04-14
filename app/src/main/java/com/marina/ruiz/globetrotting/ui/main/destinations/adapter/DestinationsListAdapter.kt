@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
-import com.marina.ruiz.globetrotting.databinding.DestinationItemBinding
+import com.marina.ruiz.globetrotting.databinding.ItemDestinationBinding
 import java.text.NumberFormat
 
 class DestinationsListAdapter(
@@ -19,7 +19,7 @@ class DestinationsListAdapter(
     ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
     inner class DestinationViewHolder(
-        private val binding: DestinationItemBinding,
+        private val binding: ItemDestinationBinding,
         private val context: Context
     ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -54,7 +54,7 @@ class DestinationsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinationViewHolder {
-        val binding = DestinationItemBinding
+        val binding = ItemDestinationBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return DestinationViewHolder(binding, parent.context)
     }

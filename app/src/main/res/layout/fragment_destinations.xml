@@ -8,10 +8,10 @@
     tools:context=".ui.main.destinations.DestinationsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/destinations_list"
+        android:id="@+id/rv_destinations_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/destination_item" />
+        tools:listitem="@layout/item_destination" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

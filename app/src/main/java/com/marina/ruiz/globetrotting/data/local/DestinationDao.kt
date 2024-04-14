@@ -21,7 +21,4 @@ interface DestinationDao {
 
     @Update
     suspend fun updateDestination(destinationEntity: DestinationEntity)
-
-    @Delete
-    suspend fun deleteDestination(destinationEntity: DestinationEntity)
 }

@@ -8,34 +8,32 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 @Entity(tableName = "destination")
 data class DestinationEntity(
     @PrimaryKey()
-    val id: Int,
+    val id: String,
     val name: String,
     val type: String?,
     val dimension: String?,
-    val price: Float,
+    val price: Double,
     val shortDescription: String,
     val description: String,
-    val fav: Boolean = false,
     val imageRef: Int? = null
 ) {
     fun asDestination(): Destination {
         return Destination(
-            id,
-            name,
-            type,
-            dimension,
-            price,
-            shortDescription,
-            description,
-            fav,
-            chooseImage(type)
+            id = id,
+            name = name,
+            type = type,
+            dimension = dimension,
+            price = price,
+            shortDescription = shortDescription,
+            description = description,
+            imageRef = chooseImage(type)
         )
     }
 }
 
 fun List<DestinationEntity>.asDestinationList(): List<Destination> {
-    return this.map {
-        it.asDestination()
+    return this.map { destination ->
+        destination.asDestination()
     }
 }
 

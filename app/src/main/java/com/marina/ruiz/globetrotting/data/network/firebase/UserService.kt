@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     private val _userData = MutableStateFlow<UserDataResponse?>(null)
-    val userData: StateFlow<UserDataResponse?>
+    val userResponse: StateFlow<UserDataResponse?>
         get() = _userData
 
     private val _logout: MutableStateFlow<Boolean?> = MutableStateFlow(null)
@@ -62,17 +62,8 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
                     Log.w(TAG, "Listen failed.", e)
                     _userData.value = null
                     _logout.value = true
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    if (isClient(snapshot.data)) {
-                        Log.d(TAG, "User is client!! ;)")
-                        _userData.value = snapshot.data!!.asUserDataResponse()
-                        _logout.value = false
-                    } else {
-                        Log.w(TAG, "User is not client")
-                        _userData.value = null
-                        _logout.value = true
-                    }
+                } else if (snapshot != null && snapshot.exists()) {
+                    checkUserRole(snapshot.data)
                 } else {
                     Log.w(TAG, "Current data: null")
                     _userData.value = null
@@ -82,6 +73,18 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
         } else {
             _userData.value = null
             _logout.value = null
+        }
+    }
+
+    private fun checkUserRole(data: Map<String, Any>?) {
+        if (isClient(data)) {
+            Log.d(TAG, "User is client!! ;)")
+            _userData.value = data!!.asUserDataResponse()
+            _logout.value = false
+        } else {
+            Log.w(TAG, "User is not client")
+            _userData.value = null
+            _logout.value = true
         }
     }
 

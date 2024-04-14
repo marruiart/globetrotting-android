@@ -1,11 +1,12 @@
 package com.marina.ruiz.globetrotting.data.network
 
-import android.util.Log
 import androidx.lifecycle.distinctUntilChanged
 import com.marina.ruiz.globetrotting.data.network.chatGpt.ChatGptApiService
 import com.marina.ruiz.globetrotting.data.network.chatGpt.model.ChatGptResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
+import com.marina.ruiz.globetrotting.data.network.firebase.DestinationsService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
+import com.marina.ruiz.globetrotting.data.network.firebase.model.FirebaseDocument
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaType
@@ -19,27 +20,35 @@ import javax.inject.Singleton
 class NetworkRepository @Inject constructor(
     private val chatGpt: ChatGptApiService,
     private val userSvc: UserService,
+    private val destinationsSvc: DestinationsService,
     private val authSvc: AuthService
 ) {
-
-    private var _isLogged: Boolean = false
-    val userData: StateFlow<UserDataResponse?> = userSvc.userData
-    val logout: StateFlow<Boolean?> = userSvc.logout
 
     companion object {
         private const val TAG = "GLOB_DEBUG NETWORK_REPOSITORY"
     }
 
+    // USER SERVICE
+    val userResponse: StateFlow<UserDataResponse?> = userSvc.userResponse
+    val logout: StateFlow<Boolean?> = userSvc.logout
+
+    // DESTINATIONS SERVICE
+    val destinationsResponse: StateFlow<List<FirebaseDocument>> =
+        destinationsSvc.destinationsResponse
+
+
     init {
-        _isLogged = authSvc.firebase.client.auth.currentUser != null
+        fetchData()
+    }
+
+    private fun fetchData() {
         authSvc.uid.distinctUntilChanged().observeForever { uid ->
             userSvc.fetchUserDocument(uid)
         }
+        destinationsSvc.fetchDestinations()
     }
 
-    fun checkAccess(): Boolean {
-        return _isLogged
-    }
+    fun checkAccess(): Boolean = authSvc.firebase.client.auth.currentUser != null
 
     suspend fun getShortDescription(destination: String): String {
         val requestBody =

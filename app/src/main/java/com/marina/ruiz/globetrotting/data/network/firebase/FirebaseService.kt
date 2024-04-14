@@ -1,7 +1,9 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,6 +19,14 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
             } else {
                 null
             }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun getCollection(collectionName: String): Task<QuerySnapshot>? {
+        return try {
+            client.db.collection(collectionName).get()
         } catch (e: Exception) {
             null
         }

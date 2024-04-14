@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_home"
-        android:title="@string/menu_home"
-        android:icon="@drawable/ic_home" />
-    <item android:id="@+id/destinations_list"
-        android:title="@string/menu_destinations"
-        android:icon="@drawable/ic_destinations" />
-    <item android:id="@+id/nav_bookings"
-        android:title="@string/menu_booking"
-        android:icon="@drawable/ic_booking" />
+    <item
+        android:id="@+id/nav_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/menu_home" />
+    <item
+        android:id="@+id/rv_destinations_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_destinations"
+        android:title="@string/menu_destinations" />
+    <item
+        android:id="@+id/nav_bookings"
+        android:enabled="true"
+        android:icon="@drawable/ic_booking"
+        android:title="@string/menu_booking" />
 </menu>

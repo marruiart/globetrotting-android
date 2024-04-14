@@ -27,6 +27,12 @@ object DatabaseModule {
         return database.destinationDao()
     }
 
+/*    @Singleton
+    @Provides
+    fun provideBookingDao(database: GlobetrottingDb): BookingDao {
+        return database.bookingDao()
+    }*/
+
     @Singleton
     @Provides
     fun provideUserDao(database: GlobetrottingDb): UserDao {

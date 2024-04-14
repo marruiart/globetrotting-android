@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DestinationsFragment : Fragment() {
     private lateinit var binding: FragmentDestinationsBinding
-    private val viewModel: DestinationsListViewModel by viewModels()
+    private lateinit var adapter: DestinationsListAdapter
+    private val destinationsVM: DestinationsListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,20 +36,14 @@ class DestinationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow)
-        bindView(adapter)
+        initAdapter()
+        destinationsVM.bindView(adapter)
     }
 
-    private fun bindView(adapter: DestinationsListAdapter) {
-        val rv = binding.destinationsList
+    private fun initAdapter() {
+        adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow)
+        val rv = binding.rvDestinationsList
         rv.adapter = adapter
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.destinations.collect {
-                    adapter.submitList(it)
-                }
-            }
-        }
     }
 
     private fun onShowDetail(destination: Destination, view: View) {

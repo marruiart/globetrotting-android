@@ -17,7 +17,7 @@ class DestinationDetailViewModel @Inject constructor(
     private val repository: GlobetrottingRepository
 ) : ViewModel() {
 
-    private val _destination: MutableStateFlow<Destination> = MutableStateFlow(Destination())
+    /*private val _destination: MutableStateFlow<Destination> = MutableStateFlow(Destination())
     val destination: StateFlow<Destination>
         get() = _destination.asStateFlow()
 
@@ -25,20 +25,9 @@ class DestinationDetailViewModel @Inject constructor(
         activityScope.launch {
             val description = repository.fetchDescription(destination.name)
             val shortDescription = repository.fetchShortDescription(destination.name)
-            val updatedDestination = DestinationEntity(
-                destination.id,
-                destination.name,
-                destination.type,
-                destination.dimension,
-                destination.price,
-                shortDescription,
-                description,
-                destination.fav,
-                destination.imageRef
-            )
             repository.updateDestination(updatedDestination).collect {
                 _destination.value = it
             }
         }
-    }
+    }*/
 }

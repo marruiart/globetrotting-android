@@ -1,19 +1,21 @@
-package com.marina.ruiz.globetrotting.ui.main.destinations
+package com.marina.ruiz.globetrotting.ui.main.bookings
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
+//import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
-import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class DestinationsListViewModel @Inject constructor(
+class BookingFormViewModel @Inject constructor(
     private val repository: GlobetrottingRepository
 ) : ViewModel() {
 
@@ -21,17 +23,24 @@ class DestinationsListViewModel @Inject constructor(
     val destinations: StateFlow<List<Destination>>
         get() = _destinations.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            repository.collectDestinationsList()
-        }
+/*    suspend fun createBooking(booking: Booking) {
+        repository.createBooking(booking.asBookingEntity())
+        repository.refreshTravelersList()
     }
 
-    fun bindView(adapter: DestinationsListAdapter) {
+    suspend fun updateBooking(booking: Booking) {
+        repository.updateBooking(booking.asBookingEntity())
+        repository.refreshTravelersList()
+    }*/
+
+    init {
         viewModelScope.launch {
-            repository.destinations.collect { destinationsList ->
-                _destinations.value = destinationsList
-                adapter.submitList(destinationsList)
+            try {
+                repository.destinations.collect { destinations ->
+                    _destinations.value = destinations
+                }
+            } catch (e: IOException) {
+                Log.ERROR
             }
         }
     }

@@ -44,6 +44,7 @@ class LocalRepository @Inject constructor(
     @WorkerThread
     suspend fun insertBookings(listBookingEntity: List<BookingEntity>) {
         Log.d(TAG, "Insert bookings")
+        bookingDao.deleteBookings()
         bookingDao.createBookings(listBookingEntity)
         bookings = bookingDao.getAllBookings()
     }

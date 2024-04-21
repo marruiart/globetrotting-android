@@ -26,7 +26,7 @@ data class Booking(
             id = id,
             agentId = agentId,
             clientId = clientId,
-            //destinationId = destinationId,
+            destinationId = destinationId,
             end = end,
             start = start,
             amount = amount,

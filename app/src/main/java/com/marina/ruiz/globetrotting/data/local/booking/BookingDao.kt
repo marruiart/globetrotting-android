@@ -22,20 +22,20 @@ interface BookingDao {
 
     @Query(
         "SELECT b.id AS id, a.name AS agentName, a.id AS agentId, u.name AS clientName, " +
-                "u.uid as clientId, /*d.name AS destinationName, d.id AS destinationId,*/ b." +
+                "u.uid as clientId, d.name AS destinationName, d.id AS destinationId, b." +
                 "`end` AS `end`, b.start AS start, b.amount AS amount, b.isActive as isActive, " +
                 "b.isConfirmed AS isConfirmed, b.travelers AS travelers " +
                 "FROM booking AS b " +
                 "INNER JOIN user AS u ON u.uid = b.clientId " +
-                "INNER JOIN agent AS a ON a.id = b.agentId " //+
-        //"INNER JOIN destination AS d ON d.id = b.destinationId"
+                "LEFT JOIN agent AS a ON a.id = b.agentId " +
+                "INNER JOIN destination AS d ON d.id = b.destinationId"
     )
     fun getAllBookings(): Flow<List<BookingClientAgentDestinationEntity>>
 
     @Update
     suspend fun updateBooking(bookingEntity: BookingEntity)
 
-    @Delete
-    suspend fun deleteBooking(booking: BookingEntity)
+    @Query("DELETE FROM booking")
+    suspend fun deleteBookings()
 }
 

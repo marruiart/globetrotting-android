@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.marina.ruiz.globetrotting.R
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.databinding.ItemBookingBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/*class BookingsListAdapter(
+class BookingsListAdapter(
     private val onShare: (booking: Booking, view: View) -> Unit,
-    private val onDeleteBooking: (booking: Booking) -> Unit,
-    private val onUpdateBooking: (view: View, booking: Booking) -> Unit
+    private val onDeleteBooking: (booking: Booking) -> Unit
 ) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
@@ -30,12 +30,12 @@ import java.util.Locale
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindBooking(booking: Booking) {
-            binding.destinationName.text = booking.destination.name
-            binding.bookingTravelerName.text = booking.traveler.name
-            binding.bookingTravelerImg.load(booking.traveler.image)
+            binding.destinationName.text = booking.destinationName
+            binding.bookingTravelerName.text = booking.clientName
+            //binding.bookingTravelerImg.load(booking.traveler.image)
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val departureDate = dateFormat.format(Date(booking.departureDate))
-            val arrivalDate = dateFormat.format(Date(booking.arrivalDate))
+            val departureDate = dateFormat.format(Date(booking.start))
+            val arrivalDate = dateFormat.format(Date(booking.end))
             binding.departureDate.text =
                 context.getString(R.string.booking_item_departure, departureDate)
             binding.arrivalDate.text = context.getString(R.string.booking_item_arrival, arrivalDate)
@@ -53,10 +53,6 @@ import java.util.Locale
 
             popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 when (menuItem.itemId) {
-                    R.id.edit_booking -> {
-                        onUpdateBooking(view, booking)
-                        true
-                    }
 
                     R.id.delete_booking -> {
                         onDeleteBooking(booking)
@@ -89,4 +85,4 @@ import java.util.Locale
         val booking = getItem(position)
         holder.bindBooking(booking)
     }
-}*/
+}

@@ -32,6 +32,9 @@ class MainViewModel @Inject constructor(
             repository.collectUserData()
         }
         viewModelScope.launch {
+            repository.collectData()
+        }
+        viewModelScope.launch {
             repository.localUser.collect { user ->
                 user?.let {
                     _user.value = it

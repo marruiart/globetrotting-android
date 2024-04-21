@@ -1,8 +1,10 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
+import com.google.firebase.firestore.QuerySnapshot
+import com.marina.ruiz.globetrotting.data.network.firebase.model.DestinationResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
-import com.marina.ruiz.globetrotting.data.network.firebase.model.FirebaseDocument
+import com.marina.ruiz.globetrotting.data.network.firebase.model.asDestinationResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -11,8 +13,8 @@ import javax.inject.Singleton
 @Singleton
 class DestinationsService @Inject constructor(private val firebase: FirebaseService) {
 
-    private val _destinationsResponse = MutableStateFlow<List<FirebaseDocument>>(emptyList())
-    val destinationsResponse: StateFlow<List<FirebaseDocument>>
+    private val _destinationsResponse = MutableStateFlow<List<DestinationResponse>>(emptyList())
+    val destinationsResponse: StateFlow<List<DestinationResponse>>
         get() = _destinationsResponse
 
     companion object {
@@ -22,12 +24,18 @@ class DestinationsService @Inject constructor(private val firebase: FirebaseServ
 
     fun fetchDestinations() {
         Log.i(TAG, "Fetch destinations")
-        firebase.getCollection(DESTINATIONS_COLLECTION)?.addOnSuccessListener { destinations ->
-            val docs: List<FirebaseDocument> =
-                destinations.documents.map { doc -> FirebaseDocument(doc.id, doc.data as DocumentData) }
-            _destinationsResponse.value = docs
-            Log.d(TAG, docs.toString())
-        }
+        firebase.getCollectionRef(DESTINATIONS_COLLECTION)
+            .addSnapshotListener { snapshot: QuerySnapshot?, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                } else if (snapshot != null) {
+                    _destinationsResponse.value = snapshot.map { doc ->
+                        (doc.data as DocumentData).asDestinationResponse()
+                    }
+                    Log.d(TAG, "Current agents: ${_destinationsResponse.value}")
+                }
+            }
     }
 
 }

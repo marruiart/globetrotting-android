@@ -1,7 +1,7 @@
 package com.marina.ruiz.globetrotting.data.network.firebase.model
 
 import android.os.Parcelable
-import com.marina.ruiz.globetrotting.data.local.UserEntity
+import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import kotlinx.parcelize.Parcelize
 

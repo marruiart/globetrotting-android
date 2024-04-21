@@ -13,18 +13,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DestinationsListViewModel @Inject constructor(
+class DestinationsViewModel @Inject constructor(
     private val repository: GlobetrottingRepository
 ) : ViewModel() {
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG DESTINATIONS_VM"
+    }
 
     private val _destinations: MutableStateFlow<List<Destination>> = MutableStateFlow(listOf())
     val destinations: StateFlow<List<Destination>>
         get() = _destinations.asStateFlow()
 
     init {
-        viewModelScope.launch {
+/*        viewModelScope.launch {
             repository.collectDestinationsList()
-        }
+        }*/
     }
 
     fun bindView(adapter: DestinationsListAdapter) {

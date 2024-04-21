@@ -1,7 +1,7 @@
 package com.marina.ruiz.globetrotting.data.repository.model
 
 import android.os.Parcelable
-import com.marina.ruiz.globetrotting.data.local.DestinationEntity
+import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -25,7 +25,7 @@ data class Destination(
             price = price,
             shortDescription = shortDescription,
             description = description,
-            imageRef = imageRef
+            //imageRef = imageRef
         )
     }
 }

@@ -4,9 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.marina.ruiz.globetrotting.data.local.agent.AgentDao
+import com.marina.ruiz.globetrotting.data.local.agent.AgentEntity
+import com.marina.ruiz.globetrotting.data.local.booking.BookingDao
+import com.marina.ruiz.globetrotting.data.local.booking.BookingEntity
+import com.marina.ruiz.globetrotting.data.local.destination.DestinationDao
+import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
+import com.marina.ruiz.globetrotting.data.local.user.UserDao
+import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 
 @Database(
-    entities = [DestinationEntity::class, /*BookingEntity::class,*/ UserEntity::class],
+    entities = [DestinationEntity::class, BookingEntity::class, AgentEntity::class, UserEntity::class],
     version = 1
 )
 abstract class GlobetrottingDb : RoomDatabase() {
@@ -32,7 +40,7 @@ abstract class GlobetrottingDb : RoomDatabase() {
     }
 
     abstract fun destinationDao(): DestinationDao
-    //abstract fun bookingDao(): BookingDao
+    abstract fun bookingDao(): BookingDao
     abstract fun userDao(): UserDao
-
+    abstract fun agentDao(): AgentDao
 }

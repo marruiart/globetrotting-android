@@ -1,7 +1,10 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
+import com.marina.ruiz.globetrotting.data.network.firebase.model.AgentResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asUserDataResponse
 import com.marina.ruiz.globetrotting.ui.auth.model.UserCredentials
 import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
@@ -16,6 +19,10 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
     private val _userData = MutableStateFlow<UserDataResponse?>(null)
     val userResponse: StateFlow<UserDataResponse?>
         get() = _userData
+
+    private val _agentsData = MutableStateFlow<List<AgentResponse>>(emptyList())
+    val agentsResponse: StateFlow<List<AgentResponse>>
+        get() = _agentsData
 
     private val _logout: MutableStateFlow<Boolean?> = MutableStateFlow(null)
     val logout: StateFlow<Boolean?>
@@ -74,6 +81,23 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
             _userData.value = null
             _logout.value = null
         }
+    }
+
+    fun fetchAgents() {
+        Log.i(TAG, "Fetch agents")
+        firebase.getCollectionRef(USER_COLLECTION)
+            .whereNotEqualTo("role", "AUTHENTICATED")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                _agentsData.value = snapshot!!.map { doc ->
+                    (doc.data as DocumentData).asAgentResponse()
+                }
+                Log.d(TAG, "Current agents: ${_agentsData.value}")
+            }
     }
 
     private fun checkUserRole(data: Map<String, Any>?) {

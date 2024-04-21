@@ -1,12 +1,11 @@
-package com.marina.ruiz.globetrotting.data.repository.model
+package com.marina.ruiz.globetrotting.data.network.firebase.model
 
 import android.os.Parcelable
 import com.marina.ruiz.globetrotting.data.local.booking.BookingEntity
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
-data class Booking(
+data class BookingResponse(
     val id: String,
     val agentName: String?,
     val agentId: String?,
@@ -16,11 +15,12 @@ data class Booking(
     val destinationId: String,
     val end: Long,
     val start: Long,
-    val amount: Float,
+    val amount: Float?,
     val isActive: Boolean,
     val isConfirmed: Boolean,
     val travelers: Int
 ) : Parcelable {
+
     fun asBookingEntity(): BookingEntity {
         return BookingEntity(
             id = id,
@@ -36,3 +36,6 @@ data class Booking(
         )
     }
 }
+
+fun List<BookingResponse>.asBookingEntityList(): List<BookingEntity> =
+    this.map { it.asBookingEntity() }

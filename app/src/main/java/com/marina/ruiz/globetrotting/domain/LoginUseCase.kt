@@ -11,6 +11,6 @@ class LoginUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(email: String, password: String): LoginResult =
-        authSvc.login(email, password)
+        authSvc.login("client@gmail.com", "Aa123456") // TODO use parameters
 
 }

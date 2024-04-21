@@ -5,19 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.R
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
-import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
+import com.marina.ruiz.globetrotting.ui.main.bookings.adapter.BookingsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -27,7 +24,8 @@ import java.util.Locale
 @AndroidEntryPoint
 class BookingsFragment : Fragment() {
     private lateinit var binding: FragmentBookingsBinding
-    private val viewModel: BookingsListViewModel by viewModels()
+    private lateinit var adapter: BookingsListAdapter
+    private val bookingsVM: BookingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,26 +37,27 @@ class BookingsFragment : Fragment() {
         return binding.root
     }
 
-    /*private fun bindView(adapter: BookingsListAdapter, view: View) {
-        val rv = binding.bookingsList
-        rv.adapter = adapter
-        if (viewModel.bookings.value.isEmpty()) {
-            displayNoBookingsMessage(view)
-        } else {
-            displayBookingsList()
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.bookings.collect {
-                    if (it.isNotEmpty()) {
-                        adapter.submitList(it)
-                        displayBookingsList()
-                    } else {
-                        displayNoBookingsMessage(view)
-                    }
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initAdapter()
+        initObservers(view)
+        bookingsVM.bindView(adapter)
+    }
+
+    private fun initObservers(view: View) {
+        bookingsVM.showNoBookingDialog.observe(viewLifecycleOwner) { show ->
+            if (show) {
+                displayNoBookingsMessage(view)
+            } else {
+                displayBookingsList()
             }
         }
+    }
+
+    private fun initAdapter() {
+        adapter = BookingsListAdapter(::onShareItem, ::onDeleteBooking)
+        val rv = binding.rvBookingsList
+        rv.adapter = adapter
     }
 
     private fun displayNoBookingsMessage(view: View) {
@@ -71,10 +70,17 @@ class BookingsFragment : Fragment() {
         }
     }
 
-    private fun navigateToBookingForm(view: View, destination: Destination, booking: Booking? = null) {
-        val action =
-            BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(destination, booking)
-        view.findNavController().navigate(action)
+    private fun navigateToBookingForm(
+        view: View,
+        destination: Destination,
+        booking: Booking? = null
+    ) {
+        /*        val action =
+                    BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(
+                        destination,
+                        booking
+                    )
+                view.findNavController().navigate(action)*/
     }
 
     private fun displayBookingsList() {
@@ -86,10 +92,10 @@ class BookingsFragment : Fragment() {
 
     private fun onShareItem(booking: Booking, view: View) {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val departureDate = dateFormat.format(Date(booking.departureDate))
-        val arrivalDate = dateFormat.format(Date(booking.arrivalDate))
+        val departureDate = dateFormat.format(Date(booking.start))
+        val arrivalDate = dateFormat.format(Date(booking.end))
         val shareText =
-            getString(R.string.share_text, booking.destination.name, departureDate, arrivalDate)
+            getString(R.string.share_text, booking.destinationName, departureDate, arrivalDate)
 
         val intent = Intent().apply {
             action = Intent.ACTION_SEND // this intent is going to send sth
@@ -101,19 +107,15 @@ class BookingsFragment : Fragment() {
         startActivity(shareIntent)
     }
 
-    private fun onUpdateBooking(view: View, booking: Booking) {
-        navigateToBookingForm(view, booking.destination, booking)
-    }
-
     private fun onDeleteBooking(booking: Booking) {
         lifecycleScope.launch {
-            viewModel.deleteBooking(booking).collect {
+/*            bookingsVM.deleteBooking(booking).collect {
                 Toast.makeText(
                     context,
                     getString(R.string.bookings_booking_deleted_toast),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
+            }*/
         }
     }
 
@@ -126,5 +128,5 @@ class BookingsFragment : Fragment() {
     }
 
     private fun navigateToLogin() {
-    }*/
+    }
 }

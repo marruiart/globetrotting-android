@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.data.local
+package com.marina.ruiz.globetrotting.data.local.destination
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,7 +7,7 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 
 @Entity(tableName = "destination")
 data class DestinationEntity(
-    @PrimaryKey()
+    @PrimaryKey
     val id: String,
     val name: String,
     val type: String?,
@@ -15,7 +15,7 @@ data class DestinationEntity(
     val price: Double,
     val shortDescription: String,
     val description: String,
-    val imageRef: Int? = null
+    //val imageRef: Int? = null
 ) {
     fun asDestination(): Destination {
         return Destination(

@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -34,6 +35,10 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
 
     fun getDocRef(collectionName: String, id: String): DocumentReference {
         return client.db.collection(collectionName).document(id)
+    }
+
+    fun getCollectionRef(collectionName: String): CollectionReference {
+        return client.db.collection(collectionName)
     }
 
     suspend fun createDocumentWithId(collectionName: String, data: Any, docId: String) {

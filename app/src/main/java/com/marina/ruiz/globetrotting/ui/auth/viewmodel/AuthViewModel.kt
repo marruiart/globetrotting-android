@@ -126,8 +126,8 @@ class AuthViewModel @Inject constructor(
     fun onLogout() {
         logoutUseCase()
         viewModelScope.launch {
-            Log.e(TAG, "Deleting user...")
-            repository.deleteUser()
+            Log.e(TAG, "Erasing database...")
+            repository.eraseDatabase()
         }
         resetData()
     }

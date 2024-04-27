@@ -38,6 +38,11 @@ class LocalRepository @Inject constructor(
         Log.d(TAG, "Insert destinations")
     }
 
+    @WorkerThread
+    suspend fun deleteDestinations() {
+        destinationDao.deleteDestinations()
+    }
+
     // BOOKING
     var bookings: Flow<List<BookingClientAgentDestinationEntity>> = bookingDao.getAllBookings()
 
@@ -49,6 +54,11 @@ class LocalRepository @Inject constructor(
         bookings = bookingDao.getAllBookings()
     }
 
+    @WorkerThread
+    suspend fun deleteBookings() {
+        bookingDao.deleteBookings()
+    }
+
     // AGENTS
     var agents: Flow<List<AgentEntity>> = agentDao.getAllAgents()
 
@@ -56,6 +66,11 @@ class LocalRepository @Inject constructor(
     suspend fun insertAgents(listAgentsEntity: List<AgentEntity>) {
         agentDao.createAgents(listAgentsEntity)
         agents = agentDao.getAllAgents()
+    }
+
+    @WorkerThread
+    suspend fun deleteAgents() {
+        agentDao.deleteAgents()
     }
 
     // USER

@@ -151,15 +151,8 @@ class GlobetrottingRepository @Inject constructor(
     private suspend fun createDestinations(destinations: List<DestinationEntity>) =
         localRepository.insertDestinations(destinations)
 
-    suspend fun deleteUser() = localRepository.deleteUser()
-
-    /*    suspend fun updateBooking(booking: BookingEntity) {
-            localRepository.updateBooking(booking)
-        }
-
-        suspend fun deleteBooking(booking: BookingEntity) {
-            localRepository.deleteBooking(booking)
-        }
-*/
-
+    suspend fun eraseDatabase() {
+        localRepository.deleteBookings()
+        localRepository.deleteUser()
+    }
 }

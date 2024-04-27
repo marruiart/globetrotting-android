@@ -20,4 +20,7 @@ interface DestinationDao {
 
     @Update
     suspend fun updateDestination(destinationEntity: DestinationEntity)
+
+    @Query("DELETE FROM destination")
+    suspend fun deleteDestinations()
 }

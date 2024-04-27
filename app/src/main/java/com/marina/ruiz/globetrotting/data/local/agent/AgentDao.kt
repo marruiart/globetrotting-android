@@ -14,4 +14,7 @@ interface AgentDao {
 
     @Query("SELECT * FROM agent")
     fun getAllAgents(): Flow<List<AgentEntity>>
+
+    @Query("DELETE FROM agent")
+    suspend fun deleteAgents()
 }

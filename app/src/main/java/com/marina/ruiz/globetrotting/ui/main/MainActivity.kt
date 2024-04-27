@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_logout -> {
-                    mainVM.deleteUser()
+                    mainVM.eraseDatabase()
                     true
                 }
 

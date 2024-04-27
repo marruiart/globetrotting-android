@@ -51,9 +51,9 @@ class MainViewModel @Inject constructor(
         _logout.value = true
     }
 
-    fun deleteUser() {
+    fun eraseDatabase() {
         viewModelScope.launch {
-            repository.deleteUser()
+            repository.eraseDatabase()
         }
     }
 

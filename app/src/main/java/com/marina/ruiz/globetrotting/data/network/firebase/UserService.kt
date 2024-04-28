@@ -3,6 +3,7 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 import android.util.Log
 import com.marina.ruiz.globetrotting.data.network.firebase.model.AgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
+import com.marina.ruiz.globetrotting.data.network.firebase.model.Payload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asUserDataResponse
@@ -40,7 +41,7 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
             "username" to credentials.username,
             "nickname" to credentials.username,
             "role" to "AUTHENTICATED",
-            "user_id" to generateId(),
+            "user_id" to Payload.generateId(),
             "favorites" to emptyArray<Any>()
         )
 
@@ -114,13 +115,6 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     private fun isClient(data: Map<String, Any>?): Boolean {
         return data?.get("role") == "AUTHENTICATED"
-    }
-
-    // TODO move this function to core
-    private fun generateId(): String {
-        val firstPart = (Math.random() * 1000000000000000).toLong().toString(36)
-        val secondPart = (Math.random() * 1000000000000000).toLong().toString(36)
-        return firstPart.substring(0, 13) + secondPart.substring(0, 13)
     }
 
 }

@@ -8,7 +8,9 @@ import com.marina.ruiz.globetrotting.data.network.firebase.BookingsService
 import com.marina.ruiz.globetrotting.data.network.firebase.DestinationsService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
 import com.marina.ruiz.globetrotting.data.network.firebase.model.AgentResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
+import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody

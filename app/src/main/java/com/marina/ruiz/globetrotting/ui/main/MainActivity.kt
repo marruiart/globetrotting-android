@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.mainTopAppBar.setOnMenuItemClickListener { menuItem ->
+        binding.mtMainToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_my_profile -> {
                     val intent = ProfileActivity.create(this)

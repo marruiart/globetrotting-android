@@ -6,28 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
+import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DestinationsFragment : Fragment() {
+class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListener {
     private lateinit var binding: FragmentDestinationsBinding
     private lateinit var adapter: DestinationsListAdapter
+    private lateinit var dialog: BookingCreationFormDialogFragment
     private val destinationsVM: DestinationsViewModel by activityViewModels()
 
+    companion object {
+        private const val TAG = "GLOB_DEBUG DESTINATIONS_FRAGMENT"
+    }
+
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDestinationsBinding
-            .inflate(inflater, container, false)
+        binding = FragmentDestinationsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -51,8 +54,8 @@ class DestinationsFragment : Fragment() {
         view.findNavController().navigate(action)
     }
 
-    private fun onBookNow(destination: Destination, view: View) {
-        // TODO
+    private fun onBookNow(destination: Destination) {
+        showBookNowDialog(destination)
     }
 
     private fun initObservers() {
@@ -63,6 +66,18 @@ class DestinationsFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun navigateToLogin() {
+    private fun showBookNowDialog(destination: Destination) {
+        dialog = BookingCreationFormDialogFragment(this, destination)
+        dialog.show(requireActivity().supportFragmentManager, "BookingCreationFormDialogFragment")
+    }
+
+    override fun onMakeBooking(booking: BookingForm) {
+        destinationsVM.makeBooking(booking.toBookingPayload(destinationsVM.user))
+    }
+
+    override fun onCancel() {
+        dialog.dismiss()
     }
 }
+
+

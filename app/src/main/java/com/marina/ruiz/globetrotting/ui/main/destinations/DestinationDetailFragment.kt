@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 class DestinationDetailFragment : Fragment() {
     private lateinit var binding: FragmentDestinationDetailBinding
     private val args: DestinationDetailFragmentArgs by navArgs()
-    private val viewModel: DestinationDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,13 +31,13 @@ class DestinationDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mainTopAppBar)
+        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mtDestinationDetailToolbar)
        // fetchDescription()
         bindView(args.destination)
     }
 
     private fun bindView(destination: Destination) {
-        binding.mainTopAppBar.setNavigationOnClickListener {
+        binding.mtDestinationDetailToolbar.setNavigationOnClickListener {
             navigateBack()
         }
         binding.destinationName.text = destination.name

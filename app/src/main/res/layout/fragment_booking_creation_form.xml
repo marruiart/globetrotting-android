@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.bookings.BookingCreationFormFragment">
+    android:background="?attr/colorSurface"
+    tools:context=".ui.main.destinations.BookingCreationFormDialogFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/main_top_app_bar"
+        android:id="@+id/mt_booking_form_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -17,91 +18,122 @@
         app:navigationIcon="@drawable/ic_close"
         app:title="@string/booking_form_header_title" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/select_destination"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/booking_form_select_destination"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_top_app_bar"
-        android:padding="?attr/dialogPreferredPadding">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
-        <AutoCompleteTextView
-            android:id="@+id/ac_select_destination"
+        <Space
+            android:id="@+id/space_booking_form_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_destination"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_booking_form_destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_booking_form_datepicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_booking_form_top"
+            tools:text="Earth" />
+
+        <Button
+            android:id="@+id/btn_booking_form_datepicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/booking_form_select_dates"
+            app:icon="@drawable/ic_calendar_month"
+            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_destination" />
+
+        <TextView
+            android:id="@+id/tv_booking_form_departure_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desde"
+            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_booking_form_datepicker"
+            tools:viewBindingIgnore="true" />
+
+        <TextView
+            android:id="@+id/tv_booking_form_departure_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_arrival_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_departure_label"
+            tools:text="10 Ene 2024" />
+
+        <TextView
+            android:id="@+id/tv_booking_form_arrival_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hasta"
+            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_arrival_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_departure_date"
+            tools:viewBindingIgnore="true" />
+
+        <TextView
+            android:id="@+id/tv_booking_form_arrival_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/til_booking_form_num_travelers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_arrival_label"
+            tools:text="15 Ene 2024" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_booking_form_num_travelers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none" />
+            android:hint="@string/booking_form_num_travelers"
+            android:padding="?attr/dialogPreferredPadding"
+            app:layout_constraintBottom_toTopOf="@id/space_booking_form_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_arrival_date">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_booking_form_num_travelers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/select_traveler"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/booking_form_select_traveler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_destination"
-        android:padding="?attr/dialogPreferredPadding">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/ac_select_traveler"
-            android:layout_width="match_parent"
+        <Space
+            android:id="@+id/space_booking_form_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_booking_form_make_booking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_booking_form_num_travelers"
+            tools:layout_editor_absoluteX="44dp"
+            tools:layout_editor_absoluteY="404dp" />
+
+        <Button
+            android:id="@+id/btn_booking_form_make_booking"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="none" />
+            android:layout_marginBottom="50dp"
+            android:text="@string/booking_form_accept_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space_booking_form_bottom" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="?attr/dialogPreferredPadding"
-        android:hint="@string/booking_form_select_dates"
-        app:endIconContentDescription="Mostrar el calendario para elegir las fechas"
-        app:endIconDrawable="@drawable/ic_calendar_month"
-        app:endIconMode="custom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_traveler">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/calendar_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/num_travelers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="?attr/dialogPreferredPadding"
-        android:hint="@string/booking_form_num_travelers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/num_travelers_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/accept_form_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/booking_form_accept_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/num_travelers" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

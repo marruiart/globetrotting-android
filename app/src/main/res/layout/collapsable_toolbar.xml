@@ -17,7 +17,7 @@
         app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/main_top_app_bar"
+            android:id="@+id/mt_booking_form_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorSurface"

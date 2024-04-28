@@ -14,7 +14,7 @@ import java.text.NumberFormat
 
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination, view: View) -> Unit,
-    private val onBookNow: (destination: Destination, view: View) -> Unit
+    private val onBookNow: (destination: Destination) -> Unit
 ) :
     ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
@@ -40,7 +40,7 @@ class DestinationsListAdapter(
                 onShowDetail(destination, binding.root)
             }
             binding.bookBtn.setOnClickListener {
-                onBookNow(destination, binding.root)
+                onBookNow(destination)
             }
         }
     }

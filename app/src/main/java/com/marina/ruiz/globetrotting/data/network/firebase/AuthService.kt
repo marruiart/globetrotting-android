@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
-import com.marina.ruiz.globetrotting.data.network.firebase.model.LoginResult
+import com.marina.ruiz.globetrotting.data.network.firebase.model.result.LoginResult
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,6 +1,7 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
+import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asBookingResponse
@@ -39,4 +40,7 @@ class BookingsService @Inject constructor(private val firebase: FirebaseService)
             }
     }
 
+    suspend fun createBooking(booking: BookingPayload) = runCatching {
+        firebase.createDocumentWithId(BOOKINGS_COLLECTION, booking.toMap(), booking.id)
+    }
 }

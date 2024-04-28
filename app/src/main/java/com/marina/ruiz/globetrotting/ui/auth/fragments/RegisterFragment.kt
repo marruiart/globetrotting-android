@@ -22,7 +22,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mainTopAppBar)
+        (requireActivity() as? AppCompatActivity)?.setSupportActionBar(binding.mtSignupToolbar)
         initUI()
     }
 
@@ -32,7 +32,7 @@ class RegisterFragment : Fragment() {
 
     private fun initListeners() {
         with(binding) {
-            mainTopAppBar.setNavigationOnClickListener { navigateBack() }
+            mtSignupToolbar.setNavigationOnClickListener { navigateBack() }
         }
     }
 

@@ -46,7 +46,7 @@
     <string name="booking_form_departure">Fecha de salida</string>
     <string name="booking_form_arrival">Fecha de llegada</string>
     <string name="booking_form_display_calendar">Mostrar el calendario para elegir las fechas</string>
-    <string name="booking_form_select_dates">Seleccionar las fechas del viaje</string>
+    <string name="booking_form_select_dates">Elegir las fechas</string>
     <string name="booking_form_num_travelers">Número de viajeros</string>
     <string name="booking_form_accept_btn">Realizar reserva</string>
     <!-- BOOKING ITEM (FOR BOOKING LIST) -->

@@ -11,6 +11,7 @@ import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
 import com.marina.ruiz.globetrotting.data.local.destination.asDestinationList
 import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
+import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentsEntityList
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asBookingEntityList
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asDestinationsEntityList

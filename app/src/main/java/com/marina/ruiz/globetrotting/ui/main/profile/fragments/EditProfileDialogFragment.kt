@@ -26,9 +26,7 @@ class EditProfileDialogFragment(
     private lateinit var form: ProfileForm
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditProfileBinding.inflate(layoutInflater)
         return binding.root
@@ -37,6 +35,12 @@ class EditProfileDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setWindowInsets(view)
+        initForm()
+        bindView()
+        initListeners()
+    }
+
+    private fun initForm() {
         form = ProfileForm(
             tilName = binding.tilFormName,
             tilSurname = binding.tilFormSurname,
@@ -44,8 +48,6 @@ class EditProfileDialogFragment(
             positiveBtn = binding.btnAcceptEditProfile,
             neutralBtn = binding.btnCancelEditProfile
         )
-        bindView()
-        initListeners()
     }
 
     private fun bindView() {

@@ -20,19 +20,4 @@ data class Booking(
     val isActive: Boolean,
     val isConfirmed: Boolean,
     val travelers: Int
-) : Parcelable {
-    fun asBookingEntity(): BookingEntity {
-        return BookingEntity(
-            id = id,
-            agentId = agentId,
-            clientId = clientId,
-            destinationId = destinationId,
-            end = end,
-            start = start,
-            amount = amount,
-            isActive = isActive,
-            isConfirmed = isConfirmed,
-            travelers = travelers
-        )
-    }
-}
+) : Parcelable

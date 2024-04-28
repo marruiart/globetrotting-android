@@ -13,4 +13,8 @@ data class User(
     val name: String? = null,
     val surname: String? = null,
     val age: String? = null
-) : Parcelable
+) : Parcelable {
+    fun getFullName(): String {
+        return if (name == null) nickname else "${name}${if (surname != null) (" " + surname) else ""}"
+    }
+}

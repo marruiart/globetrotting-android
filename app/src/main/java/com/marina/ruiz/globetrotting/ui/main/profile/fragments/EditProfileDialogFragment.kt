@@ -1,31 +1,27 @@
 package com.marina.ruiz.globetrotting.ui.main.profile.fragments
 
 import android.Manifest.permission
-import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.activity.result.contract.ActivityResultContracts.TakePicture
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
-import java.io.File
 
 interface EditProfileDialogFragmentListener {
     fun onAccept(data: Profile)
@@ -38,14 +34,31 @@ class EditProfileDialogFragment(
     private val PADDING = 100
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var form: ProfileForm
-    private lateinit var photoFile: File
     var imageUri: Uri? = null
 
     companion object {
-        private const val CAMERA_REQUEST_CODE = 1001
-        private const val GALLERY_REQUEST_CODE = 1002
-        private const val IMAGE_CAPTURE_REQUEST_CODE = 1003
-        private const val SELECT_PICTURE_REQUEST_CODE = 1004
+        private const val TAG = "GLOB_DEBUG EDIT_PROFILE_DIALOG_FRAGMENT"
+    }
+
+    private val pickImage = registerForActivityResult(GetContent()) { uri ->
+        Log.d(TAG, "picking image...")
+        imageUri = uri
+        binding.ivAvatarEditProfile.setImageURI(uri)
+    }
+
+    private val takePicture = registerForActivityResult(TakePicture()) { enabled ->
+        if (enabled) {
+            binding.ivAvatarEditProfile.setImageURI(imageUri)
+        }
+    }
+
+    private val cameraPermission = registerForActivityResult(RequestPermission()) { enabled ->
+        if (enabled) {
+            openCamera()
+        } else {
+            Log.d(TAG, "I tried to get your permissions and you said no, no, no")
+            requirePermissionsDialog()
+        }
     }
 
 
@@ -108,16 +121,9 @@ class EditProfileDialogFragment(
         binding.btnChangeAvatarProfile.setOnClickListener {
             val CAMERA = true
             if (CAMERA) {
-                checkPermissions(
-                    permission.CAMERA, CAMERA_REQUEST_CODE, ::openCamera, ::requestPermission
-                )
+                cameraPermission.launch(permission.CAMERA)
             } else {
-                checkPermissions(
-                    permission.READ_EXTERNAL_STORAGE,
-                    GALLERY_REQUEST_CODE,
-                    ::openGallery,
-                    ::requestPermission
-                )
+                openGallery()
             }
         }
     }
@@ -127,59 +133,34 @@ class EditProfileDialogFragment(
         imageUri = requireActivity().contentResolver.insert(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
         )
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        cameraARL.launch(cameraIntent)
-    }
-
-    private var cameraARL: ActivityResultLauncher<Intent> = registerForActivityResult(
-        StartActivityForResult()
-    ) { activityResult ->
-        if (activityResult.resultCode == RESULT_OK) {
-            binding.ivAvatarEditProfile.setImageURI(imageUri)
-        }
+        takePicture.launch(imageUri)
     }
 
     private fun openGallery() {
-        val galleryIntent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
-            }
-        galleryARL.launch(galleryIntent)
+        pickImage.launch("image/*")
     }
 
-    private var galleryARL: ActivityResultLauncher<Intent> = registerForActivityResult(
-        StartActivityForResult()
-    ) { activityResult ->
-        if (activityResult.resultCode == RESULT_OK) {
-            imageUri = activityResult.data?.data
-            binding.ivAvatarEditProfile.setImageURI(imageUri)
-        }
-    }
 
-    private fun requestPermission(permission: String, code: Int) {
-        if (shouldRequestPermissionRationale(permission)) {
-            Toast.makeText(
-                requireActivity(), "Los permisos han sido denegados", Toast.LENGTH_LONG
-            ).show()
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), code)
-        }
-    }
-
-    private fun shouldRequestPermissionRationale(permission: String): Boolean =
-        ActivityCompat.shouldShowRequestPermissionRationale(
-            requireActivity(), permission
+    private fun openAppSettings() {
+        val intent = Intent(
+            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:${requireContext().applicationContext.packageName}")
         )
+        startActivity(intent)
+    }
 
-    private fun hasPermission(permission: String): Boolean = checkSelfPermission(
-        requireActivity(), permission
-    ) == PackageManager.PERMISSION_GRANTED
+    private fun requirePermissionsDialog() {
+        MaterialAlertDialogBuilder(requireContext()).setTitle("Faltan permisos")
+            .setMessage("No se han dado permisos, ¿desea abrir la configuración de la aplicación para concederlos?")
+            .setNeutralButton("No, gracias") { dialog, _ ->
+                dialog.dismiss()
+                Toast.makeText(
+                    requireContext(), "No se ha podido abrir la cámara.", Toast.LENGTH_SHORT
+                ).show()
+            }.setPositiveButton("Vale") { dialog, _ ->
+                openAppSettings()
+                dialog.dismiss()
+            }.show()
+    }
 
-    private fun checkPermissions(
-        permission: String,
-        code: Int,
-        onProvided: () -> Unit,
-        onDenied: (permission: String, code: Int) -> Unit
-    ) = if (hasPermission(permission)) onProvided() else onDenied(permission, code)
 }

@@ -2,6 +2,7 @@ package com.marina.ruiz.globetrotting.ui.main.profile.fragments
 
 import android.Manifest.permission
 import android.app.Activity.RESULT_OK
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,8 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.view.ViewCompat
@@ -36,7 +39,7 @@ class EditProfileDialogFragment(
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var form: ProfileForm
     private lateinit var photoFile: File
-    var image_uri: Uri? = null
+    var imageUri: Uri? = null
 
     companion object {
         private const val CAMERA_REQUEST_CODE = 1001
@@ -103,7 +106,7 @@ class EditProfileDialogFragment(
             callback.onCancel()
         }
         binding.btnChangeAvatarProfile.setOnClickListener {
-            val CAMERA = false
+            val CAMERA = true
             if (CAMERA) {
                 checkPermissions(
                     permission.CAMERA, CAMERA_REQUEST_CODE, ::openCamera, ::requestPermission
@@ -120,37 +123,44 @@ class EditProfileDialogFragment(
     }
 
     private fun openCamera() {
+        val values = ContentValues()
+        imageUri = requireActivity().contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+        )
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         cameraARL.launch(cameraIntent)
     }
 
-    var cameraARL: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+    private var cameraARL: ActivityResultLauncher<Intent> = registerForActivityResult(
+        StartActivityForResult()
     ) { activityResult ->
         if (activityResult.resultCode == RESULT_OK) {
-            binding.ivAvatarEditProfile.setImageURI(image_uri)
+            binding.ivAvatarEditProfile.setImageURI(imageUri)
         }
     }
 
     private fun openGallery() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.setType("image/*")
+        val galleryIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                type = "image/*"
+            }
         galleryARL.launch(galleryIntent)
     }
 
-    var galleryARL: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+    private var galleryARL: ActivityResultLauncher<Intent> = registerForActivityResult(
+        StartActivityForResult()
     ) { activityResult ->
         if (activityResult.resultCode == RESULT_OK) {
-            image_uri = activityResult.data?.data
-            binding.ivAvatarEditProfile.setImageURI(image_uri)
+            imageUri = activityResult.data?.data
+            binding.ivAvatarEditProfile.setImageURI(imageUri)
         }
     }
 
     private fun requestPermission(permission: String, code: Int) {
         if (shouldRequestPermissionRationale(permission)) {
             Toast.makeText(
-                requireActivity(), "Dale permisos illo, que ya te los pedí", Toast.LENGTH_LONG
+                requireActivity(), "Los permisos han sido denegados", Toast.LENGTH_LONG
             ).show()
         } else {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), code)

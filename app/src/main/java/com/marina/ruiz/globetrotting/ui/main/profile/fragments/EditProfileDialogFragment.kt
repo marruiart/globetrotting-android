@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.TakePicture
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -125,6 +126,9 @@ class EditProfileDialogFragment(
         binding.btnChangeAvatarProfile.setOnClickListener {
             modalBottomSheet.show(requireActivity().supportFragmentManager, ModalBottomSheet.TAG)
         }
+        binding.btnRemoveAvatarProfile.setOnClickListener {
+            removePictureDialog()
+        }
     }
 
     private fun openCamera() {
@@ -146,6 +150,22 @@ class EditProfileDialogFragment(
             Uri.parse("package:${requireContext().applicationContext.packageName}")
         )
         startActivity(intent)
+    }
+
+    private fun removePicture() {
+        binding.ivAvatarEditProfile.setImageDrawable(
+            ResourcesCompat.getDrawable(resources, R.drawable.default_avatar, null)
+        )
+    }
+
+    private fun removePictureDialog() {
+        MaterialAlertDialogBuilder(requireContext()).setTitle("Eliminar foto")
+            .setMessage("¿Desea eliminar la foto de perfil?").setNeutralButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }.setPositiveButton("Sí") { dialog, _ ->
+                removePicture()
+                dialog.dismiss()
+            }.show()
     }
 
     private fun requirePermissionsDialog() {

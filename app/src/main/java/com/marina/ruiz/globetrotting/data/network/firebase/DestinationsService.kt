@@ -2,7 +2,7 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
 import com.google.firebase.firestore.QuerySnapshot
-import com.marina.ruiz.globetrotting.data.network.firebase.model.DestinationResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.DestinationResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asDestinationResponse
 import kotlinx.coroutines.flow.MutableStateFlow

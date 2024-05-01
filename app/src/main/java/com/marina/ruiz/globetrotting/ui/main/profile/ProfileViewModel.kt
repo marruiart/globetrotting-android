@@ -1,14 +1,16 @@
 package com.marina.ruiz.globetrotting.ui.main.profile
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marina.ruiz.globetrotting.data.network.firebase.StorageFileListeners
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.domain.EditProfileUseCase
-import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,10 +43,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun editProfile(data: Profile) {
+    fun editProfile(profile: ProfileForm, avatar: Uri?, callback: StorageFileListeners) {
         viewModelScope.launch {
-            editProfileUseCase(data)
-            Log.d(TAG, "Accept " + data)
+            editProfileUseCase(profile.toProfilePayload(), avatar, callback)
+            Log.d(TAG, "Accept $profile")
         }
     }
 }

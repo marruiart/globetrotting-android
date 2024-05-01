@@ -20,25 +20,23 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
-import com.marina.ruiz.globetrotting.core.dialog.ModalBottomSheet
-import com.marina.ruiz.globetrotting.core.dialog.ModalBottomSheetListener
+import com.marina.ruiz.globetrotting.core.dialog.PhotoSourcePickerBottomSheet
+import com.marina.ruiz.globetrotting.core.dialog.PhotoSourcePickerListener
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
-import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 
 interface EditProfileDialogFragmentListener {
-    fun onAccept(data: Profile)
+    fun onAccept(profile: ProfileForm, avatar: Uri?)
     fun onCancel()
 }
 
 class EditProfileDialogFragment(
-    private val callback: EditProfileDialogFragmentListener, private val profile: Profile
-) : FullScreenDialogFragment(R.layout.fragment_edit_profile), ModalBottomSheetListener {
+    private val callback: EditProfileDialogFragmentListener, private val profile: ProfileForm
+) : FullScreenDialogFragment(R.layout.fragment_edit_profile), PhotoSourcePickerListener {
     private val PADDING = 100
     private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var form: ProfileForm
     var imageUri: Uri? = null
-    val modalBottomSheet = ModalBottomSheet(this)
+    val sourcePicker = PhotoSourcePickerBottomSheet(this)
 
     companion object {
         private const val TAG = "GLOB_DEBUG EDIT_PROFILE_DIALOG_FRAGMENT"
@@ -77,25 +75,16 @@ class EditProfileDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setWindowInsets(view)
-        initForm()
         bindView()
         initListeners()
     }
 
-    private fun initForm() {
-        form = ProfileForm(
-            tilName = binding.tilFormName,
-            tilSurname = binding.tilFormSurname,
-            tilNickname = binding.tilFormNickname,
-            positiveBtn = binding.btnAcceptEditProfile,
-            neutralBtn = binding.btnCancelEditProfile
-        )
-    }
-
     private fun bindView() {
-        form.tilName.setText(profile.name)
-        form.tilSurname.setText(profile.surname)
-        form.tilNickname.setText(profile.nickname)
+        binding.tvUsername.text = profile.username
+        binding.tvEmail.text = profile.email
+        binding.tilFormName.setText(profile.name)
+        binding.tilFormSurname.setText(profile.surname)
+        binding.tilFormNickname.setText(profile.nickname)
     }
 
     private fun setWindowInsets(view: View) {
@@ -113,18 +102,22 @@ class EditProfileDialogFragment(
 
     private fun initListeners() {
         binding.btnAcceptEditProfile.setOnClickListener {
-            val profile = Profile(
-                name = form.tilName.text.toString(),
-                surname = form.tilSurname.text.toString(),
-                nickname = form.tilNickname.text.toString()
+            val profileForm = ProfileForm(
+                username = profile.username,
+                email = profile.email,
+                name = binding.tilFormName.text.toString(),
+                surname = binding.tilFormSurname.text.toString(),
+                nickname = binding.tilFormNickname.text.toString()
             )
-            callback.onAccept(profile)
+            callback.onAccept(profileForm, imageUri)
         }
         binding.btnCancelEditProfile.setOnClickListener {
             callback.onCancel()
         }
         binding.btnChangeAvatarProfile.setOnClickListener {
-            modalBottomSheet.show(requireActivity().supportFragmentManager, ModalBottomSheet.TAG)
+            sourcePicker.show(
+                requireActivity().supportFragmentManager, PhotoSourcePickerBottomSheet.TAG
+            )
         }
         binding.btnRemoveAvatarProfile.setOnClickListener {
             removePictureDialog()

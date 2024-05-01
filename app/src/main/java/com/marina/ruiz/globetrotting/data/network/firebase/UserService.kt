@@ -1,18 +1,25 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
+import android.net.Uri
 import android.util.Log
-import com.marina.ruiz.globetrotting.data.network.firebase.model.AgentResponse
+import com.google.firebase.storage.UploadTask
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
-import com.marina.ruiz.globetrotting.data.network.firebase.model.Payload
-import com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentResponse
-import com.marina.ruiz.globetrotting.data.network.firebase.model.asUserDataResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.Payload
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.ProfilePayload
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.AgentResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.UserDataResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.asUserDataResponse
 import com.marina.ruiz.globetrotting.ui.auth.model.UserCredentials
-import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
+
+interface StorageFileListeners {
+    fun onUploadSuccess(taskSnapshot: UploadTask.TaskSnapshot?)
+    fun onUploadFailed()
+}
 
 @Singleton
 class UserService @Inject constructor(private val firebase: FirebaseService) {
@@ -49,16 +56,8 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     }.isSuccess
 
-    suspend fun editUserDocument(uid: String, data: Profile) = runCatching {
-
-        val user = hashMapOf(
-            "name" to data.name as Any,
-            "surname" to data.surname as Any,
-            "nickname" to data.nickname as Any
-        )
-
-        firebase.updateDocument(USER_COLLECTION, user, uid)
-
+    suspend fun editUserDocument(uid: String, profile: ProfilePayload) = runCatching {
+        firebase.updateDocument(USER_COLLECTION, profile.asHashMap(), uid)
     }.isSuccess
 
     fun fetchUserDocument(uid: String?) {
@@ -86,8 +85,7 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     fun fetchAgents() {
         Log.i(TAG, "Fetch agents")
-        firebase.getCollectionRef(USER_COLLECTION)
-            .whereNotEqualTo("role", "AUTHENTICATED")
+        firebase.getCollectionRef(USER_COLLECTION).whereNotEqualTo("role", "AUTHENTICATED")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)
@@ -115,6 +113,24 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     private fun isClient(data: Map<String, Any>?): Boolean {
         return data?.get("role") == "AUTHENTICATED"
+    }
+
+    fun updateAvatar(uid: String, file: Uri?, callback: StorageFileListeners) {
+        if (file != null) {
+            firebase.uploadFile(uid, file).addOnFailureListener {
+                callback.onUploadFailed()
+            }.addOnSuccessListener { taskSnapshot ->
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                // ...
+                callback.onUploadSuccess(taskSnapshot)
+            }
+        } else {
+            firebase.removeFile(uid).addOnFailureListener {
+                callback.onUploadFailed()
+            }.addOnSuccessListener { _ ->
+                callback.onUploadSuccess(null)
+            }
+        }
     }
 
 }

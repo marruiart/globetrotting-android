@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.data.network.firebase.model
+package com.marina.ruiz.globetrotting.data.network.firebase.model.payload
 
 class Payload {
 

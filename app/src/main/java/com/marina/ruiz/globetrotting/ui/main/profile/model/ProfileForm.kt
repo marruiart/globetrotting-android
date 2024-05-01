@@ -1,12 +1,22 @@
 package com.marina.ruiz.globetrotting.ui.main.profile.model
 
-import android.widget.Button
-import com.google.android.material.textfield.TextInputEditText
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.ProfilePayload
+import com.marina.ruiz.globetrotting.data.repository.model.User
+
 
 data class ProfileForm(
-    val tilName: TextInputEditText,
-    val tilSurname: TextInputEditText,
-    val tilNickname: TextInputEditText,
-    val positiveBtn: Button,
-    val neutralBtn: Button
-)
+    val username: String,
+    val email: String,
+    val name: String?,
+    val surname: String?,
+    val nickname: String
+) {
+    fun toProfilePayload(): ProfilePayload {
+        return ProfilePayload(
+            name = name,
+            surname = surname,
+            nickname = nickname
+        )
+    }
+}
+

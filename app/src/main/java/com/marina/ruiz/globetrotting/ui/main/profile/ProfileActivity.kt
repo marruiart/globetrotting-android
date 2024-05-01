@@ -2,24 +2,29 @@ package com.marina.ruiz.globetrotting.ui.main.profile
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.storage.UploadTask
 import com.marina.ruiz.globetrotting.R
+import com.marina.ruiz.globetrotting.data.network.firebase.StorageFileListeners
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragment
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragmentListener
-import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
+import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
+class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
+    StorageFileListeners {
     private lateinit var binding: ActivityProfileBinding
     private val profileVM: ProfileViewModel by viewModels()
     private lateinit var systemBars: Insets
@@ -29,8 +34,7 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     companion object {
         private const val TAG = "GLOB_DEBUG PROFILE_ACTIVITY"
 
-        fun create(context: Context): Intent =
-            Intent(context, ProfileActivity::class.java)
+        fun create(context: Context): Intent = Intent(context, ProfileActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,22 +82,30 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
 
     private fun showDialog() {
         _user?.let { user ->
-            dialog = EditProfileDialogFragment(
-                this,
-                Profile(user.name ?: "", user.surname ?: "", user.nickname)
+            val profile = ProfileForm(
+                user.username, user.email, user.name ?: "", user.surname ?: "", user.nickname
             )
+            dialog = EditProfileDialogFragment(this, profile)
             dialog.show(supportFragmentManager, "EditProfileFragment")
         }
     }
 
-    override fun onAccept(data: Profile) {
-        profileVM.editProfile(data)
+    override fun onAccept(profile: ProfileForm, avatar: Uri?) {
+        profileVM.editProfile(profile, avatar, this)
         dialog.dismiss()
     }
 
     override fun onCancel() {
         Log.d(TAG, "Cancel")
         dialog.dismiss()
+    }
+
+    override fun onUploadSuccess(taskSnapshot: UploadTask.TaskSnapshot?) {
+        Toast.makeText(this, "Foto actualizada", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onUploadFailed() {
+        Toast.makeText(this, "Error al actualizar la foto de perfil", Toast.LENGTH_SHORT).show()
     }
 
 }

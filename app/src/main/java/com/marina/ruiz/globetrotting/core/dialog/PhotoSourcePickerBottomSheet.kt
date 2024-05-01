@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.marina.ruiz.globetrotting.databinding.BottomSheetProfilePictureActionBinding
 
-interface ModalBottomSheetListener {
+interface PhotoSourcePickerListener {
     fun onCameraAction()
     fun onGalleryAction()
 }
 
-class ModalBottomSheet(private val callback: ModalBottomSheetListener) :
+class PhotoSourcePickerBottomSheet(private val callback: PhotoSourcePickerListener) :
     BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetProfilePictureActionBinding
 

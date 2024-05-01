@@ -1,10 +1,12 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -55,6 +57,18 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
 
     fun logout() {
         client.auth.signOut()
+    }
+
+    fun uploadFile(uid: String, file: Uri): UploadTask {
+        val storageRef = client.storage.reference
+        val profileRef = storageRef.child(uid)
+        return profileRef.putFile(file)
+    }
+
+    fun removeFile(uid: String): Task<Void> {
+        val storageRef = client.storage.reference
+        val profileRef = storageRef.child(uid)
+        return profileRef.delete()
     }
 
 }

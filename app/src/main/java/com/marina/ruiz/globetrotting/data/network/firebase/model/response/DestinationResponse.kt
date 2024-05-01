@@ -1,4 +1,4 @@
-package com.marina.ruiz.globetrotting.data.network.firebase.model
+package com.marina.ruiz.globetrotting.data.network.firebase.model.response
 
 import android.os.Parcelable
 import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity

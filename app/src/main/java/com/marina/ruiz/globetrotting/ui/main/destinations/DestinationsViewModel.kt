@@ -2,7 +2,7 @@ package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.BookingPayload
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.User

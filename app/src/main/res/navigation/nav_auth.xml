@@ -12,7 +12,7 @@
         tools:layout="@layout/activity_main" >
         <argument
             android:name="userData"
-            app:argType="com.marina.ruiz.globetrotting.data.network.firebase.model.UserDataResponse"
+            app:argType="com.marina.ruiz.globetrotting.data.network.firebase.model.response.UserDataResponse"
             app:nullable="true" />
     </activity>
     <fragment

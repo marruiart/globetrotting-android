@@ -1,8 +1,7 @@
 package com.marina.ruiz.globetrotting.ui.main.destinations.model
 
 import com.google.firebase.Timestamp
-import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
-import com.marina.ruiz.globetrotting.data.repository.model.Booking
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.BookingPayload
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.User
 

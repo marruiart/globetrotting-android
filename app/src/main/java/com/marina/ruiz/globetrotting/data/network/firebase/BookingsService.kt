@@ -1,8 +1,8 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
-import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingPayload
-import com.marina.ruiz.globetrotting.data.network.firebase.model.BookingResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.BookingPayload
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.BookingResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asBookingResponse
 import kotlinx.coroutines.flow.MutableStateFlow

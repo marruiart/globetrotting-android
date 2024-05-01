@@ -2,6 +2,9 @@ package com.marina.ruiz.globetrotting.data.network.firebase.model
 
 import android.util.Log
 import com.google.firebase.Timestamp
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.AgentResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.BookingResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.DestinationResponse
 
 typealias DocumentData = Map<String, Any?>
 

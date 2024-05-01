@@ -9,8 +9,6 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.marina.ruiz.globetrotting.data.repository.model.Booking
-import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 
 abstract class FullScreenDialogFragment(private val layout: Int) : DialogFragment() {
 

@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    val activityVersion = "1.8.2"
+    val activityVersion = "1.9.0"
     val fragmentVersion = "1.6.2"
     val navVersion = "2.7.7"
     val retrofitVersion = "2.9.0"
@@ -53,14 +53,14 @@ dependencies {
     val glideVersion = "4.15.1"
     val sharedPreferences = "1.1.0-alpha06"
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.activity:activity-ktx:1.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -95,11 +95,10 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:${glideVersion}")
 
     // FIREBASE
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-database")
 
     // LOTTIES
 /*    val lottieVersion = "6.4.0"

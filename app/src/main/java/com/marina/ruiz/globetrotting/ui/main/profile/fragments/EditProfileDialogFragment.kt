@@ -1,6 +1,6 @@
 package com.marina.ruiz.globetrotting.ui.main.profile.fragments
 
-import android.Manifest.permission
+import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
@@ -19,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
+import com.marina.ruiz.globetrotting.core.dialog.ModalBottomSheet
+import com.marina.ruiz.globetrotting.core.dialog.ModalBottomSheetListener
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.model.Profile
 import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
@@ -30,11 +32,12 @@ interface EditProfileDialogFragmentListener {
 
 class EditProfileDialogFragment(
     private val callback: EditProfileDialogFragmentListener, private val profile: Profile
-) : FullScreenDialogFragment(R.layout.fragment_edit_profile) {
+) : FullScreenDialogFragment(R.layout.fragment_edit_profile), ModalBottomSheetListener {
     private val PADDING = 100
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var form: ProfileForm
     var imageUri: Uri? = null
+    val modalBottomSheet = ModalBottomSheet(this)
 
     companion object {
         private const val TAG = "GLOB_DEBUG EDIT_PROFILE_DIALOG_FRAGMENT"
@@ -56,7 +59,6 @@ class EditProfileDialogFragment(
         if (enabled) {
             openCamera()
         } else {
-            Log.d(TAG, "I tried to get your permissions and you said no, no, no")
             requirePermissionsDialog()
         }
     }
@@ -119,12 +121,7 @@ class EditProfileDialogFragment(
             callback.onCancel()
         }
         binding.btnChangeAvatarProfile.setOnClickListener {
-            val CAMERA = true
-            if (CAMERA) {
-                cameraPermission.launch(permission.CAMERA)
-            } else {
-                openGallery()
-            }
+            modalBottomSheet.show(requireActivity().supportFragmentManager, ModalBottomSheet.TAG)
         }
     }
 
@@ -162,5 +159,8 @@ class EditProfileDialogFragment(
                 dialog.dismiss()
             }.show()
     }
+
+    override fun onCameraAction() = cameraPermission.launch(Manifest.permission.CAMERA)
+    override fun onGalleryAction() = openGallery()
 
 }

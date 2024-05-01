@@ -44,9 +44,11 @@ class EditProfileDialogFragment(
     }
 
     private val pickImage = registerForActivityResult(GetContent()) { uri ->
-        Log.d(TAG, "picking image...")
-        imageUri = uri
-        binding.ivAvatarEditProfile.setImageURI(uri)
+        uri?.let {
+            Log.d(TAG, "picking image...")
+            imageUri = uri
+            binding.ivAvatarEditProfile.setImageURI(uri)
+        }
     }
 
     private val takePicture = registerForActivityResult(TakePicture()) { enabled ->

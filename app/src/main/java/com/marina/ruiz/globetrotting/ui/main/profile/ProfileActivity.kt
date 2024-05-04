@@ -29,22 +29,12 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     private lateinit var systemBars: Insets
     private lateinit var dialog: EditProfileDialogFragment
     private var _user: User? = null
-    private var uriImage: Uri? = null
 
     companion object {
         private const val TAG = "GLOB_DEBUG PROFILE_ACTIVITY"
 
         fun create(context: Context): Intent = Intent(context, ProfileActivity::class.java)
     }
-
-    private val filePermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { enabled ->
-            if (enabled) {
-                //updateAvatar()
-            } else {
-                PermissionsService.requirePermissionsDialog(this)
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +46,6 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setWindowInsets()
-        //filePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         initUI()
     }
 
@@ -111,8 +100,8 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
         }
     }
 
-    override fun onAccept(profile: ProfileForm, avatar: Uri?) {
-        profileVM.editProfile(this, profile, avatar)
+    override fun onAccept(profile: ProfileForm, avatar: Uri?, removeImage: Boolean) {
+        profileVM.editProfile(this, profile, avatar, removeImage)
         dialog.dismiss()
     }
 

@@ -27,20 +27,20 @@ import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 
 
 interface EditProfileDialogFragmentListener {
-    fun onAccept(profile: ProfileForm, avatar: Uri?)
+    fun onAccept(profile: ProfileForm, avatar: Uri?, removeImage: Boolean)
     fun onCancel()
 }
 
 class EditProfileDialogFragment(
     private val callback: EditProfileDialogFragmentListener, private val profile: ProfileForm
 ) : FullScreenDialogFragment(R.layout.fragment_edit_profile), PhotoSourcePickerListener {
-    private val PADDING = 100
     private lateinit var binding: FragmentEditProfileBinding
+    private var removeImage = false
     var imageUri: Uri? = null
     val sourcePicker = PhotoSourcePickerBottomSheet(this)
-
     companion object {
         private const val TAG = "GLOB_DEBUG EDIT_PROFILE_DIALOG_FRAGMENT"
+        private const val PADDING = 100
     }
 
     private val pickImage = registerForActivityResult(GetContent()) { uri ->
@@ -116,7 +116,7 @@ class EditProfileDialogFragment(
                 nickname = binding.tilFormNickname.text.toString(),
                 avatar = profile.avatar
             )
-            callback.onAccept(profileForm, imageUri)
+            callback.onAccept(profileForm, imageUri, removeImage)
         }
         binding.btnCancelEditProfile.setOnClickListener {
             callback.onCancel()
@@ -147,6 +147,7 @@ class EditProfileDialogFragment(
         binding.ivAvatarEditProfile.setImageDrawable(
             ResourcesCompat.getDrawable(resources, R.drawable.default_avatar, null)
         )
+        removeImage = true
     }
 
     private fun removePictureDialog() {

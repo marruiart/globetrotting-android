@@ -26,14 +26,14 @@ class EditProfileUseCase @Inject constructor(
     }
 
     suspend operator fun invoke(
-        context: Context, profile: ProfilePayload, avatar: Uri?
+        context: Context, profile: ProfilePayload, avatar: Uri?, removeImage: Boolean
     ): Boolean {
         authSvc.uid.value?.let { uid ->
             _context = context
             _profile = profile
             _uid = uid
             Log.d(TAG, "URI: $avatar")
-            if (avatar == null && profile.avatar != null || avatar != null) {
+            if (avatar == null && removeImage || avatar != null) {
                 userSvc.updateAvatar(uid, avatar, this)
             } else {
                 userSvc.editUserDocument(uid, _profile)

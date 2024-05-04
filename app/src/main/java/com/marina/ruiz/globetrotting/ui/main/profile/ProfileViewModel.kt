@@ -43,9 +43,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun editProfile(context: Context, profile: ProfileForm, avatar: Uri?) {
+    fun editProfile(context: Context, profile: ProfileForm, avatar: Uri?, removeImage: Boolean) {
         viewModelScope.launch {
-            editProfileUseCase(context, profile.toProfilePayload(), avatar)
+            editProfileUseCase(context, profile.toProfilePayload(), avatar, removeImage)
             Log.d(TAG, "Accept $profile")
         }
     }

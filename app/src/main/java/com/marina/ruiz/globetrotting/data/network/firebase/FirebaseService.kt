@@ -7,7 +7,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import com.marina.ruiz.globetrotting.core.compressImage
+import com.marina.ruiz.globetrotting.core.compressAndResizeImage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -70,7 +70,7 @@ class FirebaseService @Inject constructor(
     fun uploadFile(uid: String, file: Uri, callback: StorageFileListeners) {
         val storageRef = client.storage.reference
         val fileRef = storageRef.child(uid)
-        val data = file.compressImage(context, 30)
+        val data = file.compressAndResizeImage(context, 30)
         val uploadTask = if (data != null) {
             fileRef.putBytes(data)
         } else {

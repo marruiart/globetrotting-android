@@ -1,10 +1,8 @@
 package com.marina.ruiz.globetrotting.data.local.user
 
-import android.content.Context
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.marina.ruiz.globetrotting.core.extension.EncoderDecoder
 import com.marina.ruiz.globetrotting.data.repository.model.User
 
 @Entity(
@@ -23,14 +21,7 @@ data class UserEntity(
 ) {
     fun asUser(): User {
         return User(
-            uid,
-            username,
-            nickname,
-            email,
-            avatar,
-            name,
-            surname,
-            age
+            uid, username, nickname, email, avatar, name, surname, age
         )
     }
 }

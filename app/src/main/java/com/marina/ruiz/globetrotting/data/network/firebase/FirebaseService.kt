@@ -1,17 +1,22 @@
 package com.marina.ruiz.globetrotting.data.network.firebase
 
+import android.content.Context
 import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.marina.ruiz.globetrotting.core.compressImage
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseService @Inject constructor(val client: FirebaseClient) {
+class FirebaseService @Inject constructor(
+    @ApplicationContext private val context: Context, val client: FirebaseClient
+) {
 
     companion object {
         private const val TAG = "GLOB_DEBUG FIREBASE_SERVICE"
@@ -65,7 +70,13 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
     fun uploadFile(uid: String, file: Uri, callback: StorageFileListeners) {
         val storageRef = client.storage.reference
         val fileRef = storageRef.child(uid)
-        val uploadTask = fileRef.putFile(file)
+        val data = file.compressImage(context, 30)
+        val uploadTask = if (data != null) {
+            fileRef.putBytes(data)
+        } else {
+            fileRef.putFile(file)
+        }
+
         uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
                 task.exception?.let { ex ->

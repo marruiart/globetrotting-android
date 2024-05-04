@@ -118,12 +118,6 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
     fun updateAvatar(uid: String, file: Uri?, callback: StorageFileListeners) {
         if (file != null) {
             firebase.uploadFile(uid, file, callback)
-
-/*                .addOnSuccessListener { taskSnapshot ->
-                callback.onUploadSuccess(taskSnapshot)
-            }.addOnFailureListener { ex ->
-                callback.onUploadFailed(ex)
-            }*/
         } else {
             firebase.removeFile(uid, callback)
         }

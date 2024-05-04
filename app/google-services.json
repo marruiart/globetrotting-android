@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890217120061",
+    "project_id": "globetrotting-80e83",
+    "storage_bucket": "globetrotting-80e83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890217120061:android:35e121f4b7389f3e260554",
+        "android_client_info": {
+          "package_name": "com.marina.ruiz.globetrotting"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF98Zcrl-hUTtVgsOGZuQU1TsIhnx2XAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

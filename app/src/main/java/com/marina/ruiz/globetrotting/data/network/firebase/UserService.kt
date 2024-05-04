@@ -17,8 +17,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface StorageFileListeners {
-    fun onUploadSuccess(taskSnapshot: UploadTask.TaskSnapshot?)
-    fun onUploadFailed()
+    fun onUploadSuccess(downloadUri: Uri?)
+    fun onUploadFailed(exception: Exception)
 }
 
 @Singleton
@@ -117,19 +117,15 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     fun updateAvatar(uid: String, file: Uri?, callback: StorageFileListeners) {
         if (file != null) {
-            firebase.uploadFile(uid, file).addOnFailureListener {
-                callback.onUploadFailed()
-            }.addOnSuccessListener { taskSnapshot ->
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                // ...
+            firebase.uploadFile(uid, file, callback)
+
+/*                .addOnSuccessListener { taskSnapshot ->
                 callback.onUploadSuccess(taskSnapshot)
-            }
+            }.addOnFailureListener { ex ->
+                callback.onUploadFailed(ex)
+            }*/
         } else {
-            firebase.removeFile(uid).addOnFailureListener {
-                callback.onUploadFailed()
-            }.addOnSuccessListener { _ ->
-                callback.onUploadSuccess(null)
-            }
+            firebase.removeFile(uid, callback)
         }
     }
 

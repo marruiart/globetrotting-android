@@ -6,13 +6,16 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FirebaseService @Inject constructor(val client: FirebaseClient) {
+
+    companion object {
+        private const val TAG = "GLOB_DEBUG FIREBASE_SERVICE"
+    }
 
     suspend fun getDocument(collectionName: String, id: String): DocumentSnapshot? {
         return try {
@@ -59,16 +62,35 @@ class FirebaseService @Inject constructor(val client: FirebaseClient) {
         client.auth.signOut()
     }
 
-    fun uploadFile(uid: String, file: Uri): UploadTask {
+    fun uploadFile(uid: String, file: Uri, callback: StorageFileListeners) {
         val storageRef = client.storage.reference
-        val profileRef = storageRef.child(uid)
-        return profileRef.putFile(file)
+        val fileRef = storageRef.child(uid)
+        val uploadTask = fileRef.putFile(file)
+        uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let { ex ->
+                    throw ex
+                }
+            }
+            fileRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                callback.onUploadSuccess(downloadUri)
+            } else {
+                callback.onUploadFailed(Exception("Error on removing file."))
+            }
+        }
     }
 
-    fun removeFile(uid: String): Task<Void> {
+    fun removeFile(uid: String, callback: StorageFileListeners) {
         val storageRef = client.storage.reference
         val profileRef = storageRef.child(uid)
-        return profileRef.delete()
+        profileRef.delete().addOnSuccessListener { _ ->
+            callback.onUploadSuccess(null)
+        }.addOnFailureListener {
+            callback.onUploadFailed(Exception("Error on removing file."))
+        }
     }
 
 }

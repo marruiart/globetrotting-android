@@ -2,7 +2,6 @@ package com.marina.ruiz.globetrotting.ui.main.profile.fragments
 
 import android.Manifest
 import android.content.ContentValues
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -10,20 +9,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.TakePicture
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.core.dialog.PhotoSourcePickerBottomSheet
 import com.marina.ruiz.globetrotting.core.dialog.PhotoSourcePickerListener
+import com.marina.ruiz.globetrotting.data.repository.PermissionsService
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
+
 
 interface EditProfileDialogFragmentListener {
     fun onAccept(profile: ProfileForm, avatar: Uri?)
@@ -60,10 +61,9 @@ class EditProfileDialogFragment(
         if (enabled) {
             openCamera()
         } else {
-            requirePermissionsDialog()
+            PermissionsService.requirePermissionsDialog(requireContext())
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -79,12 +79,18 @@ class EditProfileDialogFragment(
         initListeners()
     }
 
+    private fun bindAvatarImage() {
+        Glide.with(this).load(profile.avatar).centerCrop().placeholder(R.drawable.default_avatar)
+            .into(binding.ivAvatarEditProfile)
+    }
+
     private fun bindView() {
         binding.tvUsername.text = profile.username
         binding.tvEmail.text = profile.email
         binding.tilFormName.setText(profile.name)
         binding.tilFormSurname.setText(profile.surname)
         binding.tilFormNickname.setText(profile.nickname)
+        bindAvatarImage()
     }
 
     private fun setWindowInsets(view: View) {
@@ -107,7 +113,8 @@ class EditProfileDialogFragment(
                 email = profile.email,
                 name = binding.tilFormName.text.toString(),
                 surname = binding.tilFormSurname.text.toString(),
-                nickname = binding.tilFormNickname.text.toString()
+                nickname = binding.tilFormNickname.text.toString(),
+                avatar = profile.avatar
             )
             callback.onAccept(profileForm, imageUri)
         }
@@ -136,15 +143,6 @@ class EditProfileDialogFragment(
         pickImage.launch("image/*")
     }
 
-
-    private fun openAppSettings() {
-        val intent = Intent(
-            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.parse("package:${requireContext().applicationContext.packageName}")
-        )
-        startActivity(intent)
-    }
-
     private fun removePicture() {
         binding.ivAvatarEditProfile.setImageDrawable(
             ResourcesCompat.getDrawable(resources, R.drawable.default_avatar, null)
@@ -157,20 +155,6 @@ class EditProfileDialogFragment(
                 dialog.dismiss()
             }.setPositiveButton("Sí") { dialog, _ ->
                 removePicture()
-                dialog.dismiss()
-            }.show()
-    }
-
-    private fun requirePermissionsDialog() {
-        MaterialAlertDialogBuilder(requireContext()).setTitle("Faltan permisos")
-            .setMessage("No se han dado permisos, ¿desea abrir la configuración de la aplicación para concederlos?")
-            .setNeutralButton("No, gracias") { dialog, _ ->
-                dialog.dismiss()
-                Toast.makeText(
-                    requireContext(), "No se ha podido abrir la cámara.", Toast.LENGTH_SHORT
-                ).show()
-            }.setPositiveButton("Vale") { dialog, _ ->
-                openAppSettings()
                 dialog.dismiss()
             }.show()
     }

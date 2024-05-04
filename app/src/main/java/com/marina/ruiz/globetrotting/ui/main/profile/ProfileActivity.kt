@@ -5,16 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.storage.UploadTask
+import com.bumptech.glide.Glide
 import com.marina.ruiz.globetrotting.R
-import com.marina.ruiz.globetrotting.data.network.firebase.StorageFileListeners
+import com.marina.ruiz.globetrotting.data.repository.PermissionsService
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.databinding.ActivityProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.fragments.EditProfileDialogFragment
@@ -23,19 +23,28 @@ import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
-    StorageFileListeners {
+class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener {
     private lateinit var binding: ActivityProfileBinding
     private val profileVM: ProfileViewModel by viewModels()
     private lateinit var systemBars: Insets
     private lateinit var dialog: EditProfileDialogFragment
     private var _user: User? = null
+    private var uriImage: Uri? = null
 
     companion object {
         private const val TAG = "GLOB_DEBUG PROFILE_ACTIVITY"
 
         fun create(context: Context): Intent = Intent(context, ProfileActivity::class.java)
     }
+
+    private val filePermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { enabled ->
+            if (enabled) {
+                //updateAvatar()
+            } else {
+                PermissionsService.requirePermissionsDialog(this)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +56,7 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setWindowInsets()
+        //filePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         initUI()
     }
 
@@ -63,6 +73,11 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
         initListeners()
     }
 
+    private fun bindAvatarImage(user: User) {
+        Glide.with(this).load(user.avatar).centerCrop().placeholder(R.drawable.default_avatar)
+            .into(binding.ivAvatarProfile)
+    }
+
     private fun bindView() {
         _user?.let {
             with(binding) {
@@ -71,6 +86,7 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
                 tvUsername.text = it.username
                 tvEmail.text = it.email
             }
+            bindAvatarImage(it)
         }
     }
 
@@ -83,7 +99,12 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
     private fun showDialog() {
         _user?.let { user ->
             val profile = ProfileForm(
-                user.username, user.email, user.name ?: "", user.surname ?: "", user.nickname
+                user.username,
+                user.email,
+                user.name ?: "",
+                user.surname ?: "",
+                user.nickname,
+                user.avatar
             )
             dialog = EditProfileDialogFragment(this, profile)
             dialog.show(supportFragmentManager, "EditProfileFragment")
@@ -91,21 +112,13 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
     }
 
     override fun onAccept(profile: ProfileForm, avatar: Uri?) {
-        profileVM.editProfile(profile, avatar, this)
+        profileVM.editProfile(this, profile, avatar)
         dialog.dismiss()
     }
 
     override fun onCancel() {
         Log.d(TAG, "Cancel")
         dialog.dismiss()
-    }
-
-    override fun onUploadSuccess(taskSnapshot: UploadTask.TaskSnapshot?) {
-        Toast.makeText(this, "Foto actualizada", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onUploadFailed() {
-        Toast.makeText(this, "Error al actualizar la foto de perfil", Toast.LENGTH_SHORT).show()
     }
 
 }

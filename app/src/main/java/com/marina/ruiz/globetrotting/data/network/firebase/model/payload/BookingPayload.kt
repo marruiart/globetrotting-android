@@ -17,7 +17,7 @@ data class BookingPayload(
     val createdAt: Timestamp = Timestamp.now(),
     val updatedAt: Timestamp = Timestamp.now()
 ) {
-    fun toMap(): Map<String, Any?> {
+    fun toMap(): Map<String, Any> {
         return mapOf(
             "id" to id,
             "clientName" to clientName,

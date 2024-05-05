@@ -1,7 +1,7 @@
 package com.marina.ruiz.globetrotting.data.repository.model
 
 import android.os.Parcelable
-import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.DestinationPayload
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -11,20 +11,18 @@ data class Destination(
     val type: String? = null,
     val dimension: String? = null,
     val price: Double = 0.0,
-    val shortDescription: String = "",
-    val description: String = "",
+    var shortDescription: String = "",
+    var description: String = "",
     override val imageRef: Int? = null,
     override val image: String? = null
 ) : Parcelable, SelectorItem {
-    fun asDestinationEntity(): DestinationEntity {
-        return DestinationEntity(
+    fun asDestinationPayload(
+        newDescription: String? = null, newShortDescription: String? = null
+    ): DestinationPayload {
+        return DestinationPayload(
             id = id,
-            name = name,
-            type = type,
-            dimension = dimension,
-            price = price,
-            shortDescription = shortDescription,
-            description = description,
+            shortDescription = newShortDescription ?: shortDescription,
+            description = newDescription ?: description,
             //imageRef = imageRef
         )
     }
@@ -32,6 +30,5 @@ data class Destination(
 
 @Parcelize
 data class Coordinate(
-    val lng: Double,
-    val lat: Double
+    val lng: Double, val lat: Double
 ) : Parcelable

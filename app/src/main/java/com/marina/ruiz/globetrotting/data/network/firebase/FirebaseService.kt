@@ -59,7 +59,7 @@ class FirebaseService @Inject constructor(
         client.db.collection(collectionName).document().set(data).await()
     }
 
-    suspend fun updateDocument(collectionName: String, data: HashMap<String, Any>, docId: String) {
+    suspend fun updateDocument(collectionName: String, data: Map<String, Any>, docId: String) {
         client.db.collection(collectionName).document(docId).update(data).await()
     }
 

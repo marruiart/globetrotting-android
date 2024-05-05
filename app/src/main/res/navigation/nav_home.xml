@@ -29,9 +29,9 @@
         tools:layout="@layout/fragment_bookings" />
     <fragment
         android:id="@+id/popularDestinationDetailFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailDialog"
         android:label="fragment_destination_detail"
-        tools:layout="@layout/fragment_destination_detail" >
+        tools:layout="@layout/dialog_destination_detail" >
         <argument
             android:name="destination"
             app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />

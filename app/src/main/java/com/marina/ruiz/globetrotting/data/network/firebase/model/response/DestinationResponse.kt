@@ -11,8 +11,8 @@ data class DestinationResponse(
     val type: String,
     val dimension: String,
     val price: Double,
-    val shortDescription: String,
-    val description: String
+    val shortDescription: String?,
+    val description: String?
 /*    val imageRef: Int?,
     val image: String?*/
 ) : Parcelable {

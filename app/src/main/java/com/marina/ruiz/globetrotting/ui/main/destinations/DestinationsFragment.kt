@@ -16,10 +16,12 @@ import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListener {
+class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
+    DestinationDetailDialogListener {
     private lateinit var binding: FragmentDestinationsBinding
     private lateinit var adapter: DestinationsListAdapter
-    private lateinit var dialog: BookingCreationFormDialogFragment
+    private lateinit var bookingDialog: BookingCreationFormDialogFragment
+    private lateinit var detailDialog: DestinationDetailDialog
     private val destinationsVM: DestinationsViewModel by activityViewModels()
     private val mainVM: MainViewModel by activityViewModels()
 
@@ -49,11 +51,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
     }
 
     private fun onShowDetail(destination: Destination) {
-        val action =
-            DestinationsFragmentDirections.actionDestinationsFragmentToDestinationDetailFragment(
-                destination
-            )
-        navigate(action)
+        showDestinationDetailDialog(destination)
     }
 
     private fun onBookNow(destination: Destination) {
@@ -69,15 +67,28 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
     }
 
     private fun showBookNowDialog(destination: Destination) {
-        dialog = BookingCreationFormDialogFragment(this, destination)
-        dialog.show(requireActivity().supportFragmentManager, "BookingCreationFormDialogFragment")
+        bookingDialog = BookingCreationFormDialogFragment(this, destination)
+        bookingDialog.show(
+            requireActivity().supportFragmentManager, "BookingCreationFormDialog"
+        )
+    }
+
+    private fun showDestinationDetailDialog(destination: Destination) {
+        detailDialog = DestinationDetailDialog(this, destination)
+        detailDialog.show(
+            requireActivity().supportFragmentManager, "DestinationDetailDialog"
+        )
     }
 
     override fun onMakeBooking(booking: BookingForm) {
         destinationsVM.makeBooking(booking.toBookingPayload(destinationsVM.user))
     }
 
-    override fun onCancel() {
-        dialog.dismiss()
+    override fun onCancelBooking() {
+        bookingDialog.dismiss()
+    }
+
+    override fun onCancelDetails() {
+        detailDialog.dismiss()
     }
 }

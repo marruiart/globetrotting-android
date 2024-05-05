@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DestinationsViewModel @Inject constructor(
-    private val repository: GlobetrottingRepository,
-    private val bookNowUseCase: BookNowUseCase
+    private val repository: GlobetrottingRepository, private val bookNowUseCase: BookNowUseCase
 ) : ViewModel() {
 
     companion object {
@@ -31,10 +30,9 @@ class DestinationsViewModel @Inject constructor(
     val destinations: StateFlow<List<Destination>>
         get() = _destinations.asStateFlow()
 
-    init {
-/*        viewModelScope.launch {
-            repository.collectDestinationsList()
-        }*/
+    init {/*        viewModelScope.launch {
+                    repository.collectDestinationsList()
+                }*/
     }
 
     fun bindView(adapter: DestinationsListAdapter) {
@@ -60,17 +58,11 @@ class DestinationsViewModel @Inject constructor(
         }
     }
 
-    /*private val _destination: MutableStateFlow<Destination> = MutableStateFlow(Destination())
-val destination: StateFlow<Destination>
-    get() = _destination.asStateFlow()
-
-fun updateDescription(destination: Destination, activityScope: CoroutineScope) {
-    activityScope.launch {
-        val description = repository.fetchDescription(destination.name)
-        val shortDescription = repository.fetchShortDescription(destination.name)
-        repository.updateDestination(updatedDestination).collect {
-            _destination.value = it
+    fun fetchDescription(destination: Destination) {
+        viewModelScope.launch {
+            val description = repository.fetchDescription(destination.name)
+            repository.updateDestination(destination.asDestinationPayload(newDescription = description))
+            //val shortDescription = repository.fetchShortDescription(destination.name)
         }
     }
-}*/
 }

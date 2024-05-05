@@ -11,6 +11,7 @@ import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
 import com.marina.ruiz.globetrotting.data.local.destination.asDestinationList
 import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 import com.marina.ruiz.globetrotting.data.network.NetworkRepository
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.DestinationPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.asAgentsEntityList
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.asBookingEntityList
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.asDestinationsEntityList
@@ -104,7 +105,7 @@ class GlobetrottingRepository @Inject constructor(
         var description = ""
         withContext(Dispatchers.IO) {
             try {
-                Log.d(TAG, "Solicitando descripción...")
+                Log.d(TAG, "Fetching description...")
                 delay(30000)
                 val gptDescription = networkRepository.getLongDescription(name)
                 Log.d(TAG, gptDescription)
@@ -123,7 +124,7 @@ class GlobetrottingRepository @Inject constructor(
         var description = ""
         withContext(Dispatchers.IO) {
             try {
-                Log.d(TAG, "Solicitando descripción corta...")
+                Log.d(TAG, "Fetching short description...")
                 delay(10000)
                 val gptShortDescription = networkRepository.getShortDescription(name)
                 Log.d(TAG, gptShortDescription)
@@ -136,6 +137,11 @@ class GlobetrottingRepository @Inject constructor(
         }
         return description
     }
+
+    // NETWORK CRUD FUNCTIONS
+
+    suspend fun updateDestination(destination: DestinationPayload) =
+        networkRepository.updateDestination(destination)
 
 
     // LOCAL DATABASE CRUD FUNCTIONS

@@ -5,51 +5,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.Timestamp
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
-import com.marina.ruiz.globetrotting.databinding.FragmentBookingCreationFormBinding
+import com.marina.ruiz.globetrotting.databinding.DialogBookingCreationFormBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-interface BookingCreationFormDialogFragmentListener {
+interface BookingCreationFormDialogListener {
     fun onMakeBooking(booking: BookingForm)
-    fun onCancel()
+    fun onCancelBooking()
 }
 
+@AndroidEntryPoint
 class BookingCreationFormDialogFragment(
-    private val callback: BookingCreationFormDialogFragmentListener,
-    destination: Destination
-) : FullScreenDialogFragment(R.layout.fragment_booking_creation_form) {
+    private val callback: BookingCreationFormDialogListener, destination: Destination
+) : FullScreenDialogFragment(R.layout.dialog_booking_creation_form) {
     private val padding = 16
-    private lateinit var binding: FragmentBookingCreationFormBinding
+    private lateinit var binding: DialogBookingCreationFormBinding
     private lateinit var activity: FragmentActivity
     private var form = BookingForm(destination)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        overrideOnBackPressed()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBookingCreationFormBinding.inflate(inflater, container, false)
+        binding = DialogBookingCreationFormBinding.inflate(inflater, container, false)
         activity = requireActivity()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setWindowInsets(view)
+        setWindowInsets()
         initListeners()
     }
 
-    private fun setWindowInsets(view: View) {
+    private fun setWindowInsets() {
+        val view =
+            requireActivity().findViewById<MaterialToolbar>(R.id.mt_booking_form_toolbar)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(
@@ -62,13 +73,24 @@ class BookingCreationFormDialogFragment(
         }
     }
 
+    private fun overrideOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    callback.onCancelBooking()
+                    isEnabled = false
+                    super.handleOnBackCancelled()
+                }
+            })
+    }
+
     private fun initListeners() {
         binding.btnBookingFormMakeBooking.setOnClickListener {
             callback.onMakeBooking(form)
         }
 
         binding.mtBookingFormToolbar.setNavigationOnClickListener {
-            callback.onCancel()
+            callback.onCancelBooking()
         }
 
         binding.btnBookingFormDatepicker.setOnClickListener {

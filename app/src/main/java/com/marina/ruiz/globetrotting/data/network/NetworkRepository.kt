@@ -7,6 +7,7 @@ import com.marina.ruiz.globetrotting.data.network.firebase.AuthService
 import com.marina.ruiz.globetrotting.data.network.firebase.BookingsService
 import com.marina.ruiz.globetrotting.data.network.firebase.DestinationsService
 import com.marina.ruiz.globetrotting.data.network.firebase.UserService
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.DestinationPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.AgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.UserDataResponse
 import kotlinx.coroutines.flow.StateFlow
@@ -37,6 +38,8 @@ class NetworkRepository @Inject constructor(
 
     // DESTINATIONS SERVICE
     val destinationsResponse = destinationsSvc.destinationsResponse
+    suspend fun updateDestination(destination: DestinationPayload) =
+        destinationsSvc.updateDestination(destination)
 
     // BOOKINGS SERVICE
     val bookingsResponse = bookingsSvc.bookingsResponse

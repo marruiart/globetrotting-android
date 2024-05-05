@@ -2,9 +2,10 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.util.Log
 import com.google.firebase.firestore.QuerySnapshot
-import com.marina.ruiz.globetrotting.data.network.firebase.model.response.DestinationResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asDestinationResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.DestinationPayload
+import com.marina.ruiz.globetrotting.data.network.firebase.model.response.DestinationResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -20,6 +21,10 @@ class DestinationsService @Inject constructor(private val firebase: FirebaseServ
     companion object {
         private const val TAG = "GLOB_DEBUG DESTINATIONS_SERVICE"
         private const val DESTINATIONS_COLLECTION = "destinations"
+    }
+
+    suspend fun updateDestination(destination: DestinationPayload) {
+        firebase.updateDocument(DESTINATIONS_COLLECTION, destination.toMap(), destination.id)
     }
 
     fun fetchDestinations() {

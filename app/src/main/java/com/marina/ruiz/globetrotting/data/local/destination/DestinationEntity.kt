@@ -13,8 +13,8 @@ data class DestinationEntity(
     val type: String?,
     val dimension: String?,
     val price: Double,
-    val shortDescription: String,
-    val description: String,
+    val shortDescription: String?,
+    val description: String?,
     //val imageRef: Int? = null
 ) {
     fun asDestination(): Destination {
@@ -24,8 +24,8 @@ data class DestinationEntity(
             type = type,
             dimension = dimension,
             price = price,
-            shortDescription = shortDescription,
-            description = description,
+            shortDescription = shortDescription ?: "",
+            description = description ?: "",
             imageRef = chooseImage(type)
         )
     }

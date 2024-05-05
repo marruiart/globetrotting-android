@@ -84,4 +84,10 @@
     <string name="AntennaMorty">Another variant of Morty, characterized by having antennas, possibly from an alternate dimension or parallel universe.</string>
     <string name="AntennaRick">Similar to Antenna Morty, he is a version of Rick with antennas, indicating his origin in some different universe.</string>
     <string name="AntsinmyEyesJohnson">A quirky character known for his advertising slogan. Despite his apparent lack of eyes, he enthusiastically sells products in commercials within the series.</string>
+    <string name="home_menu_my_account">My account</string>
+    <string name="home_menu_my_bookings">Bookings</string>
+    <string name="home_menu_my_favorites">Favorites</string>
+    <string name="home_hero_motto_text">Discover your own adventure</string>
+    <string name="home_see_all_popular">See all</string>
+    <string name="home_popular_destinations">Popular destinations</string>
 </resources>

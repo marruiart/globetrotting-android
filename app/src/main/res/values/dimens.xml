@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_fragment_margin_top">20dp</dimen>
+    <dimen name="font_size">16sp</dimen>
+    <dimen name="font_size_large">18sp</dimen>
+    <dimen name="font_size_larger">20sp</dimen>
+</resources>

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
+import com.marina.ruiz.globetrotting.ui.main.MainViewModel
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +21,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
     private lateinit var adapter: DestinationsListAdapter
     private lateinit var dialog: BookingCreationFormDialogFragment
     private val destinationsVM: DestinationsViewModel by activityViewModels()
+    private val mainVM: MainViewModel by activityViewModels()
 
     companion object {
         private const val TAG = "GLOB_DEBUG DESTINATIONS_FRAGMENT"
@@ -31,6 +32,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentDestinationsBinding.inflate(inflater, container, false)
+        mainVM.setActionBarSizeMargin(requireActivity(), 1)
         return binding.root
     }
 
@@ -46,12 +48,12 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
         rv.adapter = adapter
     }
 
-    private fun onShowDetail(destination: Destination, view: View) {
+    private fun onShowDetail(destination: Destination) {
         val action =
             DestinationsFragmentDirections.actionDestinationsFragmentToDestinationDetailFragment(
                 destination
             )
-        view.findNavController().navigate(action)
+        navigate(action)
     }
 
     private fun onBookNow(destination: Destination) {
@@ -79,5 +81,3 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogFragmentListen
         dialog.dismiss()
     }
 }
-
-

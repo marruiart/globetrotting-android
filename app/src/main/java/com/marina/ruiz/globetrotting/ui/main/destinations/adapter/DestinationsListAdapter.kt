@@ -13,7 +13,7 @@ import com.marina.ruiz.globetrotting.databinding.ItemDestinationBinding
 import java.text.NumberFormat
 
 class DestinationsListAdapter(
-    private val onShowDetail: (destination: Destination, view: View) -> Unit,
+    private val onShowDetail: (destination: Destination) -> Unit,
     private val onBookNow: (destination: Destination) -> Unit
 ) :
     ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
@@ -34,10 +34,10 @@ class DestinationsListAdapter(
                 NumberFormat.getCurrencyInstance().format(destination.price)
             )
             binding.destinationItem.setOnClickListener {
-                onShowDetail(destination, binding.root)
+                onShowDetail(destination)
             }
             binding.detailsBtn.setOnClickListener {
-                onShowDetail(destination, binding.root)
+                onShowDetail(destination)
             }
             binding.bookBtn.setOnClickListener {
                 onBookNow(destination)

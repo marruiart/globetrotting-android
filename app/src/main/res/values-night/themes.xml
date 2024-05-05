@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Globetrotting" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
@@ -25,14 +25,26 @@
         <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
         <item name="colorOutline">@color/md_theme_dark_outline</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
-        <item format="color" name="colorSurfaceBright">@color/md_theme_dark_surface_bright</item>
-        <item format="color" name="colorSurfaceContainer">@color/md_theme_dark_surface_container</item>
-        <item format="color" name="colorSurfaceContainerHigh">@color/md_theme_dark_surface_high</item>
-        <item format="color" name="colorSurfaceContainerHighest">@color/md_theme_dark_surface_highest</item>
-        <item format="color" name="colorSurfaceContainerLow">@color/md_theme_dark_surface_low</item>
-        <item format="color" name="colorSurfaceContainerLowest">@color/md_theme_dark_surface_lowest</item>
-        <item format="color" name="colorSurfaceDim">@color/md_theme_dark_surface_dim</item>
+        <item name="colorSurfaceBright">@color/md_theme_dark_surface_bright</item>
+        <item name="colorSurfaceContainer">@color/md_theme_dark_surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_dark_surface_high</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_dark_surface_highest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_dark_surface_low</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_dark_surface_lowest</item>
+        <item name="colorSurfaceDim">@color/md_theme_dark_surface_dim</item>
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+        <!-- fixed colors -->
+        <item name="colorPrimaryFixed">@color/md_theme_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_onPrimaryFixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_onPrimaryFixedVariant</item>
+        <!-- styles -->
+        <item name="android:actionOverflowButtonStyle">@style/overflowButtonStyle</item>
     </style>
+
+    <style name="overflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_profile</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
 </resources>

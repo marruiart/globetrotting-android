@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +28,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "GLOB_DEBUG MAIN_ACTIVITY"
 
-        fun create(context: Context): Intent =
-            Intent(context, MainActivity::class.java)
+        fun create(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +37,22 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mainVM.actionBarSize = getActionBarSize()
         setWindowInsets()
         initNavController()
         initUI()
+    }
+
+    private fun getActionBarSize(): Int {
+        val typedValue = TypedValue()
+        return if (theme.resolveAttribute(
+                androidx.appcompat.R.attr.actionBarSize, typedValue, true
+            )
+        ) {
+            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+        } else {
+            0
+        }
     }
 
     private fun setWindowInsets() {

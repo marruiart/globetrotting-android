@@ -14,6 +14,7 @@ import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
+import com.marina.ruiz.globetrotting.ui.main.MainViewModel
 import com.marina.ruiz.globetrotting.ui.main.bookings.adapter.BookingsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,14 +27,13 @@ class BookingsFragment : Fragment() {
     private lateinit var binding: FragmentBookingsBinding
     private lateinit var adapter: BookingsListAdapter
     private val bookingsVM: BookingsViewModel by activityViewModels()
+    private val mainVM: MainViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBookingsBinding
-            .inflate(inflater, container, false)
+        binding = FragmentBookingsBinding.inflate(inflater, container, false)
+        mainVM.setActionBarSizeMargin(requireActivity(), 1)
         return binding.root
     }
 
@@ -71,11 +71,8 @@ class BookingsFragment : Fragment() {
     }
 
     private fun navigateToBookingForm(
-        view: View,
-        destination: Destination,
-        booking: Booking? = null
-    ) {
-        /*        val action =
+        view: View, destination: Destination, booking: Booking? = null
+    ) {/*        val action =
                     BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(
                         destination,
                         booking

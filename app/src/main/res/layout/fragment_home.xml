@@ -7,14 +7,145 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HomeFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/iv_background_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_background_img_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_background_img_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0.5pt"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_motto_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fontFamily="sans-serif-medium"
+        android:shadowColor="#505050"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="@string/home_hero_motto_text"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_background_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_buttons_home"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="-50dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_background_img_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/btn_favorites_home"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_menu_my_favorites"
+                app:icon="@drawable/ic_favorite"
+                app:iconGravity="top"
+                app:iconSize="30dp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_my_account_home"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_my_account_home"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_menu_my_account"
+                app:icon="@drawable/ic_profile"
+                app:iconGravity="top"
+                app:iconSize="30dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btn_favorites_home"
+                app:layout_constraintEnd_toStartOf="@+id/btn_my_bookings_home"
+                app:layout_constraintStart_toEndOf="@+id/btn_favorites_home" />
+
+            <Button
+                android:id="@+id/btn_my_bookings_home"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_menu_my_bookings"
+                app:icon="@drawable/ic_booking"
+                app:iconGravity="top"
+                app:iconSize="30dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btn_favorites_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_my_account_home" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_popular_destinations_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/home_popular_destinations"
+        android:textSize="@dimen/font_size_large"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/rv_popular_destinations"
+        app:layout_constraintTop_toBottomOf="@id/mcv_buttons_home" />
+
+    <Button
+        android:id="@+id/btn_see_all_destinations_home"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="0dp"
+        android:text="@string/home_see_all_popular"
+        app:icon="@drawable/ic_chevron_right"
+        app:iconGravity="textEnd"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_popular_destinations_home"
+        app:layout_constraintEnd_toEndOf="@+id/rv_popular_destinations" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_popular_destinations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="@+id/mcv_buttons_home"
+        app:layout_constraintStart_toStartOf="@+id/mcv_buttons_home"
+        app:layout_constraintTop_toBottomOf="@+id/tv_popular_destinations_home"
+        tools:listitem="@layout/item_popular_destinations_home">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

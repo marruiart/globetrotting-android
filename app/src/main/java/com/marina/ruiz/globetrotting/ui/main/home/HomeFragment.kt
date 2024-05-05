@@ -5,30 +5,78 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.marina.ruiz.globetrotting.R
-import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import com.marina.ruiz.globetrotting.data.repository.model.Destination
+import com.marina.ruiz.globetrotting.databinding.FragmentHomeBinding
+import com.marina.ruiz.globetrotting.ui.main.MainViewModel
+import com.marina.ruiz.globetrotting.ui.main.home.adapter.PopularDestinationsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private val authViewModel: AuthViewModel by viewModels()
-    private val viewModel: HomeViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: PopularDestinationsAdapter
+    private val mainVM: MainViewModel by activityViewModels()
+    private val homeVM: HomeViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        mainVM.setActionBarSizeMargin(requireActivity(), 0)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initUI()
+        homeVM.bindView(adapter)
+    }
+
+    private fun initUI() {
+        initListeners()
+        initAdapter()
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            btnFavoritesHome.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToSeeAllDestinationsFragment()
+                navigate(action)
+            }
+            btnMyAccountHome.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToProfileActivity()
+                navigate(action)
+            }
+            btnMyBookingsHome.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToBookingsFragmentFromHome()
+                navigate(action)
+            }
+            btnSeeAllDestinationsHome.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToSeeAllDestinationsFragment()
+                navigate(action)
+            }
+        }
+    }
+
+    private fun initAdapter() {
+        adapter = PopularDestinationsAdapter(::onShowDetail)
+        val rv = binding.rvPopularDestinations
+        rv.adapter = adapter
+    }
+
+    private fun onShowDetail(destination: Destination) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDestinationDetailFragment(
+            destination
+        )
+        navigate(action)
+    }
+
+    private fun navigate(action: NavDirections) {
+        findNavController().navigate(action)
     }
 
 }

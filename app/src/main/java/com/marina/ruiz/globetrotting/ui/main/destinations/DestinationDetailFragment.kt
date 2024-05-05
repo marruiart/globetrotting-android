@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 class DestinationDetailFragment : Fragment() {
     private lateinit var binding: FragmentDestinationDetailBinding
     private val args: DestinationDetailFragmentArgs by navArgs()
+    private val destinationsVM: DestinationsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,11 +57,11 @@ class DestinationDetailFragment : Fragment() {
         requireActivity().supportFragmentManager.popBackStack()
     }
 
-    /*private fun fetchDescription() {
+/*    private fun fetchDescription() {
         if (args.destination.description.isEmpty()) {
-            viewModel.updateDescription(args.destination, requireActivity().lifecycleScope)
+            destinationsVM.updateDescription(args.destination, requireActivity().lifecycleScope)
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.destination.collect { destination ->
+                destinationsVM.destination.collect { destination ->
                     bindView(destination)
                 }
             }

@@ -10,8 +10,40 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_nav_auth"
-            app:destination="@id/nav_auth" />
+            android:id="@+id/action_homeFragment_to_bookingsFragmentFromHome"
+            app:destination="@id/myBookingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_destinationDetailFragment"
+            app:destination="@id/popularDestinationDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllDestinationsFragment"
+            app:destination="@id/seeAllDestinationsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileActivity"
+            app:destination="@id/profileActivity" />
     </fragment>
-    <include app:graph="@navigation/nav_auth" />
+    <fragment
+        android:id="@+id/myBookingsFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.bookings.BookingsFragment"
+        android:label="fragment_bookings"
+        tools:layout="@layout/fragment_bookings" />
+    <fragment
+        android:id="@+id/popularDestinationDetailFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailFragment"
+        android:label="fragment_destination_detail"
+        tools:layout="@layout/fragment_destination_detail" >
+        <argument
+            android:name="destination"
+            app:argType="com.marina.ruiz.globetrotting.data.repository.model.Destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllDestinationsFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationsFragment"
+        android:label="fragment_destinations"
+        tools:layout="@layout/fragment_destinations" />
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.marina.ruiz.globetrotting.ui.main.profile.ProfileActivity"
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" />
 </navigation>

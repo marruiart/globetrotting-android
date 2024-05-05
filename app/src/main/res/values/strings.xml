@@ -86,4 +86,10 @@
     <string name="menu_action_delete">Eliminar</string>
     <string name="bookings_booking_deleted_toast">Reserva eliminada</string>
     <string name="booking_form_edit_btn">Editar reserva</string>
+    <string name="home_menu_my_account">Mi cuenta</string>
+    <string name="home_menu_my_bookings">Reservas</string>
+    <string name="home_menu_my_favorites">Favoritos</string>
+    <string name="home_hero_motto_text">Descubre tu propia \naventura</string>
+    <string name="home_see_all_popular">Ver todos</string>
+    <string name="home_popular_destinations">Destinos populares</string>
 </resources>

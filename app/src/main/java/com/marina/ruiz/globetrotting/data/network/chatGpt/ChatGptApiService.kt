@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.data.network.chatGpt
 
+import com.marina.ruiz.globetrotting.core.API_KEY_SECRET
 import com.marina.ruiz.globetrotting.data.network.chatGpt.model.ChatGptResponse
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface ChatGptApi {
-    @Headers("Authorization: Bearer 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")
+    @Headers("Authorization: Bearer $API_KEY_SECRET")
     @POST("v1/completions")
     suspend fun getResponse(@Body requestBody: RequestBody): ChatGptResponse
 }

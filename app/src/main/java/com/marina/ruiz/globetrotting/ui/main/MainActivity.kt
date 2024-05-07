@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.TypedValue
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.R.attr.actionBarSize
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -45,14 +46,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun getActionBarSize(): Int {
         val typedValue = TypedValue()
-        return if (theme.resolveAttribute(
-                androidx.appcompat.R.attr.actionBarSize, typedValue, true
-            )
-        ) {
-            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
-        } else {
-            0
-        }
+        val hasSize = theme.resolveAttribute(actionBarSize, typedValue, true)
+        return if (hasSize) TypedValue.complexToDimensionPixelSize(
+            typedValue.data, resources.displayMetrics
+        )
+        else 0
     }
 
     private fun setWindowInsets() {

@@ -9,14 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.R.attr.colorOnSurfaceVariant
-import com.google.android.material.appbar.MaterialToolbar
 import com.marina.ruiz.globetrotting.R
-import com.marina.ruiz.globetrotting.core.getColorFromThemeAttribute
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
-import com.marina.ruiz.globetrotting.ui.main.MainViewModel
 import com.marina.ruiz.globetrotting.ui.main.bookings.adapter.BookingsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -28,22 +24,12 @@ class BookingsFragment : Fragment() {
     private lateinit var binding: FragmentBookingsBinding
     private lateinit var adapter: BookingsListAdapter
     private val bookingsVM: BookingsViewModel by activityViewModels()
-    private val mainVM: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentBookingsBinding.inflate(inflater, container, false)
-        mainVM.setActionBarSizeMargin(requireActivity(), 1)
-        setOverflowButtonColor()
         return binding.root
-    }
-
-    private fun setOverflowButtonColor() {
-        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.mt_main_toolbar)
-        val color = getColorFromThemeAttribute(requireContext(), colorOnSurfaceVariant)
-        val overflowIcon = toolbar.overflowIcon
-        overflowIcon?.setTint(color)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

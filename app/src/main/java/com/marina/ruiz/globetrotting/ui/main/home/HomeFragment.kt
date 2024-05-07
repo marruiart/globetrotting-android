@@ -10,8 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.MaterialToolbar
-import com.marina.ruiz.globetrotting.R
+import com.google.android.material.R
+import com.marina.ruiz.globetrotting.core.changeStatusBarContrastStyle
+import com.marina.ruiz.globetrotting.core.getColorFromThemeAttribute
+import com.marina.ruiz.globetrotting.core.setOverflowButtonColor
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentHomeBinding
 import com.marina.ruiz.globetrotting.ui.main.MainViewModel
@@ -30,7 +32,7 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         mainVM.setActionBarSizeMargin(requireActivity(), 0)
-        setOverflowButtonColor()
+        setViewColors()
         return binding.root
     }
 
@@ -43,8 +45,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        changeStatusBarContrastStyle(requireActivity().window, true)
         initUI()
         homeVM.bindView(adapter)
+    }
+
+    private fun setViewColors() {
+        setOverflowButtonColor(requireActivity(), Color.WHITE)
     }
 
     private fun initUI() {
@@ -88,6 +95,15 @@ class HomeFragment : Fragment() {
 
     private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        val color = getColorFromThemeAttribute(requireContext(), R.attr.colorOnSurfaceVariant)
+        setOverflowButtonColor(requireActivity(), color)
+        changeStatusBarContrastStyle(requireActivity().window, false)
+        mainVM.setActionBarSizeMargin(requireActivity(), 1)
     }
 
 }

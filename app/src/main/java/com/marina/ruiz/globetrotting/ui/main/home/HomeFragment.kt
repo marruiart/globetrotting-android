@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.ui.main.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
+import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentHomeBinding
 import com.marina.ruiz.globetrotting.ui.main.MainViewModel
@@ -27,7 +30,15 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         mainVM.setActionBarSizeMargin(requireActivity(), 0)
+        setOverflowButtonColor()
         return binding.root
+    }
+
+    private fun setOverflowButtonColor() {
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.mt_main_toolbar)
+        val color = Color.WHITE
+        val overflowIcon = toolbar.overflowIcon
+        overflowIcon?.setTint(color)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

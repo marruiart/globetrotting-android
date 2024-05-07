@@ -44,7 +44,7 @@
 
     <style name="overflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_profile</item>
-        <item name="android:tint">@color/white</item>
+        <item name="android:tint">?attr/colorOnSurfaceVariant</item>
     </style>
 
     <style name="Theme.Globetrotting" parent="Base.Theme.Globetrotting" />

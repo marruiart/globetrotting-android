@@ -89,7 +89,7 @@ class FirebaseService @Inject constructor(
                 val downloadUri = task.result
                 callback.onUploadSuccess(downloadUri)
             } else {
-                callback.onUploadFailed(Exception("Error on removing file."))
+                callback.onUploadFailed(Exception("Error on updating avatar."))
             }
         }
     }

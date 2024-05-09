@@ -9,7 +9,9 @@ data class BookingForm(
     val destination: Destination,
     var arrival: Timestamp = Timestamp(0L, 0),
     var departure: Timestamp = Timestamp(0L, 0),
-    var travelers: Int = 0
+    var travelers: Int = 1,
+    var nights: Int = 0,
+    var amount: Double = destination.price
 ) {
     fun toBookingPayload(user: User): BookingPayload {
         return BookingPayload(
@@ -19,7 +21,8 @@ data class BookingForm(
             destination_id = destination.id,
             end = arrival,
             start = departure,
-            amount = 0f,
+            amount = amount,
+            nights = nights,
             travelers = travelers
         )
     }

@@ -50,7 +50,7 @@
             tools:viewBindingIgnore="true">
 
             <TextView
-                android:id="@+id/tv_booking_form_destination"
+                android:id="@+id/tv_booking_form_destination_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
@@ -78,7 +78,7 @@
                 app:icon="@drawable/ic_calendar_month"
                 app:iconSize="30dp"
                 app:iconTint="?attr/colorOnSurfaceVariant"
-                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination_name"
                 app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_departure_date" />
 
             <TextView
@@ -89,8 +89,8 @@
                 android:paddingStart="8dp"
                 android:text="Desde"
                 app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_date"
-                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
-                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_destination"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_destination_name"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:viewBindingIgnore="true" />
 
@@ -136,7 +136,7 @@
                 android:layout_marginTop="24dp"
                 android:paddingStart="8dp"
                 android:text="Número de viajeros"
-                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination_name"
                 app:layout_constraintTop_toBottomOf="@+id/btn_booking_form_datepicker"
                 tools:viewBindingIgnore="true" />
 
@@ -203,9 +203,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/horizontal_margin"
                 android:text="@string/booking_form_accept_btn"
+                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tv_booking_form_total_amount"
                 app:layout_constraintTop_toBottomOf="@+id/space_booking_form_bottom" />
 
@@ -224,7 +224,7 @@
                 tools:text="2565 €" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_booking_form_total_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total"

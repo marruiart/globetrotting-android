@@ -16,9 +16,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.Timestamp
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
+import com.marina.ruiz.globetrotting.core.extension.daysBetween
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.DialogBookingCreationFormBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,8 +55,14 @@ class BookingCreationFormDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setWindowInsets()
+        initUI()
         initListeners()
+    }
+
+    private fun initUI() {
+        setWindowInsets()
+        updateAmount()
+        binding.tvBookingFormDestinationName.text = form.destination.name
     }
 
     private fun setWindowInsets() {
@@ -72,8 +80,7 @@ class BookingCreationFormDialogFragment(
     }
 
     private fun overrideOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     callback.onCancelBooking()
@@ -97,7 +104,7 @@ class BookingCreationFormDialogFragment(
         }
 
         binding.tietBookingFormNumTravelers.doAfterTextChanged { num ->
-            var num: Int = num.toString().toIntOrNull() ?: minTravelers
+            var num: Int = num.toString().toIntOrNull() ?: form.travelers
             if (num < minTravelers) {
                 num = minTravelers
                 binding.tietBookingFormNumTravelers.setText(num.toString())
@@ -107,19 +114,45 @@ class BookingCreationFormDialogFragment(
                 binding.tietBookingFormNumTravelers.setText(num.toString())
             }
             form.travelers = num
+            updateAmount()
         }
 
         binding.btnBookingFromTravelersAdd.setOnClickListener {
-            var num = binding.tietBookingFormNumTravelers.text.toString().toInt() + 1
+            val numText = binding.tietBookingFormNumTravelers.text.toString()
+            var num: Int
+            if (numText.isNotEmpty()) {
+                num = numText.toInt() + 1
+            } else {
+                num = form.travelers + 1
+            }
             if (num > maxTravelers) num = maxTravelers
             binding.tietBookingFormNumTravelers.setText(num.toString())
         }
 
         binding.btnBookingFromTravelersRemove.setOnClickListener {
-            var num = binding.tietBookingFormNumTravelers.text.toString().toInt() - 1
+            val numText = binding.tietBookingFormNumTravelers.text.toString()
+            var num: Int
+            if (numText.isNotEmpty()) {
+                num = numText.toInt() - 1
+            } else {
+                num = form.travelers - 1
+            }
             if (num < minTravelers) num = minTravelers
             binding.tietBookingFormNumTravelers.setText(num.toString())
         }
+    }
+
+    private fun updateAmount() {
+        var nights = form.nights
+        if (nights != 0) {
+            binding.btnBookingFormMakeBooking.isEnabled = true
+        } else {
+            nights = 1
+            binding.btnBookingFormMakeBooking.isEnabled = false
+        }
+        form.amount = form.travelers * form.destination.price * nights
+        val amount = NumberFormat.getCurrencyInstance().format(form.amount)
+        binding.tvBookingFormTotalAmount.text = amount
     }
 
     /**
@@ -145,6 +178,8 @@ class BookingCreationFormDialogFragment(
                 binding.tvBookingFormArrivalDate.text = formatDate["arrivalDate"]
                 form.departure = departureDate.toTimestamp()
                 form.arrival = arrivalDate.toTimestamp()
+                form.nights = form.departure.daysBetween(form.arrival)
+                updateAmount()
             } else {
                 Toast.makeText(
                     context, "Se deben seleccionar fechas de salida y llegada", Toast.LENGTH_SHORT

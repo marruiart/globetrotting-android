@@ -17,13 +17,16 @@ import com.marina.ruiz.globetrotting.core.setOverflowButtonColor
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentHomeBinding
 import com.marina.ruiz.globetrotting.ui.main.MainViewModel
+import com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailDialog
+import com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailDialogListener
 import com.marina.ruiz.globetrotting.ui.main.home.adapter.PopularDestinationsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), DestinationDetailDialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: PopularDestinationsAdapter
+    private lateinit var detailDialog: DestinationDetailDialog
     private val mainVM: MainViewModel by activityViewModels()
     private val homeVM: HomeViewModel by viewModels()
 
@@ -32,19 +35,24 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         mainVM.setActionBarSizeMargin(requireActivity(), 0)
-        setViewColors()
+        setStatusBarAndOverflowButtonColor(Color.WHITE, true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        changeStatusBarContrastStyle(requireActivity().window, true)
         initUI()
         homeVM.bindView(adapter)
     }
 
-    private fun setViewColors() {
-        setOverflowButtonColor(requireActivity(), Color.WHITE)
+    private fun setStatusBarAndOverflowButtonColor(
+        color: Int? = null, lightIcons: Boolean = false
+    ) {
+        val newColor = color ?: getColorFromThemeAttribute(
+            requireContext(), R.attr.colorOnSurfaceVariant
+        )
+        setOverflowButtonColor(requireActivity(), newColor)
+        changeStatusBarContrastStyle(requireActivity().window, lightIcons)
     }
 
     private fun initUI() {
@@ -80,10 +88,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun onShowDetail(destination: Destination) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDestinationDetailFragment(
-            destination
+        setStatusBarAndOverflowButtonColor()
+        showDestinationDetailDialog(destination)
+    }
+
+    private fun showDestinationDetailDialog(destination: Destination) {
+        setStatusBarAndOverflowButtonColor()
+        detailDialog = DestinationDetailDialog(this, destination)
+        detailDialog.show(
+            requireActivity().supportFragmentManager, "DestinationDetailDialog"
         )
-        navigate(action)
     }
 
     private fun navigate(action: NavDirections) {
@@ -93,10 +107,13 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        val color = getColorFromThemeAttribute(requireContext(), R.attr.colorOnSurfaceVariant)
-        setOverflowButtonColor(requireActivity(), color)
-        changeStatusBarContrastStyle(requireActivity().window, false)
+        setStatusBarAndOverflowButtonColor()
         mainVM.setActionBarSizeMargin(requireActivity(), 1)
+    }
+
+    override fun onCloseDetails() {
+        detailDialog.dismiss()
+        setStatusBarAndOverflowButtonColor(Color.WHITE, true)
     }
 
 }

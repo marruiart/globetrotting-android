@@ -16,7 +16,7 @@ import com.marina.ruiz.globetrotting.databinding.DialogDestinationDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 interface DestinationDetailDialogListener {
-    fun onCancelDetails()
+    fun onCloseDetails()
 }
 
 @AndroidEntryPoint
@@ -67,7 +67,7 @@ class DestinationDetailDialog(
         requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    callback.onCancelDetails()
+                    callback.onCloseDetails()
                     isEnabled = false
                     super.handleOnBackCancelled()
                 }
@@ -91,6 +91,6 @@ class DestinationDetailDialog(
     }
 
     private fun navigateBack() {
-        requireActivity().supportFragmentManager.popBackStack()
+        callback.onCloseDetails()
     }
 }

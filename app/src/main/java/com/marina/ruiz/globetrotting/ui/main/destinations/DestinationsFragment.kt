@@ -85,7 +85,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         bookingDialog.dismiss()
     }
 
-    override fun onCancelDetails() {
+    override fun onCloseDetails() {
         detailDialog.dismiss()
     }
 }

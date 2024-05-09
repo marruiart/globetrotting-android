@@ -64,8 +64,7 @@ class DestinationDetailDialog(
     }
 
     private fun overrideOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
+        requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     callback.onCancelDetails()
@@ -79,12 +78,12 @@ class DestinationDetailDialog(
         binding.mtDestinationDetailToolbar.setNavigationOnClickListener {
             navigateBack()
         }
-        binding.destinationName.text = destination.name
+        binding.tvDetailDestinationName.text = destination.name
         if (destination.imageRef != null) {
             binding.destinationImg.setImageResource(destination.imageRef)
         }
-        binding.destinationDescription.text = destination.description
-        if (binding.destinationDescription.text.isEmpty()) {
+        binding.tvDetailDestinationDescription.text = destination.description
+        if (binding.tvDetailDestinationDescription.text.isEmpty()) {
             binding.loading.visibility = View.VISIBLE
         } else {
             binding.loading.visibility = View.GONE

@@ -1,100 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/destination_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="18dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
 
-    <TextView
-        android:id="@+id/destination_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/share_btn"
-        app:layout_constraintEnd_toStartOf="@+id/share_btn"
-        app:layout_constraintStart_toStartOf="@+id/booking_traveler_img"
-        app:layout_constraintTop_toTopOf="@+id/share_btn"
-        tools:text="Earth (C-137)" />
-
-    <Button
-        android:id="@+id/share_btn"
-        style="@style/Widget.Material3.Button.TextButton.Icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/booking_share"
-        app:icon="@drawable/ic_share"
-        app:iconTint="?attr/colorPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/menu_btn"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/menu_btn"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_threedots_menu"
-        app:iconTint="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/booking_traveler_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="18dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="Rick and Morty character"
-        app:layout_constraintEnd_toStartOf="@+id/booking_traveler_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destination_name"
-        app:shapeAppearanceOverlay="@style/Circular"
-        app:srcCompat="@drawable/default_avatar" />
-
-    <TextView
-        android:id="@+id/booking_traveler_name"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:gravity="center_vertical"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/booking_traveler_img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/booking_traveler_img"
-        app:layout_constraintTop_toTopOf="@+id/booking_traveler_img"
-        tools:text="Rick Sanchez" />
-
-    <TextView
-        android:id="@+id/departure_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="@string/booking_item_departure"
-        app:layout_constraintStart_toStartOf="@+id/booking_traveler_img"
-        app:layout_constraintTop_toBottomOf="@+id/booking_traveler_img" />
-
-    <TextView
-        android:id="@+id/arrival_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/booking_item_arrival"
-        app:layout_constraintBaseline_toBaselineOf="@+id/departure_date"
-        app:layout_constraintEnd_toEndOf="@+id/booking_traveler_name"
-        app:layout_constraintStart_toEndOf="@+id/departure_date" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/materialDivider"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departure_date" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/destination_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintBottom_toTopOf="@+id/departure_date"
+            app:layout_constraintStart_toEndOf="@+id/booking_traveler_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Earth (C-137)" />
+
+        <Button
+            android:id="@+id/share_btn"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/booking_share"
+            app:icon="@drawable/ic_share"
+            app:iconTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/booking_traveler_img"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="Rick and Morty character"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/home_background" />
+
+        <TextView
+            android:id="@+id/departure_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/booking_item_departure"
+            app:layout_constraintBottom_toTopOf="@+id/arrival_date"
+            app:layout_constraintStart_toStartOf="@+id/destination_name"
+            app:layout_constraintTop_toBottomOf="@+id/destination_name" />
+
+        <TextView
+            android:id="@+id/arrival_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/booking_item_arrival"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/destination_name"
+            app:layout_constraintTop_toBottomOf="@+id/departure_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
 

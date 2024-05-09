@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.marina.ruiz.globetrotting.core.dialog.DialogConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_booking_creation_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="?attr/colorPrimaryContainer"
     tools:context=".ui.main.destinations.BookingCreationFormDialogFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -19,122 +20,226 @@
         app:navigationIconTint="?attr/colorOnSurface"
         app:title="@string/booking_form_header_title" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/giv_booking_form"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_booking"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mt_booking_form_toolbar"
+        tools:viewBindingIgnore="true" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_booking_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        tools:layout_editor_absoluteX="8dp"
+        tools:viewBindingIgnore="true">
 
-        <Space
-            android:id="@+id/space_booking_form_top"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_destination"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_booking_form_destination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_booking_form_datepicker"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/space_booking_form_top"
-            tools:text="Earth" />
-
-        <Button
-            android:id="@+id/btn_booking_form_datepicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/booking_form_select_dates"
-            app:icon="@drawable/ic_calendar_month"
-            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_destination" />
-
-        <TextView
-            android:id="@+id/tv_booking_form_departure_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Desde"
-            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_booking_form_datepicker"
-            tools:viewBindingIgnore="true" />
-
-        <TextView
-            android:id="@+id/tv_booking_form_departure_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_arrival_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_departure_label"
-            tools:text="10 Ene 2024" />
-
-        <TextView
-            android:id="@+id/tv_booking_form_arrival_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hasta"
-            app:layout_constraintBottom_toTopOf="@id/tv_booking_form_arrival_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_departure_date"
-            tools:viewBindingIgnore="true" />
-
-        <TextView
-            android:id="@+id/tv_booking_form_arrival_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/til_booking_form_num_travelers"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_booking_form_arrival_label"
-            tools:text="15 Ene 2024" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_booking_form_num_travelers"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/booking_form_num_travelers"
-            android:padding="?attr/dialogPreferredPadding"
-            app:layout_constraintBottom_toTopOf="@id/space_booking_form_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_arrival_date">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="64dp"
+            tools:viewBindingIgnore="true">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_booking_form_num_travelers"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_booking_form_destination"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Earth" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/btn_booking_form_datepicker"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:padding="15dp"
+                android:text="Seleccionar fechas"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:translationZ="5dp"
+                app:backgroundTint="?attr/colorSurfaceVariant"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_calendar_month"
+                app:iconSize="30dp"
+                app:iconTint="?attr/colorOnSurfaceVariant"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_departure_date" />
 
-        <Space
-            android:id="@+id/space_booking_form_bottom"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_booking_form_make_booking"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_booking_form_num_travelers"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="404dp" />
+            <TextView
+                android:id="@+id/tv_booking_form_departure_label"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingStart="8dp"
+                android:text="Desde"
+                app:layout_constraintBottom_toTopOf="@id/tv_booking_form_departure_date"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_destination"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:viewBindingIgnore="true" />
 
-        <Button
-            android:id="@+id/btn_booking_form_make_booking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:text="@string/booking_form_accept_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space_booking_form_bottom" />
+            <TextView
+                android:id="@+id/tv_booking_form_departure_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="8dp"
+                android:text="..."
+                android:textSize="@dimen/font_size"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_departure_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_form_departure_label"
+                tools:text="10 Ene 2024" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_booking_form_arrival_label"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontal_margin"
+                android:text="Hasta"
+                app:layout_constraintBottom_toTopOf="@+id/tv_booking_form_arrival_date"
+                app:layout_constraintStart_toEndOf="@+id/tv_booking_form_departure_label"
+                app:layout_constraintTop_toTopOf="@+id/tv_booking_form_departure_label"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:viewBindingIgnore="true" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <TextView
+                android:id="@+id/tv_booking_form_arrival_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="..."
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_arrival_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_arrival_label"
+                tools:text="15 Ene 2024" />
+
+            <TextView
+                android:id="@+id/tv_booking_form_travelers_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingStart="8dp"
+                android:text="Número de viajeros"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_destination"
+                app:layout_constraintTop_toBottomOf="@+id/btn_booking_form_datepicker"
+                tools:viewBindingIgnore="true" />
+
+            <Button
+                android:id="@+id/btn_booking_from_travelers_remove"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_remove"
+                app:layout_constraintBottom_toBottomOf="@+id/til_booking_form_num_travelers"
+                app:layout_constraintEnd_toStartOf="@id/til_booking_form_num_travelers"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_travelers_label"
+                app:layout_constraintTop_toTopOf="@+id/til_booking_form_num_travelers" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_booking_form_num_travelers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@id/space_booking_form_bottom"
+                app:layout_constraintEnd_toStartOf="@+id/btn_booking_from_travelers_add"
+                app:layout_constraintStart_toEndOf="@+id/btn_booking_from_travelers_remove"
+                app:layout_constraintTop_toBottomOf="@+id/tv_booking_form_travelers_label">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_booking_form_num_travelers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textAlignment="center" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_booking_from_travelers_add"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="@+id/til_booking_form_num_travelers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/til_booking_form_num_travelers"
+                app:layout_constraintTop_toTopOf="@+id/til_booking_form_num_travelers" />
+
+            <Space
+                android:id="@+id/space_booking_form_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_booking_form_make_booking"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_booking_form_num_travelers"
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="404dp" />
+
+            <Button
+                android:id="@+id/btn_booking_form_make_booking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/horizontal_margin"
+                android:text="@string/booking_form_accept_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_booking_form_total_amount"
+                app:layout_constraintTop_toBottomOf="@+id/space_booking_form_bottom" />
+
+            <TextView
+                android:id="@+id/tv_booking_form_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:fontFamily="sans-serif-black"
+                android:textSize="@dimen/font_size_large"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_booking_form_make_booking"
+                app:layout_constraintEnd_toStartOf="@+id/btn_booking_form_make_booking"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_booking_form_make_booking"
+                tools:text="2565 €" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                app:layout_constraintBottom_toTopOf="@+id/tv_booking_form_total_amount"
+                app:layout_constraintStart_toStartOf="@+id/tv_booking_form_total_amount"
+                tools:viewBindingIgnore="true" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.29138166" />
+</com.marina.ruiz.globetrotting.core.dialog.DialogConstraintLayout>

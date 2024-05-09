@@ -2,15 +2,11 @@ package com.marina.ruiz.globetrotting.ui.main.bookings.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.databinding.ItemBookingBinding
@@ -19,8 +15,7 @@ import java.util.Date
 import java.util.Locale
 
 class BookingsListAdapter(
-    private val onShare: (booking: Booking, view: View) -> Unit,
-    private val onDeleteBooking: (booking: Booking) -> Unit
+    private val onShare: (booking: Booking, view: View) -> Unit
 ) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
@@ -31,8 +26,6 @@ class BookingsListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bindBooking(booking: Booking) {
             binding.destinationName.text = booking.destinationName
-            binding.bookingTravelerName.text = booking.clientName
-            //binding.bookingTravelerImg.load(booking.traveler.image)
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val departureDate = dateFormat.format(Date(booking.start))
             val arrivalDate = dateFormat.format(Date(booking.end))
@@ -42,28 +35,6 @@ class BookingsListAdapter(
             binding.shareBtn.setOnClickListener {
                 onShare(booking, it)
             }
-            binding.menuBtn.setOnClickListener { view ->
-                showMenu(view, R.menu.more_actions_menu, booking)
-            }
-        }
-
-        private fun showMenu(view: View, @MenuRes menuRes: Int, booking: Booking) {
-            val popup = PopupMenu(view.context, view)
-            popup.menuInflater.inflate(menuRes, popup.menu)
-
-            popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-                when (menuItem.itemId) {
-
-                    R.id.delete_booking -> {
-                        onDeleteBooking(booking)
-                        true
-                    }
-
-                    else -> false
-                }
-            }
-            // Show the popup menu
-            popup.show()
         }
     }
 

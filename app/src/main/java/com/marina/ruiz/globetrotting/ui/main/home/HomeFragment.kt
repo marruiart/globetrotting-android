@@ -36,13 +36,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun setOverflowButtonColor() {
-        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.mt_main_toolbar)
-        val color = Color.WHITE
-        val overflowIcon = toolbar.overflowIcon
-        overflowIcon?.setTint(color)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         changeStatusBarContrastStyle(requireActivity().window, true)

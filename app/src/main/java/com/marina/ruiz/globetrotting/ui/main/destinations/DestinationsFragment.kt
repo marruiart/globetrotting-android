@@ -78,6 +78,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
 
     override fun onMakeBooking(booking: BookingForm) {
         destinationsVM.makeBooking(booking.toBookingPayload(destinationsVM.user))
+        bookingDialog.dismiss()
     }
 
     override fun onCancelBooking() {

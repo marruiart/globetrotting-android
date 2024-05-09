@@ -1,98 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/destination_item"
+    android:id="@+id/mcv_item_destination"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="18dp">
+    android:layout_margin="16dp">
 
-
-    <ImageView
-        android:id="@+id/destination_img"
-        android:layout_width="112dp"
-        android:layout_height="101dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="Rick and Morty"
-        app:layout_constraintBottom_toTopOf="@+id/details_btn"
-        app:layout_constraintEnd_toEndOf="@+id/details_btn"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/default_avatar" />
-
-    <TextView
-        android:id="@+id/destination_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/destination_img"
-        app:layout_constraintTop_toTopOf="@+id/destination_img"
-        tools:text="Earth (C-137)" />
-
-    <TextView
-        android:id="@+id/short_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/destination_img"
-        app:layout_constraintTop_toBottomOf="@+id/destination_name"
-        tools:text="Un planeta alienígena lleno de aventuras y locuras intergalácticas." />
-
-    <TextView
-        android:id="@+id/price"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="@+id/short_description"
-        app:layout_constraintStart_toStartOf="@+id/destination_img"
-        app:layout_constraintTop_toBottomOf="@+id/destination_img"
-        tools:text="30€/persona/noche" />
+        android:paddingBottom="24dp">
 
-    <Button
-        android:id="@+id/details_btn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dest_btn_see_details"
-        app:layout_constraintBottom_toTopOf="@+id/materialDivider"
-        app:layout_constraintEnd_toEndOf="@+id/destination_img"
-        app:layout_constraintEnd_toStartOf="@+id/book_btn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price" />
+        <ImageView
+            android:id="@+id/iv_item_destination_background"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/home_background" />
 
-    <Button
-        android:id="@+id/book_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dest_btn_book_now"
-        app:layout_constraintBaseline_toBaselineOf="@+id/details_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/details_btn" />
+        <CheckBox
+            android:id="@+id/cb_favorite_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:button="@drawable/ic_favorite_checkbox"
+            app:buttonTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_item_destination_background"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_item_destination_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="@dimen/font_size_larger"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_item_destination_background"
+            tools:text="Earth (C-137)" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/materialDivider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_btn" />
+        <TextView
+            android:id="@+id/tv_item_destination_short_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_destination_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_destination_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_destination_name"
+            tools:text="Un planeta alienígena lleno de aventuras y locuras intergalácticas." />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_item_destination_per_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/destination_item_per_night"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_item_destination_book_now"
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_destination_price" />
+
+        <TextView
+            android:id="@+id/tv_item_destination_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_item_destination_per_night"
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_destination_name"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="30€" />
+
+        <Button
+            android:id="@+id/btn_item_destination_book_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/dest_btn_book_now"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_destination_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_destination_short_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
 

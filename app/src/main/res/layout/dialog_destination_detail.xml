@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.marina.ruiz.globetrotting.core.dialog.DialogConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/colorSurface"
     tools:context=".ui.main.destinations.DestinationDetailDialog">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -17,104 +17,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back"
-        app:navigationIconTint="?attr/colorOnSurface"
-        app:title="@string/destination_detail" />
+        app:navigationIconTint="?attr/colorOnSurface" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/destination_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="300dp"
+        android:contentDescription="Destination image"
+        android:scaleType="centerCrop"
+        android:translationZ="-20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_background" />
 
-        <ImageView
-            android:id="@+id/destination_img"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="Destination image"
-            android:translationZ="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/cv_login_form"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/default_avatar" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="200dp" />
+    <TextView
+        android:id="@+id/tv_detail_destination_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="@dimen/font_size_giant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destination_img"
+        tools:text="Earth (C-137)" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_login_form"
-            style="?attr/materialCardViewElevatedStyle"
+    <ScrollView
+        android:id="@+id/sv_destination_description_scroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_detail_destination_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_detail_destination_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_destination_name">
+
+        <TextView
+            android:id="@+id/tv_detail_destination_description"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline">
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/font_size"
+            tools:text="Lorem ipsum dolor sit amet" />
+    </ScrollView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clay_login_form"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_destination_name"
+        tools:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/destination_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:paddingHorizontal="18dp"
-                    android:shadowColor="?attr/colorSurfaceVariant"
-                    android:shadowDx="5"
-                    android:shadowDy="5"
-                    android:shadowRadius="5"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    android:textSize="28sp"
-                    android:translationZ="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/clay_login_form"
-                    app:layout_constraintTop_toTopOf="@+id/clay_login_form"
-                    tools:text="Earth (C-137)" />
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/clay_login_form"
-                    app:layout_constraintTop_toBottomOf="@+id/destination_name">
-
-                    <TextView
-                        android:id="@+id/destination_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="32dp"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="16sp"
-                        tools:text="Lorem ipsum dolor sit amet" />
-                </ScrollView>
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/loading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:translationZ="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.marina.ruiz.globetrotting.core.dialog.DialogConstraintLayout>

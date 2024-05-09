@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,7 +19,6 @@ import com.marina.ruiz.globetrotting.core.dialog.FullScreenDialogFragment
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.DialogBookingCreationFormBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
-import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,11 +28,12 @@ interface BookingCreationFormDialogListener {
     fun onCancelBooking()
 }
 
-@AndroidEntryPoint
 class BookingCreationFormDialogFragment(
     private val callback: BookingCreationFormDialogListener, destination: Destination
 ) : FullScreenDialogFragment(R.layout.dialog_booking_creation_form) {
     private val padding = 16
+    private val maxTravelers = 10
+    private val minTravelers = 1
     private lateinit var binding: DialogBookingCreationFormBinding
     private lateinit var activity: FragmentActivity
     private var form = BookingForm(destination)
@@ -47,7 +46,7 @@ class BookingCreationFormDialogFragment(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DialogBookingCreationFormBinding.inflate(inflater, container, false)
+        binding = DialogBookingCreationFormBinding.inflate(layoutInflater)
         activity = requireActivity()
         return binding.root
     }
@@ -59,8 +58,7 @@ class BookingCreationFormDialogFragment(
     }
 
     private fun setWindowInsets() {
-        val view =
-            requireActivity().findViewById<MaterialToolbar>(R.id.mt_booking_form_toolbar)
+        val view = requireActivity().findViewById<MaterialToolbar>(R.id.mt_booking_form_toolbar)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(
@@ -74,7 +72,8 @@ class BookingCreationFormDialogFragment(
     }
 
     private fun overrideOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     callback.onCancelBooking()
@@ -98,8 +97,28 @@ class BookingCreationFormDialogFragment(
         }
 
         binding.tietBookingFormNumTravelers.doAfterTextChanged { num ->
-            val intNum: Int = num.toString().toIntOrNull() ?: 0
-            form.travelers = intNum
+            var num: Int = num.toString().toIntOrNull() ?: minTravelers
+            if (num < minTravelers) {
+                num = minTravelers
+                binding.tietBookingFormNumTravelers.setText(num.toString())
+            }
+            if (num > maxTravelers) {
+                num = maxTravelers
+                binding.tietBookingFormNumTravelers.setText(num.toString())
+            }
+            form.travelers = num
+        }
+
+        binding.btnBookingFromTravelersAdd.setOnClickListener {
+            var num = binding.tietBookingFormNumTravelers.text.toString().toInt() + 1
+            if (num > maxTravelers) num = maxTravelers
+            binding.tietBookingFormNumTravelers.setText(num.toString())
+        }
+
+        binding.btnBookingFromTravelersRemove.setOnClickListener {
+            var num = binding.tietBookingFormNumTravelers.text.toString().toInt() - 1
+            if (num < minTravelers) num = minTravelers
+            binding.tietBookingFormNumTravelers.setText(num.toString())
         }
     }
 

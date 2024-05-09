@@ -30,14 +30,14 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/no_booking_btn"
+        app:layout_constraintBottom_toTopOf="@+id/btn_bookings_no_booking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/no_booking_img" />
 
     <Button
-        android:id="@+id/no_booking_btn"
+        android:id="@+id/btn_bookings_no_booking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

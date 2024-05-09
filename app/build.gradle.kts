@@ -26,8 +26,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -52,6 +51,7 @@ dependencies {
     val hiltVersion = "2.48.1"
     val glideVersion = "4.15.1"
     val sharedPreferences = "1.1.0-alpha06"
+    val gif = "1.2.17"
 
     implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -95,14 +95,14 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:${glideVersion}")
 
     // FIREBASE
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
     // LOTTIES
-/*    val lottieVersion = "6.4.0"
-    implementation("om.airbnb.android:lottie:$lottieVersion")*/
+    /*    val lottieVersion = "6.4.0"
+        implementation("om.airbnb.android:lottie:$lottieVersion")*/
 
     // SECURED SHARED PREFERENCES
     implementation("androidx.security:security-crypto:${sharedPreferences}")

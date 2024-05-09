@@ -50,7 +50,7 @@ class BookingsFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = BookingsListAdapter(::onShareItem, ::onDeleteBooking)
+        adapter = BookingsListAdapter(::onShareItem)
         val rv = binding.rvBookingsList
         rv.adapter = adapter
     }
@@ -59,8 +59,8 @@ class BookingsFragment : Fragment() {
         binding.bookingsRecycler.visibility = View.GONE
         binding.noBookingImg.visibility = View.VISIBLE
         binding.noBookingText.visibility = View.VISIBLE
-        binding.noBookingBtn.visibility = View.VISIBLE
-        binding.noBookingBtn.setOnClickListener {
+        binding.btnBookingsNoBooking.visibility = View.VISIBLE
+        binding.btnBookingsNoBooking.setOnClickListener {
             navigateToBookingForm(view, Destination())
         }
     }
@@ -79,7 +79,7 @@ class BookingsFragment : Fragment() {
         binding.bookingsRecycler.visibility = View.VISIBLE
         binding.noBookingImg.visibility = View.GONE
         binding.noBookingText.visibility = View.GONE
-        binding.noBookingBtn.visibility = View.GONE
+        binding.btnBookingsNoBooking.visibility = View.GONE
     }
 
     private fun onShareItem(booking: Booking, view: View) {
@@ -99,26 +99,7 @@ class BookingsFragment : Fragment() {
         startActivity(shareIntent)
     }
 
-    private fun onDeleteBooking(booking: Booking) {
-        lifecycleScope.launch {
-/*            bookingsVM.deleteBooking(booking).collect {
-                Toast.makeText(
-                    context,
-                    getString(R.string.bookings_booking_deleted_toast),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }*/
-        }
-    }
-
-    private fun initObservers() {
-        val owner = viewLifecycleOwner
-    }
-
     private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
-    }
-
-    private fun navigateToLogin() {
     }
 }

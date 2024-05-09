@@ -2,7 +2,6 @@ package com.marina.ruiz.globetrotting.ui.main.destinations.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,31 +14,25 @@ import java.text.NumberFormat
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination) -> Unit,
     private val onBookNow: (destination: Destination) -> Unit
-) :
-    ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
+) : ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
     inner class DestinationViewHolder(
-        private val binding: ItemDestinationBinding,
-        private val context: Context
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+        private val binding: ItemDestinationBinding, private val context: Context
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bindDestination(destination: Destination) {
             if (destination.imageRef != null) {
-                binding.destinationImg.setImageResource(destination.imageRef)
+                binding.ivItemDestinationBackground.setImageResource(destination.imageRef)
             }
-            binding.destinationName.text = destination.name
-            binding.shortDescription.text = destination.shortDescription
-            binding.price.text = context.getString(
+            binding.tvItemDestinationName.text = destination.name
+            binding.tvItemDestinationShortDescription.text = destination.shortDescription
+            binding.tvItemDestinationPrice.text = context.getString(
                 R.string.destination_item_price,
                 NumberFormat.getCurrencyInstance().format(destination.price)
             )
-            binding.destinationItem.setOnClickListener {
+            binding.mcvItemDestination.setOnClickListener {
                 onShowDetail(destination)
             }
-            binding.detailsBtn.setOnClickListener {
-                onShowDetail(destination)
-            }
-            binding.bookBtn.setOnClickListener {
+            binding.btnItemDestinationBookNow.setOnClickListener {
                 onBookNow(destination)
             }
         }
@@ -54,8 +47,8 @@ class DestinationsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinationViewHolder {
-        val binding = ItemDestinationBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemDestinationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DestinationViewHolder(binding, parent.context)
     }
 

@@ -38,7 +38,8 @@
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>
     <!-- DESTINATION ITEM (FOR DESTINATIONS LIST -->
-    <string name="destination_item_price">%s/persona/noche</string>
+    <string name="destination_item_price">%s</string>
+    <string name="destination_item_per_night">/noche</string>
     <!-- BOOKING FORM -->
     <string name="booking_form_header_title">Realizar una reserva</string>
     <string name="booking_form_select_destination">Seleccionar el destino</string>

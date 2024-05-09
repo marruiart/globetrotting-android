@@ -3,5 +3,7 @@
     <dimen name="main_fragment_margin_top">20dp</dimen>
     <dimen name="font_size">16sp</dimen>
     <dimen name="font_size_large">18sp</dimen>
-    <dimen name="font_size_larger">20sp</dimen>
+    <dimen name="font_size_larger">23sp</dimen>
+    <dimen name="font_size_giant">27sp</dimen>
+    <dimen name="horizontal_margin">24dp</dimen>
 </resources>

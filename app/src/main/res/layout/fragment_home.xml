@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_menu_my_favorites"
-                app:icon="@drawable/ic_favorite"
+                app:icon="@drawable/ic_favorite_unchecked"
                 app:iconGravity="top"
                 app:iconSize="30dp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_my_account_home"

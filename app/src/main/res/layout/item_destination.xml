@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:button="@drawable/ic_favorite_checkbox"
-            app:buttonTint="@android:color/white"
+            app:buttonTint="@color/ic_favorite_color_selector"
             app:layout_constraintBottom_toBottomOf="@+id/iv_item_destination_background"
             app:layout_constraintEnd_toEndOf="parent" />
 

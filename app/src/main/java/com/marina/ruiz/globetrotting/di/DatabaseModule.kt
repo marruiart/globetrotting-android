@@ -1,10 +1,11 @@
 package com.marina.ruiz.globetrotting.di
 
 import android.content.Context
+import com.marina.ruiz.globetrotting.data.local.GlobetrottingDb
 import com.marina.ruiz.globetrotting.data.local.agent.AgentDao
 import com.marina.ruiz.globetrotting.data.local.booking.BookingDao
 import com.marina.ruiz.globetrotting.data.local.destination.DestinationDao
-import com.marina.ruiz.globetrotting.data.local.GlobetrottingDb
+import com.marina.ruiz.globetrotting.data.local.favorite.FavoriteDao
 import com.marina.ruiz.globetrotting.data.local.user.UserDao
 import dagger.Module
 import dagger.Provides
@@ -45,5 +46,11 @@ object DatabaseModule {
     @Provides
     fun provideAgentDao(database: GlobetrottingDb): AgentDao {
         return database.agentDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDao(database: GlobetrottingDb): FavoriteDao {
+        return database.favoriteDao()
     }
 }

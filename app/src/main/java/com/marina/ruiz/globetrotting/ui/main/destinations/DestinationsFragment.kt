@@ -41,7 +41,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     private fun initAdapter() {
-        adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow)
+        adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow, ::onFavoriteDestination)
         val rv = binding.rvDestinationsList
         rv.adapter = adapter
     }
@@ -54,8 +54,8 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         showBookNowDialog(destination)
     }
 
-    private fun initObservers() {
-        val owner = viewLifecycleOwner
+    private fun onFavoriteDestination(destinationId: String, isFavorite: Boolean) {
+        destinationsVM.handleFavorite(destinationId, isFavorite)
     }
 
     private fun navigate(action: NavDirections) {

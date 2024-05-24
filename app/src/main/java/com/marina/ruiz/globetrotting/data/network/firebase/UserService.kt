@@ -2,9 +2,9 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.net.Uri
 import android.util.Log
-import com.google.firebase.storage.UploadTask
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentResponse
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.FavoritesPayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.Payload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.ProfilePayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.AgentResponse
@@ -58,6 +58,10 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     suspend fun editUserDocument(uid: String, profile: ProfilePayload) = runCatching {
         firebase.updateDocument(USER_COLLECTION, profile.asHashMap(), uid)
+    }.isSuccess
+
+    suspend fun editUserFavorites(uid: String, favorites: FavoritesPayload) = runCatching {
+        firebase.updateDocument(USER_COLLECTION, favorites.asHashMap(), uid)
     }.isSuccess
 
     fun fetchUserDocument(uid: String?) {

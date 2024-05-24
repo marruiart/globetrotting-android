@@ -13,12 +13,14 @@ import java.text.NumberFormat
 
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination) -> Unit,
-    private val onBookNow: (destination: Destination) -> Unit
+    private val onBookNow: (destination: Destination) -> Unit,
+    private val onFavoriteDestination: (destinationId: String, isFavorite: Boolean) -> Unit
 ) : ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
     inner class DestinationViewHolder(
         private val binding: ItemDestinationBinding, private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bindDestination(destination: Destination) {
             if (destination.imageRef != null) {
                 binding.ivItemDestinationBackground.setImageResource(destination.imageRef)
@@ -35,15 +37,21 @@ class DestinationsListAdapter(
             binding.btnItemDestinationBookNow.setOnClickListener {
                 onBookNow(destination)
             }
+
+            binding.cbFavoriteToggle.setOnCheckedChangeListener(null)
+            binding.cbFavoriteToggle.isChecked = destination.favorite
+            binding.cbFavoriteToggle.setOnCheckedChangeListener { _, isChecked ->
+                onFavoriteDestination(destination.id, isChecked)
+            }
         }
     }
 
     private class DestinationDiffCallBack : DiffUtil.ItemCallback<Destination>() {
         override fun areItemsTheSame(oldItem: Destination, newItem: Destination): Boolean =
-            oldItem == newItem
+            oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Destination, newItem: Destination): Boolean =
-            oldItem == newItem
+            oldItem.equals(newItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinationViewHolder {

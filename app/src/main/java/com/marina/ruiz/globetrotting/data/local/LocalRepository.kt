@@ -9,6 +9,9 @@ import com.marina.ruiz.globetrotting.data.local.booking.BookingDao
 import com.marina.ruiz.globetrotting.data.local.booking.BookingEntity
 import com.marina.ruiz.globetrotting.data.local.destination.DestinationDao
 import com.marina.ruiz.globetrotting.data.local.destination.DestinationEntity
+import com.marina.ruiz.globetrotting.data.local.destination.DestinationFavoritesEntity
+import com.marina.ruiz.globetrotting.data.local.favorite.FavoriteDao
+import com.marina.ruiz.globetrotting.data.local.favorite.FavoriteEntity
 import com.marina.ruiz.globetrotting.data.local.user.UserDao
 import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +24,8 @@ class LocalRepository @Inject constructor(
     private val destinationDao: DestinationDao,
     private val agentDao: AgentDao,
     private val bookingDao: BookingDao,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val favoriteDao: FavoriteDao
 ) {
 
     companion object {
@@ -29,13 +33,14 @@ class LocalRepository @Inject constructor(
     }
 
     // DESTINATION
-    var destinations: Flow<List<DestinationEntity>> = destinationDao.getAllDestinations()
+    var destinations: Flow<List<DestinationFavoritesEntity>> = destinationDao.getAllDestinationsWithFavorites()
 
     @WorkerThread
     suspend fun insertDestinations(listDestinationEntity: List<DestinationEntity>) {
+        Log.d(TAG, "Inserting destinations...")
         destinationDao.createDestinations(listDestinationEntity)
-        destinations = destinationDao.getAllDestinations()
-        Log.d(TAG, "Insert destinations")
+        destinations = destinationDao.getAllDestinationsWithFavorites()
+        Log.d(TAG, "Destinations inserted")
     }
 
     @WorkerThread
@@ -48,10 +53,11 @@ class LocalRepository @Inject constructor(
 
     @WorkerThread
     suspend fun insertBookings(listBookingEntity: List<BookingEntity>) {
-        Log.d(TAG, "Insert bookings")
+        Log.d(TAG, "Inserting bookings...")
         bookingDao.deleteBookings()
         bookingDao.createBookings(listBookingEntity)
         bookings = bookingDao.getAllBookings()
+        Log.d(TAG, "Bookings inserted")
     }
 
     @WorkerThread
@@ -78,14 +84,37 @@ class LocalRepository @Inject constructor(
 
     @WorkerThread
     suspend fun insertUser(userEntity: UserEntity) {
+        Log.d(TAG, "Inserting user...")
         userDao.createUser(userEntity)
         localUser = userDao.getUser()
-        Log.d(TAG, "Insert user")
+        Log.d(TAG, "User inserted")
     }
 
     @WorkerThread
     suspend fun deleteUser() {
         userDao.deleteUser()
         localUser = flowOf(null)
+    }
+
+    // FAVORITE
+    var localFavorites: Flow<List<FavoriteEntity>?> = favoriteDao.getAllClientFavorites()
+
+    suspend fun insertFavorites(favorites: List<FavoriteEntity>) {
+        Log.d(TAG, "Inserting favorites...")
+        favoriteDao.createFavorites(favorites)
+        localFavorites = favoriteDao.getAllClientFavorites()
+        Log.d(TAG, "Favorites inserted")
+    }
+
+    @WorkerThread
+    suspend fun deleteFavorite(destinationId: String) {
+        favoriteDao.deleteFavorite(destinationId)
+        Log.d(TAG, "Favorite deleted with destination id: $destinationId")
+    }
+
+    @WorkerThread
+    suspend fun deleteFavorites() {
+        favoriteDao.deleteFavorites()
+        localFavorites = flowOf(emptyList())
     }
 }

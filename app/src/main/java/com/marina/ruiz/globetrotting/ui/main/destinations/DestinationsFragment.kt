@@ -46,7 +46,16 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     override fun onResume() {
+        binding.cbFavoriteToggleFilter.setOnCheckedChangeListener(null)
         Log.d(TAG, "resume - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+        binding.cbFavoriteToggleFilter.isChecked = destinationsVM.onlyFavorites
+
+        binding.cbFavoriteToggleFilter.setOnCheckedChangeListener { _, isChecked ->
+            destinationsVM.onlyFavorites = isChecked
+            Log.d(TAG, "listener - isChecked $isChecked")
+            Log.d(TAG, "listener - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+            destinationsVM.bindView(adapter)
+        }
         super.onResume()
     }
 
@@ -57,15 +66,9 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     private fun bindView() {
-        binding.cbFavoriteToggleFilter.isChecked = destinationsVM.onlyFavorites
-        Log.d(TAG, "bindView - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+        Log.d(TAG, "bindView - destinationsVM.onlyFavorites ${binding.cbFavoriteToggleFilter.isChecked}")
         destinationsVM.bindView(adapter)
-        binding.cbFavoriteToggleFilter.setOnCheckedChangeListener { _, isChecked ->
-            destinationsVM.onlyFavorites = isChecked
-            Log.d(TAG, "listener - isChecked $isChecked")
-            Log.d(TAG, "listener - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
-            destinationsVM.bindView(adapter)
-        }
+
         binding.btnRemoveFilter.setOnClickListener {
             binding.etDestinationsFilter.setText("")
         }
@@ -133,7 +136,9 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     override fun onPause() {
-        destinationsVM.onlyFavorites = binding.cbFavoriteToggleFilter.isChecked
+        binding.cbFavoriteToggleFilter.setOnCheckedChangeListener(null)
+        destinationsVM.onlyFavorites = false
+        binding.cbFavoriteToggleFilter.isChecked = false
         Log.d(TAG, "pause - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
         super.onPause()
     }

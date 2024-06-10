@@ -12,9 +12,7 @@ import com.marina.ruiz.globetrotting.domain.BookNowUseCase
 import com.marina.ruiz.globetrotting.domain.ToggleFavoriteUseCase
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,13 +29,9 @@ class DestinationsViewModel @Inject constructor(
     }
 
     lateinit var user: User
-    private var favorites: MutableList<Favorite> = mutableListOf()
+    private var _favorites: MutableList<Favorite> = mutableListOf()
 
-    private val _destinations: MutableStateFlow<List<Destination>> = MutableStateFlow(listOf())
-    val destinations: StateFlow<List<Destination>>
-        get() = _destinations.asStateFlow()
-
-    fun bindView(adapter: DestinationsListAdapter) {
+    fun bindView(adapter: DestinationsListAdapter, onlyFavorites: Boolean = false) {
         viewModelScope.launch {
             repository.localUser.collect { localUser ->
                 localUser?.let {
@@ -45,21 +39,27 @@ class DestinationsViewModel @Inject constructor(
                 }
             }
         }
-        viewModelScope.launch {
-            collectDestinationsWithFavorites(adapter)
-        }
+        collectDestinationsWithFavorites(adapter, onlyFavorites)
     }
 
-    private suspend fun collectDestinationsWithFavorites(adapter: DestinationsListAdapter) {
-        val favoritesResponse = repository.favorites
-        val destinationsResponse = repository.destinations
+    private fun collectDestinationsWithFavorites(
+        adapter: DestinationsListAdapter,
+        onlyFavorites: Boolean
+    ) {
+        viewModelScope.launch {
+            val favoritesResponse = repository.favorites
+            val destinationsResponse: Flow<List<Destination>> = if (onlyFavorites) {
+                repository.favDestinations
+            } else {
+                repository.destinations
+            }
 
-        combine(favoritesResponse, destinationsResponse) { favs, destinations ->
-            Pair(favs, destinations)
-        }.collect { (favs, destinations) ->
-            favorites = favs.toMutableList()
-            _destinations.value = destinations
-            adapter.submitList(destinations)
+            combine(favoritesResponse, destinationsResponse) { favorites, destinations ->
+                Pair(favorites, destinations)
+            }.collect { (favorites, destinations) ->
+                _favorites = favorites.toMutableList()
+                adapter.submitList(destinations)
+            }
         }
     }
 
@@ -73,19 +73,16 @@ class DestinationsViewModel @Inject constructor(
         viewModelScope.launch {
             val favorite = Favorite(destinationId, destinationId)
             if (isFavorite) {
-                val added = favorites.add(favorite)
+                val added = _favorites.add(favorite)
                 Log.d(TAG, "${favorite.id} added: $added")
             } else {
-                val removed = favorites.removeIf { it.destinationId == destinationId }
+                val removed = _favorites.removeIf { it.destinationId == destinationId }
                 Log.d(TAG, "${favorite.id} removed: $removed")
                 if (removed) {
                     repository.deleteFavorite(favorite.destinationId)
                 }
             }
-            toggleFavoriteUseCase(favorites)
-            _destinations.value = _destinations.value.map {
-                if (it.id == destinationId) it.copy(favorite = isFavorite) else it
-            }
+            toggleFavoriteUseCase(_favorites)
         }
     }
 

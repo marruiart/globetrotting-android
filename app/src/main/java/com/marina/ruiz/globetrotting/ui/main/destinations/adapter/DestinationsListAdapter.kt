@@ -6,22 +6,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.ItemDestinationBinding
+import com.marina.ruiz.globetrotting.databinding.ItemPopularDestinationsHomeBinding
 import java.text.NumberFormat
 
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination) -> Unit,
     private val onBookNow: (destination: Destination) -> Unit,
-    private val onFavoriteDestination: (destinationId: String, isFavorite: Boolean) -> Unit
+    private val onFavoriteDestination: (destinationId: String, isFavorite: Boolean) -> Unit,
+    private val onlyPopular: Boolean = false
 ) : ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
     inner class DestinationViewHolder(
-        private val binding: ItemDestinationBinding, private val context: Context
+        private val binding: ViewBinding, private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindDestination(destination: Destination) {
+            binding as ItemDestinationBinding
             if (destination.imageRef != null) {
                 binding.ivItemDestinationBackground.setImageResource(destination.imageRef)
             }
@@ -44,6 +48,17 @@ class DestinationsListAdapter(
                 onFavoriteDestination(destination.id, isChecked)
             }
         }
+
+        fun bindPopularDestinations(destination: Destination) {
+            binding as ItemPopularDestinationsHomeBinding
+            if (destination.imageRef != null) {
+                binding.ivBackgroundHome.setImageResource(destination.imageRef)
+            }
+            binding.tvPopularDestinationName.text = destination.name
+            binding.mcvPopularDestinationItem.setOnClickListener {
+                onShowDetail(destination)
+            }
+        }
     }
 
     private class DestinationDiffCallBack : DiffUtil.ItemCallback<Destination>() {
@@ -55,13 +70,22 @@ class DestinationsListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinationViewHolder {
-        val binding =
+        var binding: ViewBinding =
             ItemDestinationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        if (onlyPopular) {
+            binding = ItemPopularDestinationsHomeBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        }
         return DestinationViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: DestinationViewHolder, position: Int) {
         val destination = getItem(position)
-        holder.bindDestination(destination)
+        if (onlyPopular) {
+            holder.bindPopularDestinations(destination)
+        } else {
+            holder.bindDestination(destination)
+        }
     }
 }

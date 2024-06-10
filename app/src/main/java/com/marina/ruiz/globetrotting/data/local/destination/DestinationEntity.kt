@@ -1,6 +1,5 @@
 package com.marina.ruiz.globetrotting.data.local.destination
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.marina.ruiz.globetrotting.R
@@ -29,9 +28,6 @@ data class DestinationFavoritesEntity(
     val favId: String?
 ) {
     fun asDestination(): Destination {
-        if (name == "France") {
-            Log.d("GLOB_DEBUG AS DESTINATION", "${favId != null}")
-        }
         return Destination(
             id = id,
             name = name,

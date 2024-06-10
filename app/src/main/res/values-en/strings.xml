@@ -34,6 +34,7 @@
     <string name="edit_profile_cancel_btn">Cancel</string>
     <string name="edit_profile_accept_btn">Accept</string>
     <!-- DESTINATIONS LIST -->
+    <string name="dest_search_hint">Search</string>
     <string name="dest_btn_book_now">Book now</string>
     <string name="dest_btn_see_details">See details</string>
     <!-- DESTINATION ITEM (FOR DESTINATIONS LIST -->

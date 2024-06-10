@@ -37,7 +37,7 @@ class DestinationsService @Inject constructor(private val firebase: FirebaseServ
                 } else if (snapshot != null) {
                     _destinationsResponse.value = snapshot.map { doc ->
                         (doc.data as DocumentData).asDestinationResponse()
-                    }
+                    }.sortedBy { it.name }
                     Log.d(TAG, "Current agents: ${_destinationsResponse.value}")
                 }
             }

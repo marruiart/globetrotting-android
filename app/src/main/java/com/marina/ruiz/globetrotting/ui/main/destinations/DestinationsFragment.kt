@@ -21,6 +21,7 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     private lateinit var adapter: DestinationsListAdapter
     private lateinit var bookingDialog: BookingCreationFormDialogFragment
     private lateinit var detailDialog: DestinationDetailDialog
+    private var onlyFavorites: Boolean = false
     private val destinationsVM: DestinationsViewModel by activityViewModels()
 
     companion object {
@@ -31,13 +32,14 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentDestinationsBinding.inflate(inflater, container, false)
+        onlyFavorites = arguments?.getBoolean("onlyFavorites") ?: false
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        destinationsVM.bindView(adapter)
+        destinationsVM.bindView(adapter, onlyFavorites)
     }
 
     private fun initAdapter() {

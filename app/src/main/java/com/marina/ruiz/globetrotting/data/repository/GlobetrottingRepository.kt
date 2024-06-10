@@ -63,6 +63,14 @@ class GlobetrottingRepository @Inject constructor(
             }
         }
 
+    val favDestinations: Flow<List<Destination>>
+        get() {
+            return localRepository.favDestinations.map { favDestinations ->
+                Log.i(TAG, "Favorite destinations changed in room: ${favDestinations.size}")
+                favDestinations.asDestinationList()
+            }
+        }
+
     val bookings: Flow<List<Booking>>
         get() {
             return localRepository.bookings.map {

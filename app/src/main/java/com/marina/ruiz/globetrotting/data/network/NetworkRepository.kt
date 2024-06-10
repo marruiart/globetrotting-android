@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.data.network
 
+import android.util.Log
 import androidx.lifecycle.distinctUntilChanged
 import com.marina.ruiz.globetrotting.data.network.chatGpt.ChatGptApiService
 import com.marina.ruiz.globetrotting.data.network.chatGpt.model.ChatGptResponse
@@ -15,6 +16,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,16 +63,26 @@ class NetworkRepository @Inject constructor(
 
     suspend fun getShortDescription(destination: String): String {
         val requestBody =
-            createRequestBody("Crea una descripción corta (10 palabras máximo) sobre el destino de viaje '${destination}' basado en la serie Rick & Morty. No digas que es ficticio")
-        val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
-        return response.asApiModel().text.trim().replace("\"", "")
+            createRequestBody("Como si fuera una agencia de viajes, crea una descripción muy corta (10 palabras máximo) sobre el destino de viaje '${destination}'")
+        try {
+            val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
+            return response.asApiModel().text.trim().replace("\"", "")
+        } catch (httpException: HttpException) {
+            Log.e(TAG, httpException.toString())
+        }
+        return ""
     }
 
     suspend fun getLongDescription(destination: String): String {
         val requestBody =
-            createRequestBody("Crea una descripción (100 palabras en 2 o 3 párrafos) sobre el destino de viaje '${destination}' basado en la serie Rick & Morty. No digas que es ficticio")
-        val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
-        return response.asApiModel().text.trim()
+            createRequestBody("Como si fuera una agencia de viajes, crea una descripción (100 palabras en 2 o 3 párrafos) sobre el destino de viaje '${destination}'")
+        try {
+            val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
+            return response.asApiModel().text.trim()
+        } catch (httpException: HttpException) {
+            Log.e(TAG, httpException.toString())
+        }
+        return ""
     }
 
     private fun createRequestBody(request: String): RequestBody {

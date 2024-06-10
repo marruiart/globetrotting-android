@@ -11,7 +11,7 @@
         android:id="@+id/mt_destination_detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/translucent"
+        android:background="@color/translucent_20"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,27 +36,32 @@
         android:id="@+id/tv_detail_destination_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
         android:fontFamily="sans-serif-medium"
+        android:padding="24dp"
+        android:shadowColor="?attr/colorOnPrimaryFixed"
+        android:shadowRadius="15"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_size_giant"
+        app:layout_constraintBottom_toBottomOf="@+id/destination_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destination_img"
-        tools:text="Earth (C-137)" />
+        tools:text="Tierra de Fuego" />
 
     <ScrollView
         android:id="@+id/sv_destination_description_scroll"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_detail_destination_name"
         app:layout_constraintStart_toStartOf="@+id/tv_detail_destination_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_destination_name">
+        app:layout_constraintTop_toBottomOf="@+id/destination_img">
 
         <TextView
             android:id="@+id/tv_detail_destination_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/font_size"
             tools:text="Lorem ipsum dolor sit amet" />

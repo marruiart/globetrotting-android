@@ -14,11 +14,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.databinding.ActivityMainBinding
 import com.marina.ruiz.globetrotting.ui.auth.AuthActivity
 import com.marina.ruiz.globetrotting.ui.main.profile.ProfileActivity
-import com.marina.ruiz.globetrotting.ui.main.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,12 +63,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavController() {
-        navController = getNavHostFragment().navController
-        binding.navigation.setupWithNavController(navController)
-    }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
+        navController = navHostFragment.navController
 
-    private fun getNavHostFragment() =
-        supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bnv_navigation)
+        bottomNavView.setupWithNavController(navController)
+    }
 
     private fun initUI() {
         initListeners()

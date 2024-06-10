@@ -9,10 +9,12 @@ data class Destination(
     override val id: String = "",
     override val name: String = "",
     val type: String? = null,
-    val dimension: String? = null,
+    val keywords: ArrayList<String>? = null,
     val price: Double = 0.0,
     var shortDescription: String = "",
     var description: String = "",
+    val country: String = "",
+    val continent: String = "",
     override val imageRef: Int? = null,
     override val image: String? = null,
     var favorite: Boolean = false
@@ -33,14 +35,14 @@ data class Destination(
         if (this === other) return true
         if (other !is Destination) return false
 
-        return id == other.id && name == other.name && type == other.type && dimension == other.dimension && price == other.price && shortDescription == other.shortDescription && description == other.description && imageRef == other.imageRef && image == other.image
+        return id == other.id && name == other.name && type == other.type && keywords == other.keywords && price == other.price && shortDescription == other.shortDescription && description == other.description && imageRef == other.imageRef && image == other.image
     }
 
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + (type?.hashCode() ?: 0)
-        result = 31 * result + (dimension?.hashCode() ?: 0)
+        result = 31 * result + (keywords?.hashCode() ?: 0)
         result = 31 * result + price.hashCode()
         result = 31 * result + shortDescription.hashCode()
         result = 31 * result + description.hashCode()

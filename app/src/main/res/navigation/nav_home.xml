@@ -10,9 +10,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_bookingsFragmentFromHome"
-            app:destination="@id/myBookingsFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_destinationDetailFragment"
             app:destination="@id/popularDestinationDetailFragment" />
         <action
@@ -22,11 +19,6 @@
             android:id="@+id/action_homeFragment_to_profileActivity"
             app:destination="@id/profileActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/myBookingsFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.main.bookings.BookingsFragment"
-        android:label="fragment_bookings"
-        tools:layout="@layout/fragment_bookings" />
     <fragment
         android:id="@+id/popularDestinationDetailFragment"
         android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationDetailDialog"
@@ -40,7 +32,12 @@
         android:id="@+id/seeAllDestinationsFragment"
         android:name="com.marina.ruiz.globetrotting.ui.main.destinations.DestinationsFragment"
         android:label="fragment_destinations"
-        tools:layout="@layout/fragment_destinations" />
+        tools:layout="@layout/fragment_destinations" >
+        <argument
+            android:name="onlyFavorites"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <activity
         android:id="@+id/profileActivity"
         android:name="com.marina.ruiz.globetrotting.ui.main.profile.ProfileActivity"

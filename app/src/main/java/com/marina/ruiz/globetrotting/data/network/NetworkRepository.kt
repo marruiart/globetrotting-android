@@ -59,18 +59,28 @@ class NetworkRepository @Inject constructor(
 
     fun checkAccess(): Boolean = authSvc.firebase.client.auth.currentUser != null
 
-    suspend fun getShortDescription(destination: String): String {
+
+    suspend fun getShortDescription(destination: String, country: String): String {
         val requestBody =
-            createRequestBody("Crea una descripción corta (10 palabras máximo) sobre el destino de viaje '${destination}' basado en la serie Rick & Morty. No digas que es ficticio")
+            createRequestBody("Como si fuera una agencia de viajes, crea una descripción muy corta (10 palabras máximo) sobre el destino de viaje '${destination}' en $country")
         val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
-        return response.asApiModel().text.trim().replace("\"", "")
+        try {
+            return response.asApiModel().text.trim().replace("\"", "")
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 
-    suspend fun getLongDescription(destination: String): String {
+
+    suspend fun getLongDescription(destination: String, country: String): String {
         val requestBody =
-            createRequestBody("Crea una descripción (100 palabras en 2 o 3 párrafos) sobre el destino de viaje '${destination}' basado en la serie Rick & Morty. No digas que es ficticio")
-        val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
-        return response.asApiModel().text.trim()
+            createRequestBody("Como si fuera una agencia de viajes, crea una descripción (100 palabras en 2 o 3 párrafos) sobre el destino de viaje '$destination' en $country")
+        try {
+            val response: ChatGptResponse = chatGpt.api.getResponse(requestBody)
+            return response.asApiModel().text.trim()
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 
     private fun createRequestBody(request: String): RequestBody {

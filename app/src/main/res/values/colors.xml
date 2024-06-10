@@ -6,7 +6,8 @@
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="translucent">#99FFFFFF</color>
+    <color name="translucent_60">#99FFFFFF</color>
+    <color name="translucent_20">#33FFFFFF</color>
     <!-- LIGHT THEME -->
     <color name="md_theme_light_primary">#006878</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>

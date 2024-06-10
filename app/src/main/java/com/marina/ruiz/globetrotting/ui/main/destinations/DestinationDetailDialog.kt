@@ -31,7 +31,7 @@ class DestinationDetailDialog(
         super.onCreate(savedInstanceState)
         overrideOnBackPressed()
         if (destination.description.isEmpty()) {
-            destinationsVM.fetchDescription(destination)
+            destinationsVM.fetchDescription(destination, ::onResponse)
         }
     }
 
@@ -46,6 +46,11 @@ class DestinationDetailDialog(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setWindowInsets()
+    }
+
+    private fun onResponse(description: String) {
+        destination.description = description
+        bindView()
     }
 
     private fun setWindowInsets() {

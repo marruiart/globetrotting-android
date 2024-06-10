@@ -9,8 +9,10 @@ data class DestinationResponse(
     val id: String,
     val name: String,
     val type: String,
-    val dimension: String,
+    val keywords: String,
     val price: Double,
+    val country: String?,
+    val continent: String?,
     val shortDescription: String?,
     val description: String?
 /*    val imageRef: Int?,
@@ -22,8 +24,10 @@ data class DestinationResponse(
             id = id,
             name = name,
             type = type,
-            dimension = dimension,
+            keywords = keywords,
             price = price,
+            country = country,
+            continent = continent,
             shortDescription = shortDescription,
             description = description,
             //imageRef = imageRef

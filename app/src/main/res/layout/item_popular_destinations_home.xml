@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/translucent"
+        app:cardBackgroundColor="@color/translucent_60"
         app:strokeWidth="0dp"
         tools:viewBindingIgnore="true">
 

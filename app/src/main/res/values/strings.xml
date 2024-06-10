@@ -35,6 +35,7 @@
     <string name="edit_profile_cancel_btn">Cancelar</string>
     <string name="edit_profile_accept_btn">Aceptar</string>
     <!-- DESTINATIONS LIST -->
+    <string name="dest_search_hint">Buscar</string>
     <string name="dest_btn_book_now">Reservar ahora</string>
     <string name="dest_btn_see_details">Ver detalles</string>
     <!-- DESTINATION ITEM (FOR DESTINATIONS LIST -->

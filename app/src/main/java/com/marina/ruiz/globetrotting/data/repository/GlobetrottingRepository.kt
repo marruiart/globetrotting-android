@@ -1,6 +1,5 @@
 package com.marina.ruiz.globetrotting.data.repository
 
-import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.marina.ruiz.globetrotting.data.local.LocalRepository
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,6 +43,10 @@ class GlobetrottingRepository @Inject constructor(
 
     companion object {
         private const val TAG = "GLOB_DEBUG GLOBETROTTING_REPOSITORY"
+    }
+
+    fun updateDestinations(searchQuery: String) {
+        localRepository.updateDestinations(searchQuery)
     }
 
     // OFFLINE FIRST DATA OPERATIONS
@@ -60,6 +64,14 @@ class GlobetrottingRepository @Inject constructor(
             return localRepository.destinations.map { destinations ->
                 Log.i(TAG, "Destinations changed in room: ${destinations.size}")
                 destinations.asDestinationList()
+            }
+        }
+
+    val favDestinations: Flow<List<Destination>>
+        get() {
+            return localRepository.favDestinations.map { favDestinations ->
+                Log.i(TAG, "Favorite destinations changed in room: ${favDestinations.size}")
+                favDestinations.asDestinationList()
             }
         }
 
@@ -100,6 +112,7 @@ class GlobetrottingRepository @Inject constructor(
             !userData.favorites.isNullOrEmpty() && destinations.isNotEmpty()
         }.collect { (userData, _) ->
             Log.w(TAG, "Collected favorites network repo: ${userData.favorites}")
+            deleteFavorites()
             createFavorites(userData.asFavoritesEntity())
         }
     }
@@ -137,38 +150,60 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     @WorkerThread
-    suspend fun fetchDescription(name: String): String {
+    suspend fun fetchDescription(name: String, country: String, retryCount: Int = 0): String {
+        val maxRetries = 3
         var description = ""
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Fetching description...")
+
             try {
-                Log.d(TAG, "Fetching description...")
-                delay(30000)
-                val gptDescription = networkRepository.getLongDescription(name)
+                val gptDescription = networkRepository.getLongDescription(name, country)
                 Log.d(TAG, gptDescription)
                 description = gptDescription
+            } catch (e: HttpException) {
+                // Handles HTTP errors like 4xx or 5xx
+                Log.e(TAG, "HTTP error: ${e.message()}")
+                if (e.code() == 429 && retryCount < maxRetries) {
+                    delay(30000L * (retryCount + 1))
+                    description = fetchDescription(name, country, retryCount + 1)
+                } else {
+                }
             } catch (e: IOException) {
-                Log.ERROR
-            } catch (e: NetworkErrorException) {
-                Log.ERROR
+                // Handles network-related errors, such as connectivity issues
+                Log.e(TAG, "Network error: ${e.message}")
+            } catch (e: Exception) {
+                // Handles any other unexpected exceptions
+                Log.e(TAG, "Unexpected error: ${e.message}")
             }
+
         }
         return description
     }
 
     @WorkerThread
-    suspend fun fetchShortDescription(name: String): String {
+    suspend fun fetchShortDescription(name: String, country: String, retryCount: Int = 0): String {
+        val maxRetries = 3
         var description = ""
         withContext(Dispatchers.IO) {
             try {
                 Log.d(TAG, "Fetching short description...")
-                delay(10000)
-                val gptShortDescription = networkRepository.getShortDescription(name)
+                val gptShortDescription = networkRepository.getShortDescription(name, country)
                 Log.d(TAG, gptShortDescription)
                 description = gptShortDescription
+            } catch (e: HttpException) {
+                // Handles HTTP errors like 4xx or 5xx
+                Log.e(TAG, "HTTP error: ${e.message()}")
+                if (e.code() == 429 && retryCount < maxRetries) {
+                    delay(30000L * (retryCount + 1))
+                    description = fetchShortDescription(name, country, retryCount + 1)
+                } else {
+                }
             } catch (e: IOException) {
-                Log.ERROR
-            } catch (e: NetworkErrorException) {
-                Log.ERROR
+                // Handles network-related errors, such as connectivity issues
+                Log.e(TAG, "Network error: ${e.message}")
+            } catch (e: Exception) {
+                // Handles any other unexpected exceptions
+                Log.e(TAG, "Unexpected error: ${e.message}")
             }
         }
         return description

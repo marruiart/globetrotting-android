@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity:1.9.0")
     val activityVersion = "1.9.0"
     val fragmentVersion = "1.6.2"
     val navVersion = "2.7.7"

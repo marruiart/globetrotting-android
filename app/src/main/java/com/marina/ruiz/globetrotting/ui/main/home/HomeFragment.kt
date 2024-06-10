@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), DestinationDetailDialogListener {
     private fun initListeners() {
         with(binding) {
             btnFavoritesHome.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToSeeAllDestinationsFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToFavoritesDestinationsActivity()
                 navigate(action)
             }
             btnMyAccountHome.setOnClickListener {

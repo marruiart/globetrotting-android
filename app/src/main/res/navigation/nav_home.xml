@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileActivity"
             app:destination="@id/profileActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoritesDestinationsActivity"
+            app:destination="@id/favoritesDestinationsActivity" />
     </fragment>
     <fragment
         android:id="@+id/myBookingsFragment"
@@ -46,4 +49,9 @@
         android:name="com.marina.ruiz.globetrotting.ui.main.profile.ProfileActivity"
         android:label="activity_profile"
         tools:layout="@layout/activity_profile" />
+    <activity
+        android:id="@+id/favoritesDestinationsActivity"
+        android:name="com.marina.ruiz.globetrotting.ui.main.destinations.FavoritesDestinationsActivity"
+        android:label="activity_favorites_destinations"
+        tools:layout="@layout/activity_favorites_destinations" />
 </navigation>

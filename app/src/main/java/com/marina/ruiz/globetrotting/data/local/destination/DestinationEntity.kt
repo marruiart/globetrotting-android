@@ -76,6 +76,6 @@ private fun chooseImage(type: String?): Int {
         //"Machine" -> R.drawable.type_machine
         //"Arcade" -> R.drawable.type_arcade
         //"Spa" -> R.drawable.type_spa
-        else -> R.drawable.default_avatar
+        else -> R.drawable.home_background
     }
 }

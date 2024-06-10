@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -19,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Globetrotting"
         tools:targetApi="tiramisu">
+        <activity
+            android:name=".ui.main.destinations.FavoritesDestinationsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.main.profile.ProfileActivity"
             android:exported="false" />

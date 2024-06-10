@@ -100,6 +100,7 @@ class GlobetrottingRepository @Inject constructor(
             !userData.favorites.isNullOrEmpty() && destinations.isNotEmpty()
         }.collect { (userData, _) ->
             Log.w(TAG, "Collected favorites network repo: ${userData.favorites}")
+            deleteFavorites()
             createFavorites(userData.asFavoritesEntity())
         }
     }

@@ -1,5 +1,6 @@
 package com.marina.ruiz.globetrotting.data.local.destination
 
+import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.marina.ruiz.globetrotting.R
@@ -7,8 +8,7 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 
 @Entity(tableName = "destination")
 data class DestinationEntity(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey val id: String,
     val name: String,
     val type: String?,
     val dimension: String?,
@@ -16,8 +16,22 @@ data class DestinationEntity(
     val shortDescription: String?,
     val description: String?,
     //val imageRef: Int? = null
+)
+
+data class DestinationFavoritesEntity(
+    val id: String,
+    val name: String,
+    val type: String?,
+    val dimension: String?,
+    val price: Double,
+    val shortDescription: String?,
+    val description: String?,
+    val favId: String?
 ) {
     fun asDestination(): Destination {
+        if (name == "France") {
+            Log.d("GLOB_DEBUG AS DESTINATION", "${favId != null}")
+        }
         return Destination(
             id = id,
             name = name,
@@ -26,12 +40,13 @@ data class DestinationEntity(
             price = price,
             shortDescription = shortDescription ?: "",
             description = description ?: "",
-            imageRef = chooseImage(type)
+            imageRef = chooseImage(type),
+            favorite = favId != null
         )
     }
 }
 
-fun List<DestinationEntity>.asDestinationList(): List<Destination> {
+fun List<DestinationFavoritesEntity>.asDestinationList(): List<Destination> {
     return this.map { destination ->
         destination.asDestination()
     }

@@ -18,6 +18,7 @@ class PopularDestinationsAdapter(
     inner class DestinationViewHolder(
         private val binding: ItemPopularDestinationsHomeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bindDestination(destination: Destination) {
             if (destination.imageRef != null) {
                 binding.ivBackgroundHome.setImageResource(destination.imageRef)
@@ -27,6 +28,7 @@ class PopularDestinationsAdapter(
                 onShowDetail(destination)
             }
         }
+
     }
 
     private class DestinationDiffCallBack : DiffUtil.ItemCallback<Destination>() {

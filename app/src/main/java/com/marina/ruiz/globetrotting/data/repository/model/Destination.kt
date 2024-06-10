@@ -14,8 +14,10 @@ data class Destination(
     var shortDescription: String = "",
     var description: String = "",
     override val imageRef: Int? = null,
-    override val image: String? = null
+    override val image: String? = null,
+    var favorite: Boolean = false
 ) : Parcelable, SelectorItem {
+
     fun asDestinationPayload(
         newDescription: String? = null, newShortDescription: String? = null
     ): DestinationPayload {
@@ -25,6 +27,27 @@ data class Destination(
             description = newDescription ?: description,
             //imageRef = imageRef
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Destination) return false
+
+        return id == other.id && name == other.name && type == other.type && dimension == other.dimension && price == other.price && shortDescription == other.shortDescription && description == other.description && imageRef == other.imageRef && image == other.image
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (type?.hashCode() ?: 0)
+        result = 31 * result + (dimension?.hashCode() ?: 0)
+        result = 31 * result + price.hashCode()
+        result = 31 * result + shortDescription.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + (imageRef?.hashCode() ?: 0)
+        result = 31 * result + (image?.hashCode() ?: 0)
+        // 'favorite' is not included in hashCode calculation
+        return result
     }
 }
 

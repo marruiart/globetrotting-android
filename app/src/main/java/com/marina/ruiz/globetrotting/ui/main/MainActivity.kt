@@ -18,6 +18,7 @@ import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.databinding.ActivityMainBinding
 import com.marina.ruiz.globetrotting.ui.auth.AuthActivity
 import com.marina.ruiz.globetrotting.ui.main.profile.ProfileActivity
+import com.marina.ruiz.globetrotting.ui.main.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,7 +1,7 @@
 package com.marina.ruiz.globetrotting.data.network.firebase.model.response
 
-import android.net.Uri
 import android.os.Parcelable
+import com.marina.ruiz.globetrotting.data.local.favorite.FavoriteEntity
 import com.marina.ruiz.globetrotting.data.local.user.UserEntity
 import kotlinx.parcelize.Parcelize
 
@@ -15,8 +15,7 @@ data class UserDataResponse(
     val name: String? = null,
     val surname: String? = null,
     val age: String? = null,
-    //val bookings: List<BookingResponse> = emptyList(), // TODO move to BookingResponse
-    //val favorites?: ClientFavDestination[] // TODO receive client favs
+    val favorites: ArrayList<HashMap<String, String>>?
 ) : Parcelable {
 
     fun asUserEntity(): UserEntity {
@@ -31,6 +30,15 @@ data class UserDataResponse(
             age = age
         )
     }
+
+    fun asFavoritesEntity(): List<FavoriteEntity> {
+        return favorites?.map { fav ->
+            FavoriteEntity(
+                id = fav["fav_id"] as String,
+                destinationId = fav["destination_id"] as String
+            )
+        } ?: emptyList()
+    }
 }
 
 fun Map<String, Any>.asUserDataResponse(): UserDataResponse {
@@ -42,6 +50,7 @@ fun Map<String, Any>.asUserDataResponse(): UserDataResponse {
         this["avatar"] as? String,
         this["name"] as String?,
         this["surname"] as String?,
-        this["age"] as String?
+        this["age"] as String?,
+        this["favorites"] as ArrayList<HashMap<String, String>>?
     )
 }

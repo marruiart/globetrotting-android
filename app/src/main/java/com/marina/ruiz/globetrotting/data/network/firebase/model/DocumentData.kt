@@ -25,8 +25,10 @@ fun DocumentData.asDestinationResponse(): DestinationResponse {
         this["id"] as String,
         this["name"] as String,
         this["type"] as? String ?: "",
-        this["dimension"] as? String ?: "",
+        this["keywords"] as? String ?: "",
         this["price"] as Double,
+        this["country"] as String?,
+        this["continent"] as String?,
         this["shortDescription"] as? String ?: "",
         this["description"] as? String ?: ""
     )

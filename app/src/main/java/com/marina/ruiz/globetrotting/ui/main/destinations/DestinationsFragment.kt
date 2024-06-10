@@ -15,6 +15,7 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
+import com.marina.ruiz.globetrotting.ui.main.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +42,12 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         bindView()
+        Log.d(TAG, "created - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+    }
+
+    override fun onResume() {
+        Log.d(TAG, "resume - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+        super.onResume()
     }
 
     private fun initAdapter() {
@@ -51,9 +58,12 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
 
     private fun bindView() {
         binding.cbFavoriteToggleFilter.isChecked = destinationsVM.onlyFavorites
+        Log.d(TAG, "bindView - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
         destinationsVM.bindView(adapter)
         binding.cbFavoriteToggleFilter.setOnCheckedChangeListener { _, isChecked ->
             destinationsVM.onlyFavorites = isChecked
+            Log.d(TAG, "listener - isChecked $isChecked")
+            Log.d(TAG, "listener - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
             destinationsVM.bindView(adapter)
         }
         binding.btnRemoveFilter.setOnClickListener {
@@ -122,8 +132,10 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         detailDialog.dismiss()
     }
 
-    override fun onDestroy() {
-        destinationsVM.onlyFavorites = false
-        super.onDestroy()
+    override fun onPause() {
+        destinationsVM.onlyFavorites = binding.cbFavoriteToggleFilter.isChecked
+        Log.d(TAG, "pause - destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
+        super.onPause()
     }
+
 }

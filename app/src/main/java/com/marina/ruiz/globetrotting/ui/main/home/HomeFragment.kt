@@ -2,6 +2,7 @@ package com.marina.ruiz.globetrotting.ui.main.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,6 +72,11 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         changeStatusBarContrastStyle(requireActivity().window, lightIcons)
     }
 
+    override fun onResume() {
+        homeVM.bindView(adapter)
+        super.onResume()
+    }
+
     private fun initUI() {
         initListeners()
         initAdapter()
@@ -91,6 +97,7 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
 
     private fun navigateToDestinations() {
         destinationsVM.onlyFavorites = true
+        Log.d(TAG, "destinationsVM.onlyFavorites ${destinationsVM.onlyFavorites}")
         bottomNav?.selectedItemId = R.id.nav_destinations
     }
 

@@ -85,11 +85,15 @@ class DestinationsViewModel @Inject constructor(
         }
     }
 
-    fun fetchDescription(destination: Destination) {
+    fun fetchDescription(destination: Destination, onResponse: (description: String) -> Unit) {
         viewModelScope.launch {
-            val description = repository.fetchDescription(destination.name)
-            repository.updateDestination(destination.asDestinationPayload(newDescription = description))
-            //val shortDescription = repository.fetchShortDescription(destination.name)
+            val description = repository.fetchDescription(destination.name, destination.country)
+            onResponse(description)
+            val shortDescription =
+                repository.fetchShortDescription(destination.name, destination.country)
+            repository.updateDestination(
+                destination.asDestinationPayload(description, shortDescription)
+            )
         }
     }
 }

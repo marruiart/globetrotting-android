@@ -16,7 +16,7 @@ interface DestinationDao {
     suspend fun createDestination(destinationEntity: DestinationEntity)
 
     @Query(
-        "SELECT d.id AS id, d.name AS name, d.type AS type, d.dimension AS dimension, d.price AS price, " +
+        "SELECT d.id AS id, d.name AS name, d.type AS type, d.country AS country, d.continent AS continent, d.keywords AS keywords, d.price AS price, " +
                 "d.shortDescription AS shortDescription, d.description AS description, f.id AS favId " +
                 "FROM destination d LEFT JOIN favorite AS f ON f.destinationId = d.id " +
                 "WHERE d.name LIKE '%' || :searchQuery || '%' " +
@@ -25,7 +25,7 @@ interface DestinationDao {
     fun getAllDestinationsWithFavorites(searchQuery: String = ""): Flow<List<DestinationFavoritesEntity>>
 
     @Query(
-        "SELECT d.id AS id, d.name AS name, d.type AS type, d.dimension AS dimension, d.price AS price, " +
+        "SELECT d.id AS id, d.name AS name, d.type AS type, d.country AS country, d.continent AS continent, d.keywords AS keywords, d.price AS price, " +
                 "d.shortDescription AS shortDescription, d.description AS description, f.id AS favId " +
                 "FROM destination d LEFT JOIN favorite AS f ON f.destinationId = d.id " +
                 "WHERE favId IS NOT NULL AND d.name LIKE '%' || :searchQuery || '%' " +

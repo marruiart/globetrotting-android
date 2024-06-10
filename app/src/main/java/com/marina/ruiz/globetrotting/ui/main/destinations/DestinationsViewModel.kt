@@ -30,8 +30,10 @@ class DestinationsViewModel @Inject constructor(
 
     lateinit var user: User
     private var _favorites: MutableList<Favorite> = mutableListOf()
+    var onlyFavorites: Boolean = false
 
-    fun bindView(adapter: DestinationsListAdapter, onlyFavorites: Boolean = false) {
+    fun bindView(adapter: DestinationsListAdapter, searchQuery: String = "") {
+        repository.updateDestinations(searchQuery)
         viewModelScope.launch {
             repository.localUser.collect { localUser ->
                 localUser?.let {
@@ -39,13 +41,10 @@ class DestinationsViewModel @Inject constructor(
                 }
             }
         }
-        collectDestinationsWithFavorites(adapter, onlyFavorites)
+        collectDestinationsWithFavorites(adapter)
     }
 
-    private fun collectDestinationsWithFavorites(
-        adapter: DestinationsListAdapter,
-        onlyFavorites: Boolean
-    ) {
+    private fun collectDestinationsWithFavorites(adapter: DestinationsListAdapter) {
         viewModelScope.launch {
             val favoritesResponse = repository.favorites
             val destinationsResponse: Flow<List<Destination>> = if (onlyFavorites) {

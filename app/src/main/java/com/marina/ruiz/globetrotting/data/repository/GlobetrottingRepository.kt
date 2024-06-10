@@ -45,6 +45,10 @@ class GlobetrottingRepository @Inject constructor(
         private const val TAG = "GLOB_DEBUG GLOBETROTTING_REPOSITORY"
     }
 
+    fun updateDestinations(searchQuery: String) {
+        localRepository.updateDestinations(searchQuery)
+    }
+
     // OFFLINE FIRST DATA OPERATIONS
 
     val localUser: Flow<User?>

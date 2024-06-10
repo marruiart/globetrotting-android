@@ -18,17 +18,20 @@ interface DestinationDao {
     @Query(
         "SELECT d.id AS id, d.name AS name, d.type AS type, d.dimension AS dimension, d.price AS price, " +
                 "d.shortDescription AS shortDescription, d.description AS description, f.id AS favId " +
-                "FROM destination d LEFT JOIN favorite AS f ON f.destinationId = d.id"
+                "FROM destination d LEFT JOIN favorite AS f ON f.destinationId = d.id " +
+                "WHERE d.name LIKE '%' || :searchQuery || '%' " +
+                "ORDER BY d.name "
     )
-    fun getAllDestinationsWithFavorites(): Flow<List<DestinationFavoritesEntity>>
+    fun getAllDestinationsWithFavorites(searchQuery: String = ""): Flow<List<DestinationFavoritesEntity>>
 
     @Query(
         "SELECT d.id AS id, d.name AS name, d.type AS type, d.dimension AS dimension, d.price AS price, " +
                 "d.shortDescription AS shortDescription, d.description AS description, f.id AS favId " +
                 "FROM destination d LEFT JOIN favorite AS f ON f.destinationId = d.id " +
-                "WHERE favId IS NOT NULL"
+                "WHERE favId IS NOT NULL AND d.name LIKE '%' || :searchQuery || '%' " +
+                "ORDER BY d.name"
     )
-    fun getAllFavDestinations(): Flow<List<DestinationFavoritesEntity>>
+    fun getAllFavDestinations(searchQuery: String = ""): Flow<List<DestinationFavoritesEntity>>
 
     @Update
     suspend fun updateDestination(destinationEntity: DestinationEntity)

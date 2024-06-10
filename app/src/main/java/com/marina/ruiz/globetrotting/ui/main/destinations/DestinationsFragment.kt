@@ -1,13 +1,16 @@
 package com.marina.ruiz.globetrotting.ui.main.destinations
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.marina.ruiz.globetrotting.core.extension.hideKeyboard
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentDestinationsBinding
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
@@ -21,7 +24,6 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
     private lateinit var adapter: DestinationsListAdapter
     private lateinit var bookingDialog: BookingCreationFormDialogFragment
     private lateinit var detailDialog: DestinationDetailDialog
-    private var onlyFavorites: Boolean = false
     private val destinationsVM: DestinationsViewModel by activityViewModels()
 
     companion object {
@@ -32,20 +34,49 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentDestinationsBinding.inflate(inflater, container, false)
-        onlyFavorites = arguments?.getBoolean("onlyFavorites") ?: false
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        destinationsVM.bindView(adapter, onlyFavorites)
+        bindView()
     }
 
     private fun initAdapter() {
         adapter = DestinationsListAdapter(::onShowDetail, ::onBookNow, ::onFavoriteDestination)
         val rv = binding.rvDestinationsList
         rv.adapter = adapter
+    }
+
+    private fun bindView() {
+        binding.cbFavoriteToggleFilter.isChecked = destinationsVM.onlyFavorites
+        destinationsVM.bindView(adapter)
+        binding.cbFavoriteToggleFilter.setOnCheckedChangeListener { _, isChecked ->
+            destinationsVM.onlyFavorites = isChecked
+            destinationsVM.bindView(adapter)
+        }
+        binding.btnRemoveFilter.setOnClickListener {
+            binding.etDestinationsFilter.setText("")
+        }
+
+        binding.etDestinationsFilter.doAfterTextChanged { textView ->
+            performSearch(textView.toString())
+            if (textView.isNullOrEmpty()) {
+                binding.btnRemoveFilter.visibility = View.GONE
+            } else {
+                binding.btnRemoveFilter.visibility = View.VISIBLE
+            }
+        }
+        binding.etDestinationsFilter.setOnEditorActionListener { textView, actionId, _ ->
+            this.hideKeyboard()
+            true
+        }
+    }
+
+    private fun performSearch(searchQuery: String) {
+        Log.i(TAG, "searchQuery: $searchQuery")
+        destinationsVM.bindView(adapter, searchQuery)
     }
 
     private fun onShowDetail(destination: Destination) {
@@ -89,5 +120,10 @@ class DestinationsFragment : Fragment(), BookingCreationFormDialogListener,
 
     override fun onCloseDetails() {
         detailDialog.dismiss()
+    }
+
+    override fun onDestroy() {
+        destinationsVM.onlyFavorites = false
+        super.onDestroy()
     }
 }

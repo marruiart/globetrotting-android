@@ -90,6 +90,7 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     private fun navigateToDestinations() {
+        destinationsVM.onlyFavorites = true
         bottomNav?.selectedItemId = R.id.nav_destinations
     }
 

@@ -36,6 +36,13 @@ class LocalRepository @Inject constructor(
     var destinations: Flow<List<DestinationFavoritesEntity>> = destinationDao.getAllDestinationsWithFavorites()
     var favDestinations: Flow<List<DestinationFavoritesEntity>> = destinationDao.getAllFavDestinations()
 
+
+    fun updateDestinations(searchQuery: String = "") {
+        destinations = destinationDao.getAllDestinationsWithFavorites(searchQuery)
+        favDestinations = destinationDao.getAllFavDestinations(searchQuery)
+    }
+
+
     @WorkerThread
     suspend fun insertDestinations(listDestinationEntity: List<DestinationEntity>) {
         Log.d(TAG, "Inserting destinations...")

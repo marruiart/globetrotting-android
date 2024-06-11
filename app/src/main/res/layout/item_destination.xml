@@ -22,13 +22,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/home_background" />
+            app:srcCompat="@drawable/placeholder" />
 
         <CheckBox
             android:id="@+id/cb_favorite_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:background="@drawable/translucent_fav_circle"
             android:button="@drawable/ic_favorite_checkbox"
             app:buttonTint="@color/ic_favorite_color_selector"
             app:layout_constraintBottom_toBottomOf="@+id/iv_item_destination_background"

@@ -1,4 +1,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/white" android:drawable="@drawable/ic_favorite_unchecked" android:state_checked="false" />
+    <item android:color="@color/white" android:background="@drawable/translucent_fav_circle" android:drawable="@drawable/ic_favorite_unchecked" android:state_checked="false" />
     <item android:color="@color/red" android:drawable="@drawable/ic_favorite_checked" android:state_checked="true" />
 </selector>

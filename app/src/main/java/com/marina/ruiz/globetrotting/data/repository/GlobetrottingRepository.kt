@@ -141,21 +141,25 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     suspend fun collectData(): Unit = withContext(Dispatchers.IO) {
+        stopCollecting(dataCollectJob)
+
         val agentsResponse = networkRepository.agentsResponse
         val destinationsResponse = networkRepository.destinationsResponse
         val bookingsResponse = networkRepository.bookingsResponse
 
-        combine(
-            agentsResponse, destinationsResponse, bookingsResponse
-        ) { agents, destinations, bookings ->
-            Log.w(TAG, "Collected agents network repo: $agents")
-            createAgents(agents.asAgentsEntityList())
-            Triple(agents, destinations, bookings)
-        }.filter { (agents, destinations, _) ->
-            agents.isNotEmpty() && destinations.isNotEmpty()
-        }.collect { (_, _, bookings) ->
-            Log.w(TAG, "Collected bookings network repo: $bookings")
-            createBookings(bookings.asBookingEntityList())
+        dataCollectJob = CoroutineScope(Dispatchers.IO).launch {
+            combine(
+                agentsResponse, destinationsResponse, bookingsResponse
+            ) { agents, destinations, bookings ->
+                Log.w(TAG, "Collected agents network repo: $agents")
+                createAgents(agents.asAgentsEntityList())
+                Triple(agents, destinations, bookings)
+            }.filter { (agents, destinations, _) ->
+                agents.isNotEmpty() && destinations.isNotEmpty()
+            }.collect { (_, _, bookings) ->
+                Log.w(TAG, "Collected bookings network repo: $bookings")
+                createBookings(bookings.asBookingEntityList())
+            }
         }
     }
 

@@ -36,11 +36,9 @@ class DestinationsViewModel @Inject constructor(
 
     fun bindView(adapter: DestinationsListAdapter, searchQuery: String = "") {
         repository.updateDestinations(searchQuery)
-        viewModelScope.launch {
-            repository.localUser.collect { localUser ->
-                localUser?.let {
-                    user = it
-                }
+        repository.collectLocalUser { localUser ->
+            localUser?.let {
+                user = it
             }
         }
         collectDestinationsWithFavorites(adapter)

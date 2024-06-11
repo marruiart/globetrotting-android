@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             repository.localUser.collect { user ->
                 user?.let {
-                    _user.value = it
+                    _user.postValue(it)
                 }
                 if (user == null) {
                     logout()

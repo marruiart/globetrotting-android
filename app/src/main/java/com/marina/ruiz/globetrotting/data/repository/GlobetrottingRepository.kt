@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
@@ -48,6 +49,7 @@ class GlobetrottingRepository @Inject constructor(
         private const val TAG = "GLOB_DEBUG GLOBETROTTING_REPOSITORY"
     }
 
+    private var localUserJob: Job? = null
     private var dataCollectJob: Job? = null
     private var userAndDestinationsCollectJob: Job? = null
 
@@ -64,6 +66,14 @@ class GlobetrottingRepository @Inject constructor(
                 user?.asUser()
             }
         }
+
+    fun collectLocalUser(flowCollector: FlowCollector<User?>) {
+        stopCollecting(localUserJob)
+
+        localUserJob = CoroutineScope(Dispatchers.IO).launch {
+            localUser.collect(flowCollector)
+        }
+    }
 
     val destinations: Flow<List<Destination>>
         get() {

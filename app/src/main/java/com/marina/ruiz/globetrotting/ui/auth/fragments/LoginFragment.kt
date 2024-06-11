@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.extension.dismissKeyboard
 import com.marina.ruiz.globetrotting.databinding.FragmentLoginBinding
 import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
@@ -25,9 +26,7 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -60,19 +59,17 @@ class LoginFragment : Fragment() {
         with(authVM) {
             showErrorDialog.observe(owner) { showError ->
                 if (showError) {
-                    showErrorDialog("No es posible la autenticación")
+                    showErrorDialog(requireContext().getString(R.string.login_error_response))
                 }
             }
         }
     }
 
     private fun showErrorDialog(message: String) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Error")
+        MaterialAlertDialogBuilder(requireContext()).setTitle(requireContext().getString(R.string.login_error_response_error_title))
             .setMessage(message)
-            .setNeutralButton("Aceptar") { dialog, which ->
-                if (which == DialogInterface.BUTTON_NEUTRAL)
-                    dialog.dismiss()
+            .setNeutralButton(requireContext().getString(R.string.login_error_response_accept_btn)) { dialog, which ->
+                if (which == DialogInterface.BUTTON_NEUTRAL) dialog.dismiss()
             }.show()
     }
 

@@ -11,6 +11,8 @@ import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.User
 import com.marina.ruiz.globetrotting.domain.LoginUseCase
 import com.marina.ruiz.globetrotting.domain.LogoutUseCase
+import com.marina.ruiz.globetrotting.domain.SignUpListeners
+import com.marina.ruiz.globetrotting.domain.SignUpUseCase
 import com.marina.ruiz.globetrotting.ui.auth.LoginViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +26,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val createAccount: SignUpUseCase,
     private val repository: GlobetrottingRepository
 ) : ViewModel() {
 
@@ -130,5 +133,16 @@ class AuthViewModel @Inject constructor(
             repository.eraseDatabase()
         }
         resetData()
+    }
+
+    fun onCreateAccount(
+        username: String,
+        email: String,
+        password: String,
+        callback: SignUpListeners
+    ) {
+        viewModelScope.launch {
+            createAccount(username, email, password, callback)
+        }
     }
 }

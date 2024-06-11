@@ -25,12 +25,14 @@ class MainViewModel @Inject constructor(
         private const val TAG = "GLOB_DEBUG MAIN_VM"
     }
 
-    // LIVEDATA VARIABLES
-    private val _logout = MutableLiveData<Boolean>(false)
+    // LIVEDATA VARIABLESBoolean
+    private val _logout = MutableLiveData(false)
     val logout: LiveData<Boolean> = _logout
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
+
+    var registering = false
 
 
     init {
@@ -45,8 +47,12 @@ class MainViewModel @Inject constructor(
                 user?.let {
                     _user.postValue(it)
                 }
-                if (user == null) {
+                if (user == null && !registering) {
+                    Log.d(TAG, "Null user login out...")
                     logout()
+                }
+                if (registering) {
+                    registering = false
                 }
             }
         }

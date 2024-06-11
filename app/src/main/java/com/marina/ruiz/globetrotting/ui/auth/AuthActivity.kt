@@ -70,7 +70,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun navigateHome() {
-        startActivity(MainActivity.create(this))
+        val intent = MainActivity.create(this)
+        intent.putExtra("REGISTERING", true)
+        startActivity(intent)
         Log.i(TAG, "FINISH")
         this.finish()
     }

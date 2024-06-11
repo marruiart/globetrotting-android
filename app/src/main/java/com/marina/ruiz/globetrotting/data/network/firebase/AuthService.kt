@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.marina.ruiz.globetrotting.data.network.firebase.model.result.LoginResult
 import kotlinx.coroutines.tasks.await
@@ -17,14 +18,27 @@ class AuthService @Inject constructor(val firebase: FirebaseService) {
         private const val TAG = "GLOB_DEBUG AUTH_SERVICE"
     }
 
+    private var authStateListener: FirebaseAuth.AuthStateListener? = null
     private val _uid = MutableLiveData<String?>()
     val uid: LiveData<String?>
         get() = _uid
 
     init {
-        firebase.client.auth.addAuthStateListener { auth ->
+        startListening()
+    }
+
+    fun startListening() {
+        authStateListener = FirebaseAuth.AuthStateListener { auth ->
             Log.i(TAG, "Listening uid: ${auth.currentUser?.uid}")
             _uid.value = auth.currentUser?.uid
+        }
+        firebase.client.auth.addAuthStateListener(authStateListener!!)
+    }
+
+    fun stopListening() {
+        authStateListener?.let {
+            firebase.client.auth.removeAuthStateListener(it)
+            authStateListener = null
         }
     }
 

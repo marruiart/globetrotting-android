@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.fragments.RegisterFragment">
+    tools:context=".ui.auth.fragments.SignUpFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mt_signup_toolbar"
@@ -46,7 +46,7 @@
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_form_email"
+                android:id="@+id/til_create_form_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/form_email_hint"
@@ -56,30 +56,38 @@
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_create_form_email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/form_name"
+                android:id="@+id/til_create_form_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/form_username_hint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_form_email"
+                app:layout_constraintTop_toBottomOf="@id/til_create_form_email"
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_create_form_username"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_form_password"
+                android:id="@+id/til_create_form_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -87,18 +95,22 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/form_name"
+                app:layout_constraintTop_toBottomOf="@id/til_create_form_username"
                 app:startIconDrawable="@drawable/ic_key">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_create_form_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/form_repeat_passwd"
+                android:id="@+id/til_create_form_repeat_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -106,26 +118,30 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_form_password"
+                app:layout_constraintTop_toBottomOf="@id/til_create_form_password"
                 app:startIconDrawable="@drawable/ic_key">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_create_form_repeat_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_create_account"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="46dp"
                 android:text="@string/create_account_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/form_repeat_passwd" />
+                app:layout_constraintTop_toBottomOf="@+id/til_create_form_repeat_password" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

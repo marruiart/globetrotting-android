@@ -2,15 +2,15 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.marina.ruiz.globetrotting.data.network.firebase.model.DocumentData
 import com.marina.ruiz.globetrotting.data.network.firebase.model.asAgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.FavoritesPayload
-import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.Payload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.ProfilePayload
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.AgentResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.UserDataResponse
 import com.marina.ruiz.globetrotting.data.network.firebase.model.response.asUserDataResponse
-import com.marina.ruiz.globetrotting.ui.auth.model.UserCredentials
+import com.marina.ruiz.globetrotting.domain.SignUpListeners
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -41,15 +41,19 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
         private const val USER_COLLECTION = "users"
     }
 
-    suspend fun createUserDocument(uid: String, credentials: UserCredentials) = runCatching {
-
+    suspend fun createUserDocument(
+        uid: String,
+        username: String,
+        email: String
+    ) = runCatching {
         val user = hashMapOf(
-            "email" to credentials.email,
-            "username" to credentials.username,
-            "nickname" to credentials.username,
+            "email" to email,
+            "username" to username,
+            "nickname" to username,
             "role" to "AUTHENTICATED",
-            "user_id" to Payload.generateId(),
-            "favorites" to emptyArray<Any>()
+            "user_id" to uid,
+            "favorites" to emptyList<Any>(),
+            "createdAt" to Timestamp.now()
         )
 
         firebase.createDocumentWithId(USER_COLLECTION, user, uid)
@@ -99,7 +103,7 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
                 _agentsData.value = snapshot!!.map { doc ->
                     (doc.data as DocumentData).asAgentResponse()
                 }
-                Log.d(TAG, "Current agents: ${_agentsData.value}")
+                Log.d(TAG, "Current agents: ${_agentsData.value.map { it.username }}")
             }
     }
 

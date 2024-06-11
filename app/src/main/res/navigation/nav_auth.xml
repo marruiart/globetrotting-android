@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.RegisterFragment"
+        android:name="com.marina.ruiz.globetrotting.ui.auth.fragments.SignUpFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 </navigation>

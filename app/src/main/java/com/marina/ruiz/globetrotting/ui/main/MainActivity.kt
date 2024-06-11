@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "MainActivity")
+        mainVM.registering = intent.getBooleanExtra("REGISTERING", false)
+        Log.i(TAG, "registering: ${mainVM.registering}")
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -105,6 +107,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToLogin() {
+        Log.d(TAG, "Navigating to login...")
         val intent = AuthActivity.create(this)
         intent.putExtra("LOGOUT", true)
         startActivity(intent)

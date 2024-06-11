@@ -38,7 +38,7 @@ class DestinationsService @Inject constructor(private val firebase: FirebaseServ
                     _destinationsResponse.value = snapshot.map { doc ->
                         (doc.data as DocumentData).asDestinationResponse()
                     }
-                    Log.d(TAG, "Current destinations: ${_destinationsResponse.value}")
+                    Log.d(TAG, "Current destinations: ${_destinationsResponse.value.map{it.name}}")
                 }
             }
     }

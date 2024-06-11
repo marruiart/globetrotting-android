@@ -6,11 +6,10 @@ import com.marina.ruiz.globetrotting.data.network.firebase.model.result.LoginRes
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
-    private val authSvc: AuthService,
-    private val userSvc: UserService
+    private val authSvc: AuthService
 ) {
 
     suspend operator fun invoke(email: String, password: String): LoginResult =
-        authSvc.login(email, password) // TODO use parameters
+        authSvc.login(email, password)
 
 }

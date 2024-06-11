@@ -125,7 +125,7 @@ class GlobetrottingRepository @Inject constructor(
             return null
         }
         createUser(userData.asUserEntity())
-        Log.w(TAG, "Collected destinations network repo: $destinations")
+        Log.w(TAG, "Collected destinations network repo: ${destinations.map { it.name }}")
         createDestinations(destinations.asDestinationsEntityList())
         return Pair(userData, destinations)
     }

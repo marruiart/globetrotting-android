@@ -27,7 +27,16 @@ import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 
 
 interface EditProfileDialogFragmentListener {
-    fun onAccept(profile: ProfileForm, avatar: Uri?, removeImage: Boolean)
+    /**
+     * Called when the accept button is clicked in the edit profile dialog.
+     * @param profile The updated profile form.
+     * @param avatar The updated avatar image URI.
+     * @param removeImage A flag indicating whether to remove the current avatar image.
+     */
+    fun onAccept(profile: ProfileForm, avatar: Uri?, removeImage: Boolean, nameChanged: Boolean)
+    /**
+     * Called when the cancel button is clicked in the edit profile dialog.
+     */
     fun onCancel()
 }
 
@@ -38,6 +47,7 @@ class EditProfileDialogFragment(
     private var removeImage = false
     var imageUri: Uri? = null
     val sourcePicker = PhotoSourcePickerBottomSheet(this)
+
     companion object {
         private const val TAG = "GLOB_DEBUG EDIT_PROFILE_DIALOG_FRAGMENT"
         private const val PADDING = 100
@@ -116,7 +126,9 @@ class EditProfileDialogFragment(
                 nickname = binding.tilFormNickname.text.toString(),
                 avatar = profile.avatar
             )
-            callback.onAccept(profileForm, imageUri, removeImage)
+            val nameChanged =
+                profileForm.name != profile.name || profileForm.surname != profile.surname
+            callback.onAccept(profileForm, imageUri, removeImage, nameChanged)
         }
         binding.btnCancelEditProfile.setOnClickListener {
             callback.onCancel()

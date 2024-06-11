@@ -17,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface StorageFileListeners {
-    fun onUploadSuccess(downloadUri: Uri?)
+    fun onUploadSuccess(downloadUri: Uri?, profile: ProfilePayload, clientName: String?)
     fun onUploadFailed(exception: Exception)
 }
 
@@ -56,13 +56,13 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
 
     }.isSuccess
 
-    suspend fun editUserDocument(uid: String, profile: ProfilePayload) = runCatching {
+    suspend fun editUserDocument(uid: String, profile: ProfilePayload) {
         firebase.updateDocument(USER_COLLECTION, profile.asHashMap(), uid)
-    }.isSuccess
+    }
 
-    suspend fun editUserFavorites(uid: String, favorites: FavoritesPayload) = runCatching {
+    suspend fun editUserFavorites(uid: String, favorites: FavoritesPayload) {
         firebase.updateDocument(USER_COLLECTION, favorites.asHashMap(), uid)
-    }.isSuccess
+    }
 
     fun fetchUserDocument(uid: String?) {
         Log.i(TAG, "Fetch user document: ${uid.toString()}")
@@ -119,11 +119,17 @@ class UserService @Inject constructor(private val firebase: FirebaseService) {
         return data?.get("role") == "AUTHENTICATED"
     }
 
-    fun updateAvatar(uid: String, file: Uri?, callback: StorageFileListeners) {
+    fun updateAvatar(
+        uid: String,
+        file: Uri?,
+        profile: ProfilePayload,
+        clientName: String?,
+        callback: StorageFileListeners
+    ) {
         if (file != null) {
-            firebase.uploadFile(uid, file, callback)
+            firebase.uploadFile(uid, file, profile, clientName, callback)
         } else {
-            firebase.removeFile(uid, callback)
+            firebase.removeFile(uid, profile, clientName, callback)
         }
     }
 

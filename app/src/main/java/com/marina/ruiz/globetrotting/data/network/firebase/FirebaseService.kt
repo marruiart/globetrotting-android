@@ -2,12 +2,14 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.marina.ruiz.globetrotting.core.compressAndResizeImage
+import com.marina.ruiz.globetrotting.data.network.firebase.model.payload.ProfilePayload
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -63,11 +65,28 @@ class FirebaseService @Inject constructor(
         client.db.collection(collectionName).document(docId).update(data).await()
     }
 
+    fun batchUpdateBookings(clientName: String, bookingsId: List<String>) {
+        client.db.runBatch { batch ->
+            for (id in bookingsId) {
+                val docRef = client.db.collection("bookings").document(id)
+                batch.update(docRef, "clientName", clientName)
+            }
+        }.addOnCompleteListener {
+            Log.d(TAG, "Client name updated in bookings")
+        }
+    }
+
     fun logout() {
         client.auth.signOut()
     }
 
-    fun uploadFile(uid: String, file: Uri, callback: StorageFileListeners) {
+    fun uploadFile(
+        uid: String,
+        file: Uri,
+        profile: ProfilePayload,
+        clientName: String?,
+        callback: StorageFileListeners
+    ) {
         val storageRef = client.storage.reference
         val fileRef = storageRef.child(uid)
         val data = file.compressAndResizeImage(context, 30)
@@ -87,18 +106,23 @@ class FirebaseService @Inject constructor(
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                callback.onUploadSuccess(downloadUri)
+                callback.onUploadSuccess(downloadUri, profile, clientName)
             } else {
                 callback.onUploadFailed(Exception("Error on updating avatar."))
             }
         }
     }
 
-    fun removeFile(uid: String, callback: StorageFileListeners) {
+    fun removeFile(
+        uid: String,
+        profile: ProfilePayload,
+        clientName: String?,
+        callback: StorageFileListeners
+    ) {
         val storageRef = client.storage.reference
         val profileRef = storageRef.child(uid)
         profileRef.delete().addOnSuccessListener { _ ->
-            callback.onUploadSuccess(null)
+            callback.onUploadSuccess(null, profile, clientName)
         }.addOnFailureListener {
             callback.onUploadFailed(Exception("Error on removing file."))
         }

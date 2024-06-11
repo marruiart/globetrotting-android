@@ -20,6 +20,10 @@ class DestinationsListAdapter(
     private val onlyPopular: Boolean = false
 ) : ListAdapter<Destination, DestinationsListAdapter.DestinationViewHolder>(DestinationDiffCallBack()) {
 
+    companion object {
+        const val TAG = "GLOB_DEBUG DESTINATIONS_LIST_ADAPTER"
+    }
+
     inner class DestinationViewHolder(
         private val binding: ViewBinding, private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -49,7 +53,7 @@ class DestinationsListAdapter(
             }
         }
 
-        fun bindPopularDestinations(destination: Destination) {
+        fun bindPopularDestination(destination: Destination) {
             binding as ItemPopularDestinationsHomeBinding
             if (destination.imageRef != null) {
                 binding.ivBackgroundHome.setImageResource(destination.imageRef)
@@ -83,7 +87,7 @@ class DestinationsListAdapter(
     override fun onBindViewHolder(holder: DestinationViewHolder, position: Int) {
         val destination = getItem(position)
         if (onlyPopular) {
-            holder.bindPopularDestinations(destination)
+            holder.bindPopularDestination(destination)
         } else {
             holder.bindDestination(destination)
         }

@@ -2,16 +2,12 @@ package com.marina.ruiz.globetrotting.ui.main
 
 import android.app.Activity
 import android.util.Log
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.User

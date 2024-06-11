@@ -12,6 +12,7 @@ import com.marina.ruiz.globetrotting.domain.BookNowUseCase
 import com.marina.ruiz.globetrotting.domain.ToggleFavoriteUseCase
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class DestinationsViewModel @Inject constructor(
     }
 
     lateinit var user: User
+    private var collectJob: Job? = null
     private var _favorites: MutableList<Favorite> = mutableListOf()
     var onlyFavorites: Boolean = false
 
@@ -45,7 +47,9 @@ class DestinationsViewModel @Inject constructor(
     }
 
     private fun collectDestinationsWithFavorites(adapter: DestinationsListAdapter) {
-        viewModelScope.launch {
+        stopCollecting(collectJob)
+
+        collectJob = viewModelScope.launch {
             val favoritesResponse = repository.favorites
             val destinationsResponse: Flow<List<Destination>> = if (onlyFavorites) {
                 repository.favDestinations
@@ -60,6 +64,10 @@ class DestinationsViewModel @Inject constructor(
                 adapter.submitList(destinations)
             }
         }
+    }
+
+    private fun stopCollecting(job: Job?) {
+        job?.cancel()
     }
 
     fun makeBooking(booking: BookingPayload) {

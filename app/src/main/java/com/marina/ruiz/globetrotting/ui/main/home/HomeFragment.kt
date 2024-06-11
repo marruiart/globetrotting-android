@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.R as materialRes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.core.changeStatusBarContrastStyle
@@ -28,6 +27,7 @@ import com.marina.ruiz.globetrotting.ui.main.destinations.DestinationsViewModel
 import com.marina.ruiz.globetrotting.ui.main.destinations.adapter.DestinationsListAdapter
 import com.marina.ruiz.globetrotting.ui.main.destinations.model.BookingForm
 import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.R as materialRes
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), BookingCreationFormDialogListener,
@@ -120,8 +120,12 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
     }
 
     private fun initAdapter() {
-        adapter =
-            DestinationsListAdapter(::onShowDetail, ::onBookNow, ::onFavoriteDestination, true)
+        adapter = DestinationsListAdapter(
+            ::onShowDetail,
+            ::onBookNow,
+            ::onFavoriteDestination,
+            onlyPopular = true
+        )
         val rv = binding.rvPopularDestinations
         rv.adapter = adapter
     }

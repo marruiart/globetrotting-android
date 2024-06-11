@@ -22,7 +22,9 @@ import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.data.repository.model.Favorite
 import com.marina.ruiz.globetrotting.data.repository.model.User
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +32,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
@@ -44,6 +47,9 @@ class GlobetrottingRepository @Inject constructor(
     companion object {
         private const val TAG = "GLOB_DEBUG GLOBETROTTING_REPOSITORY"
     }
+
+    private var dataCollectJob: Job? = null
+    private var userAndDestinationsCollectJob: Job? = null
 
     fun updateDestinations(searchQuery: String) {
         localRepository.updateDestinations(searchQuery)
@@ -100,26 +106,30 @@ class GlobetrottingRepository @Inject constructor(
     }
 
     suspend fun collectUserData(): Unit = withContext(Dispatchers.IO) {
+        stopCollecting(userAndDestinationsCollectJob)
         val userResponse = networkRepository.userResponse
         val destinationsResponse = networkRepository.destinationsResponse
 
-        combine(
-            userResponse, destinationsResponse
-        ) { userData, destinations ->
-            Log.w(TAG, "Collected user network repo: $userData")
-            saveUserAndDestinations(userData, destinations)
-        }.filterNotNull().filter { (userData, destinations) ->
-            !userData.favorites.isNullOrEmpty() && destinations.isNotEmpty()
-        }.collect { (userData, _) ->
-            Log.w(TAG, "Collected favorites network repo: ${userData.favorites}")
-            deleteFavorites()
-            createFavorites(userData.asFavoritesEntity())
+        userAndDestinationsCollectJob = CoroutineScope(Dispatchers.IO).launch {
+            combine(userResponse, destinationsResponse) { userData, destinations ->
+                Log.w(TAG, "Collected user network repo: $userData")
+                saveUserAndDestinations(userData, destinations)
+            }.filterNotNull().filter { (userData, destinations) ->
+                !userData.favorites.isNullOrEmpty() && destinations.isNotEmpty()
+            }.collect { (userData, _) ->
+                Log.w(TAG, "Collected favorites network repo: ${userData.favorites}")
+                deleteFavorites()
+                createFavorites(userData.asFavoritesEntity())
+            }
         }
     }
 
+    private fun stopCollecting(job: Job?) {
+        job?.cancel()
+    }
+
     private suspend fun saveUserAndDestinations(
-        userData: UserDataResponse?,
-        destinations: List<DestinationResponse>
+        userData: UserDataResponse?, destinations: List<DestinationResponse>
     ): Pair<UserDataResponse, List<DestinationResponse>>? {
         if (userData == null) {
             return null
@@ -235,8 +245,7 @@ class GlobetrottingRepository @Inject constructor(
     suspend fun deleteFavorite(destinationId: String) =
         localRepository.deleteFavorite(destinationId)
 
-    private suspend fun deleteFavorites() =
-        localRepository.deleteFavorites()
+    private suspend fun deleteFavorites() = localRepository.deleteFavorites()
 
     suspend fun eraseDatabase() {
         localRepository.deleteBookings()

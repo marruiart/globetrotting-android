@@ -2,6 +2,7 @@ package com.marina.ruiz.globetrotting.ui.main.bookings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
 import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
 import com.marina.ruiz.globetrotting.ui.main.bookings.adapter.BookingsListAdapter
+import com.marina.ruiz.globetrotting.ui.main.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -23,12 +26,14 @@ import java.util.Locale
 class BookingsFragment : Fragment() {
     private lateinit var binding: FragmentBookingsBinding
     private lateinit var adapter: BookingsListAdapter
+    private var bottomNav: BottomNavigationView? = null
     private val bookingsVM: BookingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentBookingsBinding.inflate(inflater, container, false)
+        bottomNav = activity?.findViewById(R.id.bnv_navigation)
         return binding.root
     }
 
@@ -61,18 +66,12 @@ class BookingsFragment : Fragment() {
         binding.noBookingText.visibility = View.VISIBLE
         binding.btnBookingsNoBooking.visibility = View.VISIBLE
         binding.btnBookingsNoBooking.setOnClickListener {
-            navigateToBookingForm(view, Destination())
+            navigateToDestinations()
         }
     }
 
-    private fun navigateToBookingForm(
-        view: View, destination: Destination, booking: Booking? = null
-    ) {/*        val action =
-                    BookingsFragmentDirections.actionBookingsFragmentToBookingCreationFormFragment(
-                        destination,
-                        booking
-                    )
-                view.findNavController().navigate(action)*/
+    private fun navigateToDestinations() {
+        bottomNav?.selectedItemId = R.id.nav_destinations
     }
 
     private fun displayBookingsList() {

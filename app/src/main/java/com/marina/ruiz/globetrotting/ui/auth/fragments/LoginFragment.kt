@@ -1,17 +1,26 @@
 package com.marina.ruiz.globetrotting.ui.auth.fragments
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.marina.ruiz.globetrotting.R
+import com.marina.ruiz.globetrotting.core.extension.comparePassword
 import com.marina.ruiz.globetrotting.core.extension.dismissKeyboard
+import com.marina.ruiz.globetrotting.core.extension.isValidEmail
+import com.marina.ruiz.globetrotting.core.extension.isValidPassword
+import com.marina.ruiz.globetrotting.core.extension.validateEmailAndPassword
 import com.marina.ruiz.globetrotting.databinding.FragmentLoginBinding
 import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +28,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var etEmail: TextInputEditText
+    private lateinit var etPassword: TextInputEditText
+    private lateinit var btnLoginAccept: Button
+    private var boxStrokeColor = Color.BLACK
     private val authVM: AuthViewModel by activityViewModels()
 
     companion object {
@@ -38,12 +51,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun initUI() {
+        boxStrokeColor = binding.tilFormEmail.boxStrokeColor
         initListeners()
         initObservers()
     }
 
     private fun initListeners() {
         with(binding) {
+            etEmail = etLoginEmail
+            etPassword = etLoginPassword
+            btnLoginAccept = btnLogin
             btnLogin.setOnClickListener {
                 it.dismissKeyboard()
                 val email = binding.etLoginEmail.text.toString()
@@ -53,6 +70,8 @@ class LoginFragment : Fragment() {
             tvCreateAccount.setOnClickListener { navigateToRegisterForm() }
             tvForgotPassword.setOnClickListener { navigateToForgotPassword() }
         }
+        validateEmail()
+        validatePassword()
     }
 
     private fun initObservers() {
@@ -65,6 +84,39 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Validates the email input field and updates the UI accordingly.
+     */
+    private fun validateEmail() {
+        etEmail.doOnTextChanged { text, _, _, _ ->
+            val valid = text.toString().isValidEmail()
+            Log.d(TAG, "EMAIL: $valid")
+            btnLoginAccept.isEnabled = valid
+            if (!text.isNullOrEmpty() && !valid) {
+                binding.tilFormEmail.boxStrokeColor = Color.RED
+            } else {
+                binding.tilFormEmail.boxStrokeColor = boxStrokeColor
+            }
+        }
+    }
+
+    /**
+     * Validates the password input fields and updates the UI accordingly.
+     */
+    private fun validatePassword() {
+        etPassword.doOnTextChanged { text, _, _, _ ->
+            val valid = text.toString().isValidPassword()
+            Log.d(TAG, "PASSWORD: $valid")
+            btnLoginAccept.isEnabled = valid && etEmail.text.toString().isValidEmail()
+            if (!text.isNullOrEmpty() && !valid) {
+                binding.tilFormPassword.boxStrokeColor = Color.RED
+            } else {
+                binding.tilFormPassword.boxStrokeColor = boxStrokeColor
+            }
+        }
+    }
+
 
     /**
      * Displays an error dialog with the specified message.

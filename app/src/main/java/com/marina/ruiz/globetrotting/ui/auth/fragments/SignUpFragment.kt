@@ -88,6 +88,35 @@ class SignUpFragment : Fragment(), SignUpListeners {
     }
 
     /**
+     * Validates the password input fields and updates the UI accordingly.
+     */
+    private fun validatePassword() {
+        etPassword.doOnTextChanged { text, _, _, _ ->
+            val samePasswords = etPassword.text.toString()
+                .comparePassword(etPasswordRepeat.text.toString()) || etPasswordRepeat.text.isNullOrEmpty()
+            val valid = text.toString().isValidPassword() && samePasswords
+            Log.d(TAG, "PASSWORD: $valid")
+            btnSignupRegister.isEnabled = valid && etEmail.text.toString().isValidEmail()
+            if (!text.isNullOrEmpty() && !valid) {
+                binding.tilCreateFormPassword.boxStrokeColor = Color.RED
+            } else {
+                binding.tilCreateFormPassword.boxStrokeColor = boxStrokeColor
+            }
+        }
+        etPasswordRepeat.doOnTextChanged { text, _, _, _ ->
+            val valid = text.toString().isValidPassword() && etPassword.text.toString()
+                .comparePassword(etPasswordRepeat.text.toString())
+            Log.d(TAG, "PASSWORD: $valid")
+            btnSignupRegister.isEnabled = valid && etEmail.text.toString().isValidEmail()
+            if (!text.isNullOrEmpty() && !valid) {
+                binding.tilCreateFormRepeatPassword.boxStrokeColor = Color.RED
+            } else {
+                binding.tilCreateFormRepeatPassword.boxStrokeColor = boxStrokeColor
+            }
+        }
+    }
+
+    /**
      * Toggles the activation state of the "Sign Up" button and sets its click listener.
      */
     private fun toggleActivationSignUpButton() {
@@ -121,40 +150,16 @@ class SignUpFragment : Fragment(), SignUpListeners {
             }.show()
     }
 
-    /**
-     * Validates the password input fields and updates the UI accordingly.
-     */
-    private fun validatePassword() {
-        etPassword.doOnTextChanged { text, _, _, _ ->
-            val valid = text.toString().isValidPassword() && etPassword.text.toString()
-                .comparePassword(etPasswordRepeat.text.toString())
-            Log.d(TAG, "PASSWORD: $valid")
-            btnSignupRegister.isEnabled = valid && etEmail.text.toString().isValidEmail()
-            if (!text.isNullOrEmpty() && !valid) {
-                binding.tilCreateFormPassword.boxStrokeColor = Color.RED
-            } else {
-                binding.tilCreateFormPassword.boxStrokeColor = boxStrokeColor
-            }
-        }
-        etPasswordRepeat.doOnTextChanged { text, _, _, _ ->
-            val valid = text.toString().isValidPassword() && etPassword.text.toString()
-                .comparePassword(etPasswordRepeat.text.toString())
-            Log.d(TAG, "PASSWORD: $valid")
-            btnSignupRegister.isEnabled = valid && etEmail.text.toString().isValidEmail()
-            if (!text.isNullOrEmpty() && !valid) {
-                binding.tilCreateFormRepeatPassword.boxStrokeColor = Color.RED
-            } else {
-                binding.tilCreateFormRepeatPassword.boxStrokeColor = boxStrokeColor
-            }
-        }
-    }
-
     private fun navigateBack() {
         requireActivity().supportFragmentManager.popBackStack()
     }
 
     override fun onSignUpSuccess(username: String) {
-        Toast.makeText(requireContext(), requireContext().getString(R.string.welcome, username), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            requireContext().getString(R.string.welcome, username),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onSignUpFailure(exception: Exception) {

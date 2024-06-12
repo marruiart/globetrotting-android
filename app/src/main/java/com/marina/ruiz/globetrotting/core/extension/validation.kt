@@ -16,7 +16,10 @@ fun String.isValidEmail() = Patterns.EMAIL_ADDRESS.matcher(this).matches() || th
  *
  * @return True if the password length is valid or empty, false otherwise.
  */
-fun String.isValidPassword(): Boolean = this.length >= MIN_PASSWORD_LENGTH || this.isEmpty()
+fun String.isValidPassword(): Boolean {
+    val passwordRegex = "^(?=.*[A-Z])(?=.*\\d).+$"
+    return (this.length >= MIN_PASSWORD_LENGTH && this.matches(Regex(passwordRegex))) || this.isEmpty()
+}
 
 /**
  * Validates both email and password.

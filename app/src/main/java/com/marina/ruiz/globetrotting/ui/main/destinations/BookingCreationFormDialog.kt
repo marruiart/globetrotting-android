@@ -26,7 +26,16 @@ import java.util.Date
 import java.util.Locale
 
 interface BookingCreationFormDialogListener {
+    /**
+     * Handles the booking creation event.
+     *
+     * @param booking The booking form data.
+     */
     fun onMakeBooking(booking: BookingForm)
+
+    /**
+     * Handles the booking cancellation event.
+     */
     fun onCancelBooking()
 }
 
@@ -65,6 +74,9 @@ class BookingCreationFormDialogFragment(
         binding.tvBookingFormDestinationName.text = form.destination.name
     }
 
+    /**
+     * Sets window insets for proper padding.
+     */
     private fun setWindowInsets() {
         val view = requireActivity().findViewById<MaterialToolbar>(R.id.mt_booking_form_toolbar)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
@@ -79,6 +91,9 @@ class BookingCreationFormDialogFragment(
         }
     }
 
+    /**
+     * Overrides the default back button behavior to handle cancellation.
+     */
     private fun overrideOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
@@ -90,6 +105,9 @@ class BookingCreationFormDialogFragment(
             })
     }
 
+    /**
+     * Initializes listeners for various UI components.
+     */
     private fun initListeners() {
         binding.btnBookingFormMakeBooking.setOnClickListener {
             callback.onMakeBooking(form)
@@ -142,6 +160,9 @@ class BookingCreationFormDialogFragment(
         }
     }
 
+    /**
+     * Updates the total amount based on the number of travelers and nights.
+     */
     private fun updateAmount() {
         var nights = form.nights
         if (nights != 0) {
@@ -156,7 +177,7 @@ class BookingCreationFormDialogFragment(
     }
 
     /**
-     * Display a range datePicker on screen.
+     * Displays a date range picker dialog for selecting departure and arrival dates.
      */
     private fun showDatePickerDialog() {
         val dateRangePicker =
@@ -188,6 +209,13 @@ class BookingCreationFormDialogFragment(
         }
     }
 
+    /**
+     * Formats the departure and arrival dates into strings.
+     *
+     * @param departureMillis The departure date in milliseconds
+     * @param arrivalMillis The arrival date in milliseconds
+     * @return A map containing the formatted departure and arrival dates
+     */
     private fun formatDate(departureMillis: Long, arrivalMillis: Long): HashMap<String, String> {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val departureDate = dateFormat.format(Date(departureMillis))
@@ -197,7 +225,12 @@ class BookingCreationFormDialogFragment(
         )
     }
 
-    fun Long.toTimestamp(): Timestamp {
+    /**
+     * Converts a timestamp in milliseconds to a Firebase Timestamp.
+     *
+     * @return The Firebase Timestamp
+     */
+    private fun Long.toTimestamp(): Timestamp {
         val milliseconds = this
         val seconds = milliseconds / 1000
         val nanoseconds = (milliseconds % 1000) * 1000000

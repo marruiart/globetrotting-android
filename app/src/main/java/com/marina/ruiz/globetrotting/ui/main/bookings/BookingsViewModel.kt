@@ -40,8 +40,4 @@ class BookingsViewModel @Inject constructor(
             }
         }
     }
-
-    fun deleteBooking(booking: Booking) {
-
-    }
 }

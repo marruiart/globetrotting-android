@@ -66,6 +66,11 @@ class LoginFragment : Fragment() {
         }
     }
 
+    /**
+     * Displays an error dialog with the specified message.
+     *
+     * @param message The message to be shown in the error dialog.
+     */
     private fun showErrorDialog(message: String) {
         MaterialAlertDialogBuilder(requireContext()).setTitle(requireContext().getString(R.string.login_error_response_error_title))
             .setMessage(message)

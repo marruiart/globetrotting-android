@@ -13,6 +13,14 @@ import com.marina.ruiz.globetrotting.databinding.ItemDestinationBinding
 import com.marina.ruiz.globetrotting.databinding.ItemPopularDestinationsHomeBinding
 import java.text.NumberFormat
 
+/**
+ * Adapter class for managing and binding destination items to a RecyclerView.
+ *
+ * @param onShowDetail Callback function to handle showing destination details.
+ * @param onBookNow Callback function to handle booking a destination.
+ * @param onFavoriteDestination Callback function to handle favoriting a destination.
+ * @param onlyPopular Flag indicating whether to show only popular destinations.
+ */
 class DestinationsListAdapter(
     private val onShowDetail: (destination: Destination) -> Unit,
     private val onBookNow: (destination: Destination) -> Unit,
@@ -24,10 +32,21 @@ class DestinationsListAdapter(
         const val TAG = "GLOB_DEBUG DESTINATIONS_LIST_ADAPTER"
     }
 
+    /**
+     * ViewHolder class for managing individual destination views.
+     *
+     * @param binding The ViewBinding for the destination item.
+     * @param context The context of the parent view.
+     */
     inner class DestinationViewHolder(
         private val binding: ViewBinding, private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * Binds a destination to the standard destination view.
+         *
+         * @param destination The destination to bind to the view.
+         */
         fun bindDestination(destination: Destination) {
             binding as ItemDestinationBinding
             if (destination.imageRef != null) {
@@ -53,6 +72,11 @@ class DestinationsListAdapter(
             }
         }
 
+        /**
+         * Binds a destination to the popular destination view.
+         *
+         * @param destination The destination to bind to the view.
+         */
         fun bindPopularDestination(destination: Destination) {
             binding as ItemPopularDestinationsHomeBinding
             if (destination.imageRef != null) {

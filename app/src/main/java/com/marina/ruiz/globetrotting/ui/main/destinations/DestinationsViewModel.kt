@@ -34,6 +34,12 @@ class DestinationsViewModel @Inject constructor(
     private var _favorites: MutableList<Favorite> = mutableListOf()
     var onlyFavorites: Boolean = false
 
+    /**
+     * Binds the DestinationsListAdapter to the ViewModel and updates the destinations list based on the search query.
+     *
+     * @param adapter The DestinationsListAdapter to bind
+     * @param searchQuery The search query to filter the destinations list (default is an empty string)
+     */
     fun bindView(adapter: DestinationsListAdapter, searchQuery: String = "") {
         repository.updateDestinations(searchQuery)
         repository.collectLocalUser { localUser ->
@@ -44,6 +50,11 @@ class DestinationsViewModel @Inject constructor(
         collectDestinationsWithFavorites(adapter)
     }
 
+    /**
+     * Collects the destinations and favorite destinations and submits the list to the adapter.
+     *
+     * @param adapter The DestinationsListAdapter to submit the list to
+     */
     private fun collectDestinationsWithFavorites(adapter: DestinationsListAdapter) {
         stopCollecting(collectJob)
 
@@ -64,16 +75,32 @@ class DestinationsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Stops collecting data if there is an ongoing job.
+     *
+     * @param job The job to be stopped
+     */
     private fun stopCollecting(job: Job?) {
         job?.cancel()
     }
 
+    /**
+     * Makes a booking using the provided BookingPayload.
+     *
+     * @param booking The BookingPayload containing the booking details
+     */
     fun makeBooking(booking: BookingPayload) {
         viewModelScope.launch {
             bookNowUseCase(booking)
         }
     }
 
+    /**
+     * Handles adding or removing a favorite destination.
+     *
+     * @param destinationId The ID of the destination to be added or removed from favorites
+     * @param isFavorite Whether the destination is currently marked as a favorite
+     */
     fun handleFavorite(destinationId: String, isFavorite: Boolean) {
         viewModelScope.launch {
             val favorite = Favorite(destinationId, destinationId)
@@ -91,6 +118,12 @@ class DestinationsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetches the description for a given destination and updates the repository with the new information.
+     *
+     * @param destination The destination to fetch the description for
+     * @param onResponse The callback to execute with the fetched description
+     */
     fun fetchDescription(destination: Destination, onResponse: (description: String) -> Unit) {
         viewModelScope.launch {
             val description = repository.fetchDescription(destination.name, destination.country)

@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marina.ruiz.globetrotting.core.extension.isValidEmail
+import com.marina.ruiz.globetrotting.core.extension.isValidPassword
 import com.marina.ruiz.globetrotting.data.network.firebase.model.result.LoginResult
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.User
@@ -52,6 +54,9 @@ class AuthViewModel @Inject constructor(
     private val _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> = _user
 
+    /**
+     * Initializes the ViewModel, setting up initial states and collecting user data.
+     */
     init {
         _allowAccess.value = repository.checkAccess()
         Log.d(TAG, "First access: ${_allowAccess.value}")
@@ -81,12 +86,24 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Updates the view state based on changes in the email and password fields.
+     *
+     * @param email The email entered by the user.
+     * @param password The password entered by the user.
+     */
     private fun onFieldsChanged(email: String, password: String) {
         _viewState.value = LoginViewState(
-            isValidEmail = isValidEmail(email), isValidPassword = isValidPassword(password)
+            isValidEmail = email.isValidEmail(), isValidPassword = password.isValidPassword()
         )
     }
 
+    /**
+     * Handles the login operation.
+     *
+     * @param email The email entered by the user.
+     * @param password The password entered by the user.
+     */
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
@@ -111,21 +128,21 @@ class AuthViewModel @Inject constructor(
         _allowAccess.value = false
     }
 
-    private fun isValidEmail(email: String) =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()
-
-    private fun isValidPassword(password: String): Boolean =
-        password.length >= MIN_PASSWORD_LENGTH || password.isEmpty()
-
-
     // PUBLIC FUNCTIONS
 
     fun forgotPassword(email: String,callback: ForgotPasswordListeners) {
         forgotPasswordUseCase(email, callback)
     }
 
+
+    /**
+     * Handles the login operation.
+     *
+     * @param email The email entered by the user.
+     * @param password The password entered by the user.
+     */
     fun onLogin(email: String, password: String) {
-        if (isValidEmail(email) && isValidPassword(password)) {
+        if (email.isValidEmail() && password.isValidPassword()) {
             Log.d(TAG, "Init login...")
             loginUser(email, password)
         } else {
@@ -133,6 +150,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+
+    /**
+     * Handles the logout operation.
+     */
     fun onLogout() {
         logoutUseCase()
         viewModelScope.launch {
@@ -142,6 +163,14 @@ class AuthViewModel @Inject constructor(
         resetData()
     }
 
+    /**
+     * Handles the account creation process.
+     *
+     * @param username The username entered by the user.
+     * @param email The email entered by the user.
+     * @param password The password entered by the user.
+     * @param callback The callback to handle the sign up response.
+     */
     fun onCreateAccount(
         username: String,
         email: String,

@@ -25,7 +25,9 @@ import com.marina.ruiz.globetrotting.data.repository.PermissionsService
 import com.marina.ruiz.globetrotting.databinding.FragmentEditProfileBinding
 import com.marina.ruiz.globetrotting.ui.main.profile.model.ProfileForm
 
-
+/**
+ * Interface for handling events in the edit profile dialog.
+ */
 interface EditProfileDialogFragmentListener {
     /**
      * Called when the accept button is clicked in the edit profile dialog.
@@ -40,6 +42,12 @@ interface EditProfileDialogFragmentListener {
     fun onCancel()
 }
 
+/**
+ * Dialog fragment for editing the user profile.
+ *
+ * @param callback The listener for dialog events.
+ * @param profile The profile form to be edited.
+ */
 class EditProfileDialogFragment(
     private val callback: EditProfileDialogFragmentListener, private val profile: ProfileForm
 ) : FullScreenDialogFragment(R.layout.fragment_edit_profile), PhotoSourcePickerListener {
@@ -75,6 +83,14 @@ class EditProfileDialogFragment(
         }
     }
 
+    /**
+     * Inflates the layout for this fragment.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -82,6 +98,12 @@ class EditProfileDialogFragment(
         return binding.root
     }
 
+    /**
+     * Called immediately after {@link #onCreateView} has returned.
+     *
+     * @param view The View returned by {@link #onCreateView}.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setWindowInsets(view)
@@ -89,11 +111,17 @@ class EditProfileDialogFragment(
         initListeners()
     }
 
+    /**
+     * Binds the avatar image to the view.
+     */
     private fun bindAvatarImage() {
         Glide.with(this).load(profile.avatar).centerCrop().placeholder(R.drawable.default_avatar)
             .into(binding.ivAvatarEditProfile)
     }
 
+    /**
+     * Binds the profile data to the view.
+     */
     private fun bindView() {
         binding.tvUsername.text = profile.username
         binding.tvEmail.text = profile.email
@@ -103,6 +131,11 @@ class EditProfileDialogFragment(
         bindAvatarImage()
     }
 
+    /**
+     * Sets the window insets for the view.
+     *
+     * @param view The view to set the insets for.
+     */
     private fun setWindowInsets(view: View) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -143,6 +176,10 @@ class EditProfileDialogFragment(
         }
     }
 
+
+    /**
+     * Opens the camera to take a picture.
+     */
     private fun openCamera() {
         val values = ContentValues()
         imageUri = requireActivity().contentResolver.insert(
@@ -151,10 +188,16 @@ class EditProfileDialogFragment(
         takePicture.launch(imageUri)
     }
 
+    /**
+     * Opens the gallery to pick an image.
+     */
     private fun openGallery() {
         pickImage.launch("image/*")
     }
 
+    /**
+     * Removes the current picture and sets the default avatar.
+     */
     private fun removePicture() {
         binding.ivAvatarEditProfile.setImageDrawable(
             ResourcesCompat.getDrawable(resources, R.drawable.default_avatar, null)
@@ -162,6 +205,9 @@ class EditProfileDialogFragment(
         removeImage = true
     }
 
+    /**
+     * Shows a dialog to confirm the removal of the current picture.
+     */
     private fun removePictureDialog() {
         MaterialAlertDialogBuilder(requireContext()).setTitle("Eliminar foto")
             .setMessage("¿Desea eliminar la foto de perfil?").setNeutralButton("No") { dialog, _ ->

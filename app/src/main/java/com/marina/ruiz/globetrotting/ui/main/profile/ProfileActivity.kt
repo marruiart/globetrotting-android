@@ -73,6 +73,9 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
             .into(binding.ivAvatarProfile)
     }
 
+    /**
+     * Binds the user's avatar image and other profile information to the UI elements.
+     */
     private fun bindView() {
         _user?.let {
             with(binding) {

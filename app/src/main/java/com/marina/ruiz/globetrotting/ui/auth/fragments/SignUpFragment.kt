@@ -71,6 +71,9 @@ class SignUpFragment : Fragment(), SignUpListeners {
         toggleActivationSignUpButton()
     }
 
+    /**
+     * Validates the email input field and updates the UI accordingly.
+     */
     private fun validateEmail() {
         etEmail.doOnTextChanged { text, _, _, _ ->
             val valid = text.toString().isValidEmail()
@@ -84,6 +87,9 @@ class SignUpFragment : Fragment(), SignUpListeners {
         }
     }
 
+    /**
+     * Toggles the activation state of the "Sign Up" button and sets its click listener.
+     */
     private fun toggleActivationSignUpButton() {
         btnSignupRegister.setOnClickListener {
             val username = etUsername.text.toString()
@@ -102,6 +108,11 @@ class SignUpFragment : Fragment(), SignUpListeners {
         }
     }
 
+    /**
+     * Displays an error dialog with the specified message.
+     *
+     * @param message The message to display in the dialog
+     */
     private fun showErrorDialog(message: String) {
         MaterialAlertDialogBuilder(requireContext()).setTitle(requireContext().getString(R.string.login_error_response_error_title))
             .setMessage(message)
@@ -110,6 +121,9 @@ class SignUpFragment : Fragment(), SignUpListeners {
             }.show()
     }
 
+    /**
+     * Validates the password input fields and updates the UI accordingly.
+     */
     private fun validatePassword() {
         etPassword.doOnTextChanged { text, _, _, _ ->
             val valid = text.toString().isValidPassword() && etPassword.text.toString()

@@ -15,7 +15,13 @@ import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.DialogDestinationDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Interface for handling destination detail dialog events.
+ */
 interface DestinationDetailDialogListener {
+    /**
+     * Handles the event of closing the details dialog.
+     */
     fun onCloseDetails()
 }
 
@@ -48,11 +54,19 @@ class DestinationDetailDialog(
         setWindowInsets()
     }
 
+    /**
+     * Updates the description of the destination and rebinds the view.
+     *
+     * @param description The description of the destination.
+     */
     private fun onResponse(description: String) {
         destination.description = description
         bindView()
     }
 
+    /**
+     * Sets the window insets for the toolbar.
+     */
     private fun setWindowInsets() {
         val view =
             requireActivity().findViewById<MaterialToolbar>(R.id.mt_destination_detail_toolbar)
@@ -68,8 +82,12 @@ class DestinationDetailDialog(
         }
     }
 
+    /**
+     * Overrides the back press action to handle dialog closing.
+     */
     private fun overrideOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     callback.onCloseDetails()
@@ -79,6 +97,9 @@ class DestinationDetailDialog(
             })
     }
 
+    /**
+     * Binds the destination details to the view.
+     */
     private fun bindView() {
         binding.mtDestinationDetailToolbar.setNavigationOnClickListener {
             navigateBack()

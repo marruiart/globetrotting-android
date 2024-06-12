@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
         private const val TAG = "GLOB_DEBUG MAIN_VM"
     }
 
-    // LIVEDATA VARIABLESBoolean
+    // LIVEDATA VARIABLES
     private val _logout = MutableLiveData(false)
     val logout: LiveData<Boolean> = _logout
 
@@ -59,16 +59,27 @@ class MainViewModel @Inject constructor(
         Log.d(TAG, "MainViewModel")
     }
 
+    /**
+     * Sets the _logout variable to true to activate the logout.
+     */
     private fun logout() {
         _logout.value = true
     }
 
+    /**
+     * Erases the local database.
+     */
     fun eraseDatabase() {
         viewModelScope.launch {
             repository.eraseDatabase()
         }
     }
 
+    /**
+     * Sets the top margin for the action bar size.
+     * @param activity The activity instance.
+     * @param remove The amount to remove.
+     */
     fun setActionBarSizeMargin(activity: Activity, remove: Int = -1) {
         val fragmentContainerView =
             activity.findViewById<FragmentContainerView>(R.id.fragment_main_area)

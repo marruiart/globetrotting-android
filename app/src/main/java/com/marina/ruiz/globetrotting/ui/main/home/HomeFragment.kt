@@ -62,6 +62,12 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         homeVM.bindView(adapter)
     }
 
+    /**
+     * Sets the status bar and overflow button color.
+     *
+     * @param color The color to set for the status bar and overflow button.
+     * @param lightIcons Whether to use light icons on the status bar.
+     */
     private fun setStatusBarAndOverflowButtonColor(
         color: Int? = null, lightIcons: Boolean = false
     ) {
@@ -89,6 +95,9 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         seeAllDestinationsListener()
     }
 
+    /**
+     * Sets up the listener for the favorites button.
+     */
     private fun favoritesListener() {
         binding.btnFavoritesHome.setOnClickListener {
             navigateToDestinations()
@@ -101,24 +110,36 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         bottomNav?.selectedItemId = R.id.nav_destinations
     }
 
+    /**
+     * Sets up the listener for the my account button.
+     */
     private fun myAccountListener() {
         binding.btnMyAccountHome.setOnClickListener {
             navigate(HomeFragmentDirections.actionHomeFragmentToProfileActivity())
         }
     }
 
+    /**
+     * Sets up the listener for the my bookings button.
+     */
     private fun myBookingsListener() {
         binding.btnMyBookingsHome.setOnClickListener {
             bottomNav?.selectedItemId = R.id.nav_bookings
         }
     }
 
+    /**
+     * Sets up the listener for the see all destinations button.
+     */
     private fun seeAllDestinationsListener() {
         binding.btnSeeAllDestinationsHome.setOnClickListener {
             navigate(HomeFragmentDirections.actionHomeFragmentToSeeAllDestinationsFragment())
         }
     }
 
+    /**
+     * Initializes the adapter for the RecyclerView.
+     */
     private fun initAdapter() {
         adapter = DestinationsListAdapter(
             ::onShowDetail,
@@ -130,19 +151,40 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         rv.adapter = adapter
     }
 
+    /**
+     * Shows the detail dialog for the selected destination.
+     *
+     * @param destination The selected destination.
+     */
     private fun onShowDetail(destination: Destination) {
         setStatusBarAndOverflowButtonColor()
         showDestinationDetailDialog(destination)
     }
 
+    /**
+     * Shows the booking dialog for the selected destination.
+     *
+     * @param destination The selected destination.
+     */
     private fun onBookNow(destination: Destination) {
         showBookNowDialog(destination)
     }
 
+    /**
+     * Handles the favorite action for a destination.
+     *
+     * @param destinationId The ID of the destination.
+     * @param isFavorite Indicates if the destination is marked as favorite.
+     */
     private fun onFavoriteDestination(destinationId: String, isFavorite: Boolean) {
         destinationsVM.handleFavorite(destinationId, isFavorite)
     }
 
+    /**
+     * Shows the booking creation dialog for the selected destination.
+     *
+     * @param destination The selected destination.
+     */
     private fun showBookNowDialog(destination: Destination) {
         setStatusBarAndOverflowButtonColor()
         bookingDialog = BookingCreationFormDialogFragment(this, destination)
@@ -151,6 +193,11 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
         )
     }
 
+    /**
+     * Shows the destination detail dialog for the selected destination.
+     *
+     * @param destination The selected destination.
+     */
     private fun showDestinationDetailDialog(destination: Destination) {
         setStatusBarAndOverflowButtonColor()
         detailDialog = DestinationDetailDialog(this, destination)
@@ -162,6 +209,7 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
     private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
     }
+
 
     override fun onMakeBooking(booking: BookingForm) {
         destinationsVM.makeBooking(booking.toBookingPayload(destinationsVM.user))

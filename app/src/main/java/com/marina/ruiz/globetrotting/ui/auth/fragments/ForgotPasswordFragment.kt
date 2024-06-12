@@ -16,14 +16,10 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.marina.ruiz.globetrotting.R
-import com.marina.ruiz.globetrotting.core.extension.comparePassword
 import com.marina.ruiz.globetrotting.core.extension.isValidEmail
-import com.marina.ruiz.globetrotting.core.extension.validateEmailAndPassword
 import com.marina.ruiz.globetrotting.databinding.FragmentForgotPasswordBinding
 import com.marina.ruiz.globetrotting.domain.ForgotPasswordListeners
-import com.marina.ruiz.globetrotting.domain.ForgotPasswordUseCase
 import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
-import javax.inject.Inject
 
 class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
     private lateinit var binding: FragmentForgotPasswordBinding
@@ -49,6 +45,7 @@ class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
         initUI()
     }
 
+
     private fun initUI() {
         boxStrokeColor = binding.tilForgotEmail.boxStrokeColor
         initListeners()
@@ -64,6 +61,9 @@ class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
         toggleActivationSignUpButton()
     }
 
+    /**
+     * Validates the email input field and updates the UI accordingly.
+     */
     private fun validateEmail() {
         etEmail.doOnTextChanged { text, _, _, _ ->
             val valid = text.toString().isValidEmail()
@@ -77,6 +77,9 @@ class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
         }
     }
 
+    /**
+     * Toggles the activation state of the "Remind Password" button and sets its click listener.
+     */
     private fun toggleActivationSignUpButton() {
         btnRemindPassword.setOnClickListener {
             val email = etEmail.text.toString()
@@ -89,6 +92,11 @@ class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
         }
     }
 
+    /**
+     * Displays an error dialog with the specified message.
+     *
+     * @param message The message to display in the dialog
+     */
     private fun showErrorDialog(message: String) {
         MaterialAlertDialogBuilder(requireContext()).setTitle(requireContext().getString(R.string.login_error_response_error_title))
             .setMessage(message)
@@ -96,6 +104,7 @@ class ForgotPasswordFragment : Fragment(), ForgotPasswordListeners {
                 if (which == DialogInterface.BUTTON_NEUTRAL) dialog.dismiss()
             }.show()
     }
+
 
     private fun navigateBack() {
         requireActivity().supportFragmentManager.popBackStack()

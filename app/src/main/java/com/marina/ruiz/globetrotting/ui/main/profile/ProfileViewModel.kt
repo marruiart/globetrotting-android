@@ -42,12 +42,26 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Uploads the user's avatar.
+     *
+     * @param avatar The URI of the avatar image.
+     * @param profile The profile payload containing user information.
+     * @param clientName The client name associated with the user.
+     * @param callback The callback to handle upload events.
+     */
     fun uploadAvatar(
         avatar: Uri?, profile: ProfilePayload, clientName: String?, callback: StorageFileListeners
     ) {
         uploadAvatarUseCase(avatar, profile, clientName, callback)
     }
 
+    /**
+     * Edits the user's profile.
+     *
+     * @param profile The profile payload containing updated user information.
+     * @param clientName The client name associated with the user.
+     */
     fun editProfile(profile: ProfilePayload, clientName: String?) {
         viewModelScope.launch {
             editProfileUseCase(profile, clientName)

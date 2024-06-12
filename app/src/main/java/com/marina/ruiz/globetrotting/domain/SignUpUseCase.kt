@@ -7,7 +7,19 @@ import javax.inject.Inject
 
 
 interface SignUpListeners {
+
+    /**
+     * Callback method for when the sign up is successful.
+     *
+     * @param username The username of the newly created account
+     */
     fun onSignUpSuccess(username: String)
+
+    /**
+     * Callback method for when the sign up request fails.
+     *
+     * @param exception The exception that occurred during the request
+     */
     fun onSignUpFailure(exception: Exception)
 }
 
@@ -16,6 +28,15 @@ class SignUpUseCase @Inject constructor(
     private val authSvc: AuthService, private val userSvc: UserService
 ) {
 
+
+    /**
+     * Invokes the sign-up process.
+     *
+     * @param username The username for the new account
+     * @param email The email address for the new account
+     * @param password The password for the new account
+     * @param callback The callback to handle success or failure responses
+     */
     suspend operator fun invoke(
         username: String, email: String, password: String, callback: SignUpListeners
     ) {

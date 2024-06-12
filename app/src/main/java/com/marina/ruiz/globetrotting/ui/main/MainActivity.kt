@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
         initUI()
     }
 
+    /**
+     * Gets the height of the action bar.
+     */
     private fun getActionBarSize(): Int {
         val typedValue = TypedValue()
         val hasSize = theme.resolveAttribute(actionBarSize, typedValue, true)
@@ -56,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         else 0
     }
 
+    /**
+     * Sets system window insets for the app bar layout.
+     */
     private fun setWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.app_bar_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -64,6 +70,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes the navigation controller.
+     */
     private fun initNavController() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_main_area) as NavHostFragment
@@ -78,6 +87,9 @@ class MainActivity : AppCompatActivity() {
         initObservers()
     }
 
+    /**
+     * Initializes listeners for UI components.
+     */
     private fun initListeners() {
         binding.mtMainToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -98,6 +110,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes observers for ViewModel LiveData.
+     */
     private fun initObservers() {
         mainVM.logout.observe(this) { logout ->
             if (logout) {
@@ -106,6 +121,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Navigates to the login screen.
+     */
     private fun navigateToLogin() {
         Log.d(TAG, "Navigating to login...")
         val intent = AuthActivity.create(this)

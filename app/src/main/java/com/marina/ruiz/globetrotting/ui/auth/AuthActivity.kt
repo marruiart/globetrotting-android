@@ -25,8 +25,7 @@ class AuthActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "GLOB_DEBUG AUTH_ACTIVITY"
 
-        fun create(context: Context): Intent =
-            Intent(context, AuthActivity::class.java)
+        fun create(context: Context): Intent = Intent(context, AuthActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +39,17 @@ class AuthActivity : AppCompatActivity() {
         getNavHostFragment()
     }
 
+    /**
+     * Retrieves the NavHostFragment for navigation within the authentication area.
+     *
+     * @return The NavHostFragment used for navigation
+     */
     private fun getNavHostFragment() =
         supportFragmentManager.findFragmentById(R.id.fragment_auth_area) as NavHostFragment
 
+    /**
+     * Sets the window insets to handle system bars (status bar, navigation bar) correctly.
+     */
     private fun setWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_auth)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -51,6 +58,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes the observers for the ViewModel.
+     * Observes the allowAccess LiveData to navigate to the main activity upon successful login.
+     */
     private fun initObservers() {
         authVM.allowAccess.distinctUntilChanged().observe(this) { navigate ->
             if (navigate) {
@@ -60,6 +71,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Checks the login state to determine if the user is logging out.
+     * If logging out, it triggers the logout process in the ViewModel.
+     */
     private fun checkLoginState() {
         val logout = intent.getBooleanExtra("LOGOUT", false)
         Log.d(TAG, "Logout: ${logout}")
@@ -69,6 +84,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Navigates to the main activity upon successful login or registration.
+     */
     private fun navigateHome() {
         val intent = MainActivity.create(this)
         intent.putExtra("REGISTERING", true)

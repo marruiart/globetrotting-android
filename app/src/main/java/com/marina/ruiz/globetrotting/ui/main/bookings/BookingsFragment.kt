@@ -2,21 +2,16 @@ package com.marina.ruiz.globetrotting.ui.main.bookings
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.marina.ruiz.globetrotting.R
 import com.marina.ruiz.globetrotting.data.repository.model.Booking
-import com.marina.ruiz.globetrotting.data.repository.model.Destination
 import com.marina.ruiz.globetrotting.databinding.FragmentBookingsBinding
 import com.marina.ruiz.globetrotting.ui.main.bookings.adapter.BookingsListAdapter
-import com.marina.ruiz.globetrotting.ui.main.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,6 +39,12 @@ class BookingsFragment : Fragment() {
         bookingsVM.bindView(adapter)
     }
 
+
+    /**
+     * Initializes the observers for the ViewModel.
+     *
+     * @param view The view used to display the fragment's UI
+     */
     private fun initObservers(view: View) {
         bookingsVM.showNoBookingDialog.observe(viewLifecycleOwner) { show ->
             if (show) {
@@ -54,12 +55,20 @@ class BookingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Initializes the adapter for the RecyclerView.
+     */
     private fun initAdapter() {
         adapter = BookingsListAdapter(::onShareItem)
         val rv = binding.rvBookingsList
         rv.adapter = adapter
     }
 
+    /**
+     * Displays a message indicating that there are no bookings.
+     *
+     * @param view The view used to display the fragment's UI
+     */
     private fun displayNoBookingsMessage(view: View) {
         binding.bookingsRecycler.visibility = View.GONE
         binding.noBookingImg.visibility = View.VISIBLE
@@ -74,6 +83,7 @@ class BookingsFragment : Fragment() {
         bottomNav?.selectedItemId = R.id.nav_destinations
     }
 
+
     private fun displayBookingsList() {
         binding.bookingsRecycler.visibility = View.VISIBLE
         binding.noBookingImg.visibility = View.GONE
@@ -81,6 +91,12 @@ class BookingsFragment : Fragment() {
         binding.btnBookingsNoBooking.visibility = View.GONE
     }
 
+    /**
+     * Handles the sharing of a booking item.
+     *
+     * @param booking The booking item to be shared
+     * @param view The view used to display the booking item
+     */
     private fun onShareItem(booking: Booking, view: View) {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val departureDate = dateFormat.format(Date(booking.start))
@@ -98,7 +114,4 @@ class BookingsFragment : Fragment() {
         startActivity(shareIntent)
     }
 
-    private fun navigate(action: NavDirections) {
-        findNavController().navigate(action)
-    }
 }

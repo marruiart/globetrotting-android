@@ -14,16 +14,32 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Adapter class for managing and binding booking items to a RecyclerView.
+ *
+ * @param onShare Callback function to handle sharing a booking.
+ */
 class BookingsListAdapter(
     private val onShare: (booking: Booking, view: View) -> Unit
 ) :
     ListAdapter<Booking, BookingsListAdapter.BookingViewHolder>(BookingDiffCallBack()) {
 
+    /**
+     * ViewHolder class for managing individual booking views.
+     *
+     * @param binding The ViewBinding for the booking item.
+     * @param context The context of the parent view.
+     */
     inner class BookingViewHolder(
         private val binding: ItemBookingBinding,
         private val context: Context
     ) :
         RecyclerView.ViewHolder(binding.root) {
+        /**
+         * Binds a booking to the view.
+         *
+         * @param booking The booking to bind to the view.
+         */
         fun bindBooking(booking: Booking) {
             binding.destinationName.text = booking.destinationName
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

@@ -8,7 +8,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.marina.ruiz.globetrotting.databinding.BottomSheetProfilePictureActionBinding
 
 interface PhotoSourcePickerListener {
+    /**
+     * Handles the action of taking a photo from the camera.
+     */
     fun onCameraAction()
+
+    /**
+     * Handles the action of picking a photo from the gallery.
+     */
     fun onGalleryAction()
 }
 

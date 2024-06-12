@@ -3,6 +3,7 @@ package com.marina.ruiz.globetrotting.data.network.firebase
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -68,8 +69,8 @@ class AuthService @Inject constructor(val firebase: FirebaseService) {
         return firebase.client.auth.createUserWithEmailAndPassword(email, password).await()
     }
 
-    fun getCurrentUser(): FirebaseUser? {
-        return firebase.client.auth.currentUser
+    fun resetPassword(email: String): Task<Void> {
+        return firebase.client.auth.sendPasswordResetEmail(email)
     }
 
     fun logout() = runCatching {

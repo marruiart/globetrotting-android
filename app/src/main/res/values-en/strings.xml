@@ -27,6 +27,11 @@
     <string name="signup_error_response">There was an error on sign up</string>
     <string name="signup_error_response_data">Error generating user data</string>
     <string name="welcome">Welcome %1$s</string>
+    <string name="forgot_password_explanation_question">¿Did you forget your password?</string>
+    <string name="forgot_password_explanation">Enter your email and you will receive a reset link.</string>
+    <string name="forgot_password_sent">"Email sent to %1$s"</string>
+    <string name="forgot_password_error_response">"There was an error on sending email"</string>
+    <string name="forgot_password_btn_remind">Remind password</string>
     <!-- MY PROFILE -->
     <string name="profile_avatar">User\'s avatar</string>
     <string name="profile_username_label">Username:</string>

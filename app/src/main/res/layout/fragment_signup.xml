@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_back" />
+        app:navigationIcon="@drawable/ic_back"
+        app:title="" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_login_imagotype"
@@ -43,12 +44,13 @@
             android:id="@+id/clay_login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_create_form_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/form_email_hint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,16 +134,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Space
+                android:id="@+id/space_signup_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_create_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_create_form_repeat_password" />
+
 
             <Button
                 android:id="@+id/btn_create_account"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="46dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/create_account_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_create_form_repeat_password" />
+                app:layout_constraintTop_toBottomOf="@+id/space_signup_bottom" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

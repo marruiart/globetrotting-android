@@ -20,13 +20,13 @@ import com.marina.ruiz.globetrotting.core.extension.comparePassword
 import com.marina.ruiz.globetrotting.core.extension.isValidEmail
 import com.marina.ruiz.globetrotting.core.extension.isValidPassword
 import com.marina.ruiz.globetrotting.core.extension.validateEmailAndPassword
-import com.marina.ruiz.globetrotting.databinding.FragmentRegisterBinding
+import com.marina.ruiz.globetrotting.databinding.FragmentSignupBinding
 import com.marina.ruiz.globetrotting.domain.SignUpListeners
 import com.marina.ruiz.globetrotting.ui.auth.viewmodel.AuthViewModel
 
 class SignUpFragment : Fragment(), SignUpListeners {
 
-    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var binding: FragmentSignupBinding
     private lateinit var etUsername: TextInputEditText
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
@@ -42,7 +42,7 @@ class SignUpFragment : Fragment(), SignUpListeners {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        binding = FragmentSignupBinding.inflate(inflater, container, false)
         return binding.root
     }
 

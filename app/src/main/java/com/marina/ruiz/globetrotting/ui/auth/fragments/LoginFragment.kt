@@ -51,6 +51,7 @@ class LoginFragment : Fragment() {
                 authVM.onLogin(email, password)
             }
             tvCreateAccount.setOnClickListener { navigateToRegisterForm() }
+            tvForgotPassword.setOnClickListener { navigateToForgotPassword() }
         }
     }
 
@@ -80,4 +81,6 @@ class LoginFragment : Fragment() {
     private fun navigateToRegisterForm() =
         navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
 
+    private fun navigateToForgotPassword() =
+        navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
 }

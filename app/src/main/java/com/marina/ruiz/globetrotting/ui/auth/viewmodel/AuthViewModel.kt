@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.marina.ruiz.globetrotting.data.network.firebase.model.result.LoginResult
 import com.marina.ruiz.globetrotting.data.repository.GlobetrottingRepository
 import com.marina.ruiz.globetrotting.data.repository.model.User
+import com.marina.ruiz.globetrotting.domain.ForgotPasswordListeners
+import com.marina.ruiz.globetrotting.domain.ForgotPasswordUseCase
 import com.marina.ruiz.globetrotting.domain.LoginUseCase
 import com.marina.ruiz.globetrotting.domain.LogoutUseCase
 import com.marina.ruiz.globetrotting.domain.SignUpListeners
@@ -24,6 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    private val forgotPasswordUseCase: ForgotPasswordUseCase,
     private val loginUseCase: LoginUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val createAccount: SignUpUseCase,
@@ -116,6 +119,10 @@ class AuthViewModel @Inject constructor(
 
 
     // PUBLIC FUNCTIONS
+
+    fun forgotPassword(email: String,callback: ForgotPasswordListeners) {
+        forgotPasswordUseCase(email, callback)
+    }
 
     fun onLogin(email: String, password: String) {
         if (isValidEmail(email) && isValidPassword(password)) {

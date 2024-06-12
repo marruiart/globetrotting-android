@@ -27,7 +27,12 @@
     <string name="signup_error_response_collision">El email ya está registrado</string>
     <string name="signup_error_response">No se ha podido hacer el registro</string>
     <string name="signup_error_response_data">Error al generar los datos del usuario</string>
-    <string name="welcome">Hola %1$s</string>
+    <string name="welcome">Te damos la bienvenida %1$s</string>
+    <string name="forgot_password_explanation_question">¿Olvidaste tu contraseña?</string>
+    <string name="forgot_password_explanation">Indica tu email y recibirás un enlace de reinicio.</string>
+    <string name="forgot_password_sent">"Email enviado a %1$s"</string>
+    <string name="forgot_password_error_response">"Ha habido un error al enviar el email"</string>
+    <string name="forgot_password_btn_remind">Recordar contraseña</string>
     <!-- MY PROFILE -->
     <string name="profile_avatar">Avatar del usuario</string>
     <string name="profile_username_label">Usuario:</string>
@@ -101,4 +106,6 @@
     <string name="home_hero_motto_text">Descubre tu propia \naventura</string>
     <string name="home_see_all_popular">Ver todos</string>
     <string name="home_popular_destinations">Destinos populares</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

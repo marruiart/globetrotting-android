@@ -9,14 +9,14 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_login_imagotype"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:layout_marginTop="55dp"
         android:contentDescription="@string/imagotype_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/splash" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_login_form"

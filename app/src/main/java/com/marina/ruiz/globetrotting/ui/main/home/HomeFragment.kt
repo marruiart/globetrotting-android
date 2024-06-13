@@ -133,7 +133,7 @@ class HomeFragment : Fragment(), BookingCreationFormDialogListener,
      */
     private fun seeAllDestinationsListener() {
         binding.btnSeeAllDestinationsHome.setOnClickListener {
-            navigate(HomeFragmentDirections.actionHomeFragmentToSeeAllDestinationsFragment())
+            bottomNav?.selectedItemId = R.id.nav_destinations
         }
     }
 

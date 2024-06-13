@@ -79,7 +79,8 @@ class ProfileActivity : AppCompatActivity(), EditProfileDialogFragmentListener,
     private fun bindView() {
         _user?.let {
             with(binding) {
-                tvName.text = getString(R.string.full_name, it.name, it.surname)
+                val name = if (it.name != null) getString(R.string.full_name, it.name, it.surname) else it.username
+                tvName.text = name
                 tvNickname.text = it.nickname
                 tvUsername.text = it.username
                 tvEmail.text = it.email

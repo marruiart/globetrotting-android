@@ -30,6 +30,12 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "GLOB_DEBUG MAIN_ACTIVITY"
 
+        /**
+         * Creates an Intent to start MainActivity.
+         *
+         * @param context The context used to create the Intent.
+         * @return The Intent to start MainActivity.
+         */
         fun create(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
 
@@ -49,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Gets the height of the action bar.
+     *
+     * @return The height of the action bar in pixels.
      */
     private fun getActionBarSize(): Int {
         val typedValue = TypedValue()

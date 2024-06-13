@@ -1,4 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+    }
+}
+
+
 plugins {
     id("com.android.application") version "8.4.0" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
@@ -7,4 +14,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48.1" apply false
     id("org.jetbrains.kotlin.plugin.parcelize") version "1.9.20" apply false
     id("com.google.gms.google-services") version "4.4.1" apply false
+    id("org.jetbrains.dokka") version "1.9.20"  apply false
 }

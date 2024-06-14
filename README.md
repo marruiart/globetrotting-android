@@ -23,4 +23,4 @@ La aplicación sigue el patrón de arquitectura MVVM (Model-View-ViewModel):
 ## Interfaz del Usuario
 
 La interfaz de usuario de Globetrotting está diseñada para ser intuitiva y fácil de usar. Aquí se muestran algunas capturas de pantalla de la aplicación:
-![Google Pixel 4 XL Screenshot 1](https://github.com/marruiart/globetrotting-android/assets/88201067/3adb403d-3787-4cb4-ade4-42d6887a7568)![Google Pixel 4 XL Screenshot 2](https://github.com/marruiart/globetrotting-android/assets/88201067/035ead60-bc23-4078-a00a-3e63cff53829)![Google Pixel 4 XL Screenshot 3](https://github.com/marruiart/globetrotting-android/assets/88201067/c03c882d-f17b-4335-b1b9-c4742439ff1c)![Google Pixel 4 XL Screenshot 4](https://github.com/marruiart/globetrotting-android/assets/88201067/8e018219-357a-4b32-9460-ed55efe58469)
+![Interfaz de usuario](https://github.com/marruiart/globetrotting-android/assets/88201067/b101fe58-c8b4-4efe-999a-0dac1c44e2ba)

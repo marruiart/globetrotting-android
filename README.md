@@ -5,8 +5,8 @@ Globetrotting es una aplicación desarrollada en Android con Kotlin, destinada a
 ## Tecnologías Utilizadas
 
 - **Android con Kotlin**: El lenguaje principal utilizado para desarrollar la aplicación.
-- **API de ChatGPT**: Integración con la API de ChatGPT para proporcionar asistencia inteligente y recomendaciones personalizadas.
-- **Backend de Firebase**: Utilizado para la autenticación de usuarios, almacenamiento en tiempo real y funciones de backend.
+- **API de ChatGPT**: Integración con la API de ChatGPT para proporcionar descripciones de los destinos de viaje.
+- **Backend de Firebase**: Utilizado para la autenticación de usuarios y almacenamiento en tiempo real.
 
 ## Estructura de la Aplicación
 

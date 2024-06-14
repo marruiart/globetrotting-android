@@ -17,9 +17,9 @@ La aplicación sigue el patrón de arquitectura MVVM (Model-View-ViewModel):
 - **ViewModel**: Actúa como un intermediario entre el Model y la View. Gestiona los datos para las interfaces de usuario y maneja la lógica de presentación.
 
 ### Diagrama de Estructura MVVM
-+-----------+ +-----------+ +-----------+
-| View | <--> | ViewModel | <--> | Model |
-+-----------+ +-----------+ +-----------+
++-----------+ +-----------+ +-----------+ \n
+| View | <--> | ViewModel | <--> | Model | \n
++-----------+ +-----------+ +-----------+ \n
 ## Interfaz del Usuario
 
 La interfaz de usuario de Globetrotting está diseñada para ser intuitiva y fácil de usar. Aquí se muestran algunas capturas de pantalla de la aplicación:
